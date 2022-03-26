@@ -16,4 +16,7 @@ Is there anything that you need from your teammate?
 Any other comments, questions, or concerns?
 
 
+Does this PR close any issues?
+
+
 Cheers!
