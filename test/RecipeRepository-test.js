@@ -1,5 +1,6 @@
 import { expect } from 'chai';
 import RecipeRepository from '../src/classes/RecipeRepository';
+import recipeData from '../src/data/recipes.js';
 
 describe('Recipe Repository', () => {
 
@@ -7,7 +8,7 @@ describe('Recipe Repository', () => {
 
   beforeEach(() => {
 
-    recipeRepository = new RecipeRepository();
+    recipeRepository = new RecipeRepository(recipeData);
   });
 
   it('should be a function', () => {
@@ -17,4 +18,8 @@ describe('Recipe Repository', () => {
   it('should be an instance of RecipeRepository', () => {
     expect(recipeRepository).to.be.an.instanceOf(RecipeRepository);
   });
+
+  it('should have all recipe data', () => {
+    expect(recipeRepository.repositoryData).to.equal(recipeData);
+  })
 });
