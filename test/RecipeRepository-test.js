@@ -21,5 +21,13 @@ describe('Recipe Repository', () => {
 
   it('should have all recipe data', () => {
     expect(recipeRepository.repositoryData).to.equal(recipeData);
-  })
+  });
+
+  it('should filter by tag', () => {
+    expect(recipeRepository.filterByTag('side dish').length).to.equal(22);
+    expect(recipeRepository.filterByTag('main dish').length).to.equal(12);
+    expect(recipeRepository.filterByTag('MAIN DISH').length).to.equal(0);
+  });
+
+  
 });
