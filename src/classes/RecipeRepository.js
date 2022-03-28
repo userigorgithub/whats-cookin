@@ -1,7 +1,6 @@
 class RecipeRepository {
   constructor(repositoryData) {
     this.repositoryData = repositoryData;
-    // One class to get you started!
   }
 
   filterByTag(searchTag) {
@@ -9,7 +8,10 @@ class RecipeRepository {
     return filteredTags;
   }
 
-  
+  filterByName(searchName) {
+    const filteredNames = this.repositoryData.filter(recipe => recipe.name.includes(searchName));
+    return filteredNames;
+  }
 }
 
 export default RecipeRepository;
