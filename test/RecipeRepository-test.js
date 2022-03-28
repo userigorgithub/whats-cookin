@@ -1,8 +1,36 @@
 import { expect } from 'chai';
 import RecipeRepository from '../src/classes/RecipeRepository';
+import recipeData from '../src/data/recipes.js';
 
-describe('Recipe', () => {
-  it('Should be a function', () => {
+describe('Recipe Repository', () => {
+
+  let recipeRepository;
+
+  beforeEach(() => {
+
+    recipeRepository = new RecipeRepository(recipeData);
+  });
+
+  it('should be a function', () => {
     expect(RecipeRepository).to.be.a('function');
   });
-})
+
+  it('should be an instance of RecipeRepository', () => {
+    expect(recipeRepository).to.be.an.instanceOf(RecipeRepository);
+  });
+
+  it('should have all recipe data', () => {
+    expect(recipeRepository.repositoryData).to.equal(recipeData);
+  });
+
+  it('should filter recipes by tag', () => {
+    expect(recipeRepository.filterByTag('side dish').length).to.equal(22);
+    expect(recipeRepository.filterByTag('main dish').length).to.equal(12);
+    expect(recipeRepository.filterByTag('MAIN DISH').length).to.equal(0);
+  });
+
+  it('should filter recipes by name', () => {
+    expect(recipeRepository.filterByName('Loaded Chocolate Chip Pudding Cookie Cups')[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
+    expect(recipeRepository.filterByName('Chocolate Chip Cookie Cups')).to.deep.equal([]);
+  });
+});
