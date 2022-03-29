@@ -1,5 +1,7 @@
 class Recipe {
-  constructor() {}
+  constructor(singleRecipe) {
+    this.singleRecipe = singleRecipe;
+  }
 }
 
 export default Recipe;
