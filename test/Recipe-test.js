@@ -21,8 +21,13 @@ describe("Recipe", () => {
   it("should hold a single recipe", () => {
     expect(recipe.singleRecipe).to.deep.equal(recipeData[0]);
   });
-  it("should determine the names of ingredients needed", () => {
-    expect().to();
+
+  it("should determine the names of ingredients needed in a recipe", () => {
+    expect(recipe.storeIngredientNames()[0]).to.deep.equal("wheat flour");
+    expect(recipe.storeIngredientNames()[1]).to.deep.equal(
+      "bicarbonate of soda"
+    );
+    //expect(recipe.storeIngredientNames()).to.deep.equal([]);
   });
   it.skip("should", () => {});
   it.skip("should", () => {});
