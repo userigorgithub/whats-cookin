@@ -27,4 +27,10 @@ describe("Ingredient", () => {
     expect(ingredient.addNameOfIngredient(1123)).to.equal("eggs");
     // expect(ingredient.addNameOfIngredient(1483)).to.deep.equal([]);
   });
+
+  it("should be able to provide the Ingredient cost per unit", () => {
+    expect(ingredient.provideIngredientCostPerUnit(20081)).to.equal(142);
+    expect(ingredient.provideIngredientCostPerUnit(1123)).to.equal(472);
+    // expect(ingredient.addNameOfIngredient(1483)).to.deep.equal([]);
+  });
 });

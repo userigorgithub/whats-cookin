@@ -29,8 +29,8 @@ describe("Recipe", () => {
     );
     //expect(recipe.storeIngredientNames()).to.deep.equal([]);
   });
-  it.skip("should calculate the cost of ingredients for a recipe", () => {
-    // expect(recipe.calculateIngredientsCost()).
+  it("should calculate the cost of ingredients for a recipe", () => {
+    expect(recipe.calculateRecipeCost()).to.equal('$177.76 USD')
   });
   it.skip("should", () => {});
 });

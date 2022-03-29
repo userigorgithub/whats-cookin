@@ -10,6 +10,13 @@ class Ingredient {
     );
     return ingredientName[0].name;
   }
+
+  provideIngredientCostPerUnit(id) {
+    const ingredientName = ingredientsData.filter(
+      (ingredient) => ingredient.id === id
+    );
+    return ingredientName[0].estimatedCostInCents;
+  }
 }
 
 export default Ingredient;

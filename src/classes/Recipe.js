@@ -14,5 +14,16 @@ class Recipe {
     return foodItemList;
   }
 
+  calculateRecipeCost() {
+    const totalPrice = this.singleRecipe.ingredients.reduce((acc,cur) =>{
+
+      acc += (cur.quantity.amount * this.allIngredients.provideIngredientCostPerUnit(cur.id))
+      return acc
+    },0)
+
+
+    return `$${(totalPrice / 100).toFixed(2)} USD`
+  }
+
 }
 export default Recipe;
