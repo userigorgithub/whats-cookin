@@ -20,10 +20,23 @@ class Recipe {
       acc += (cur.quantity.amount * this.allIngredients.provideIngredientCostPerUnit(cur.id))
       return acc
     },0)
-
-
     return `$${(totalPrice / 100).toFixed(2)} USD`
   }
 
+  getInstructions() {
+    const instructions = this.singleRecipe.instructions.reduce((acc,cur) =>{
+      acc += `${cur.number}. ${cur.instruction} \n`
+      return acc
+    },"")
+
+    return instructions
+  }
+
+
+
 }
 export default Recipe;
+
+
+//1. instructions
+//2. more instruction
