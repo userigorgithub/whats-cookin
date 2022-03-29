@@ -2,10 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Whats Cookin</title>
+    <title>Fork-to-Table</title>
   </head>
   <body>
-    <h1>Whats Cookin</h1>
+    <section class="top-section">
+      <section class="logo-title">
+        <img src="" alt="fork-to-table logo">
+      </section>
+      <nav class="nav-bar">
+        <button class="nav-buttons hidden">Home</button>
+        <button class="nav-buttons">My Favorites</button>
+        <button class="nav-buttons">Want to Cook</button>
+      </nav>
+      <section class="user-search">
+        <p class="user-welcome">Hello, Igor</p>
+        <section class="search-container">
+            <img class="search-image" src="./assets/search.svg" alt="search icon"/>
+            <input class="search-input" type="search" placeholder="Search Recipes" id="search">
+        </section>
+      </section>
+    </section>
+    <section class="main-section">main section</section>
+    <section class="bottom-section">bottom section</section>
   </body>
   <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
