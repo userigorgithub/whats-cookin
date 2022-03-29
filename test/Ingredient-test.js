@@ -7,7 +7,7 @@ describe("Ingredient", () => {
   let ingredient;
 
   beforeEach(() => {
-    ingredient = new Ingredient();
+    ingredient = new Ingredient(recipeData[0].ingredients);
   });
 
   it("should be a function", () => {
@@ -17,4 +17,10 @@ describe("Ingredient", () => {
   it("should be an instance of Ingredient", () => {
     expect(ingredient).to.be.an.instanceOf(Ingredient);
   });
+  it("should be able to contain all of the ingredients", () => {
+    expect(ingredient.ingredientList.length).to.equal(11);
+  });
+  // it.skip("should be able to search by ingredient id". () => {
+  //   expect(ingredient.searchById(20081)).to
+  // });
 });
