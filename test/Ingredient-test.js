@@ -17,10 +17,14 @@ describe("Ingredient", () => {
   it("should be an instance of Ingredient", () => {
     expect(ingredient).to.be.an.instanceOf(Ingredient);
   });
+
   it("should be able to contain all of the ingredients", () => {
     expect(ingredient.ingredientList.length).to.equal(11);
   });
-  // it.skip("should be able to search by ingredient id". () => {
-  //   expect(ingredient.searchById(20081)).to
-  // });
+
+  it("should be able to search by ingredient id", () => {
+    expect(ingredient.addNameOfIngredient(20081)).to.equal("wheat flour");
+    expect(ingredient.addNameOfIngredient(1123)).to.equal("eggs");
+    // expect(ingredient.addNameOfIngredient(1483)).to.deep.equal([]);
+  });
 });
