@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import Recipe from "../src/classes/Recipe";
 import recipeData from "../src/data/recipes.js";
+import ingredientsData from "../src/data/ingredients.js";
 
 describe("Recipe", () => {
   let recipe;
@@ -20,7 +21,9 @@ describe("Recipe", () => {
   it("should hold a single recipe", () => {
     expect(recipe.singleRecipe).to.deep.equal(recipeData[0]);
   });
-  it.skip("should", () => {});
+  it("should determine the names of ingredients needed", () => {
+    expect().to();
+  });
   it.skip("should", () => {});
   it.skip("should", () => {});
 });
