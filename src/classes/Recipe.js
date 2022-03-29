@@ -4,19 +4,15 @@ import Ingredient from "../classes/Ingredient";
 class Recipe {
   constructor(singleRecipe) {
     this.singleRecipe = singleRecipe;
+    this.allIngredients = new Ingredient;
   }
 
   storeIngredientNames() {
     const foodItemList = this.singleRecipe.ingredients.map((foodItem) =>
-      this.addNameOfIngredient(foodItem.id)
+      this.allIngredients.addNameOfIngredient(foodItem.id)
     );
     return foodItemList;
   }
-  addNameOfIngredient(id) {
-    const ingredientName = ingredientsData.filter(
-      (ingredient) => ingredient.id === id
-    );
-    return ingredientName[0].name;
-  }
+
 }
 export default Recipe;

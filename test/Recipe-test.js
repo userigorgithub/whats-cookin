@@ -29,6 +29,8 @@ describe("Recipe", () => {
     );
     //expect(recipe.storeIngredientNames()).to.deep.equal([]);
   });
-  it.skip("should", () => {});
+  it.skip("should calculate the cost of ingredients for a recipe", () => {
+    // expect(recipe.calculateIngredientsCost()).
+  });
   it.skip("should", () => {});
 });
