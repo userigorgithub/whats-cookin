@@ -2,11 +2,12 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Fork-to-Table</title>
+    <title>Fork2Table</title>
   </head>
   <body>
     <section class="top-section">
       <section class="logo-title">
+        <h1 class="fork-to-table">Fork2Table</h1>
         <img src="" alt="fork-to-table logo">
       </section>
       <nav class="nav-bar">
@@ -17,12 +18,48 @@
       <section class="user-search">
         <p class="user-welcome">Hello, Igor</p>
         <section class="search-container">
-            <img class="search-image" src="./assets/search.svg" alt="search icon"/>
+            <img class="search-image" src="" alt="search icon"/>
             <input class="search-input" type="search" placeholder="Search Recipes" id="search">
         </section>
       </section>
     </section>
-    <section class="main-section">main section</section>
+    <section class="main-section">
+      <section class="go-back hidden">
+        <button class="shift-view">Go Back</button>
+      </section>
+
+      <section class="recipe-boxes" id="boxOne">
+        <h2 class="recipe-name">Recipe Name</h2>
+        <img class="recipe-image" src="" alt="recipe image" />
+        <section class="recipe-actions">
+          <button class="recipe-action-buttons" id="wantToCook">Want to Cook</button>
+          <button class="recipe-action-buttons" id="addFavorite">Favorite</button>
+        </section>
+      </section>
+
+      <section class="recipe-boxes" id="boxTwo">
+        <h2 class="recipe-name">Recipe Name</h2>
+        <img class="recipe-image" src="" alt="recipe image" />
+        <section class="recipe-actions">
+          <button class="recipe-action-buttons" id="wantToCook">Want to Cook</button>
+          <button class="recipe-action-buttons" id="addFavorite">Favorite</button>
+        </section>
+      </section>
+
+      <section class="recipe-boxes" id="boxThree">
+        <h2 class="recipe-name">Recipe Name</h2>
+        <img class="recipe-image" src="" alt="recipe image" />
+        <section class="recipe-actions">
+          <button class="recipe-action-buttons" id="wantToCook">Want to Cook</button>
+          <button class="recipe-action-buttons" id="addFavorite">Favorite</button>
+        </section>
+      </section>
+
+      <section class="go-forward">
+        <button class="shift-view">Go Forward</button>
+      </section>
+
+    </section>
     <section class="bottom-section">bottom section</section>
   </body>
   <!-- Do not include the scripts.js file here - it is done automatically by the webpack server -->
