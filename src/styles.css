@@ -1,34 +1,82 @@
+/*  Global */
 * {
   border: 1px solid black;
 }
-/*  */
+
 body {
   background-color: grey;
   display: flex;
   flex-direction: column;
   margin: 0px;
   overflow: hidden;
+  height: 100vh;
+  width: 100vw;
 }
 
+/*  Top Section */
 .top-section {
   display: flex;
-  flex-direction: column;
   height: 20%;
   width: 100%;
 }
+.logo-title {
+  width: 20%;
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.fork-to-table {
+}
+.logo-image {
+}
+.nav-bar {
+  width: 50%;
+  border: 2px solid white;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.user-search {
+  width: 30%;
+  border: 2px solid white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.user-welcome {
+}
+
+/*  Page Title Section */
 .page-title-section {
   border: 2px solid red;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 5%;
   width: 100%;
 }
+/*  Main and Recipe View */
 .main-section {
   border: 2px solid blue;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   height: 60%;
   width: 100%;
+}
+.go-back {
+  width: 10%;
+}
+.go-forward {
+  width: 10%;
+}
+.shift-view {
+}
+.recipe-boxes {
+  width: 27%;
 }
 .recipe-view {
   display: flex;
@@ -36,10 +84,15 @@ body {
   height: 60%;
   width: 100%;
 }
+/*  Bottom Section */
 .bottom-section {
   border: 2px solid red;
   display: flex;
   flex-direction: column;
   height: 15%;
   width: 100%;
+}
+/*  Hidden */
+.hidden {
+  /* display: none; */
 }
