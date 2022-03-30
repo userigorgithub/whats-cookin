@@ -1,3 +1,7 @@
+* {
+  border: 2px solid blue;
+}
+
 body {
   background-color: blueviolet;
 }
