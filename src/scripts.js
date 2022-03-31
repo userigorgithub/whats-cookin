@@ -34,13 +34,12 @@ const sideDish = document.getElementById('sideDish');
 const mainDish = document.getElementById('mainDish');
 const dessert = document.getElementById('dessert');
 
+
 const displayAllRecipes = () => {
   let allRecipes = new RecipeRepository(recipeData).repositoryData;
-
   allRecipes.sort((a, b) => 0.5 - Math.random());
 
   let showInDom = allRecipes
-
   .filter((recipe,index)=> (index <= 2))
   .map((recipe,index)=>
     boxOfRecipes.innerHTML +=
@@ -55,13 +54,24 @@ const displayAllRecipes = () => {
           Favorite
         </button>
       </section>
-    </section>
-  `
-)
-// console.log(allRecipes);
-  //main section .innerHTML = showInDOM
+    </section>`
+    )}
 
-}
+// const shiftForward = (allRecipes) => {
+  //capture the value of the first element of the array
+  // allRecipes = 17
+  // console.log(allRecipes);
+  // const toAddToEnd = allRecipes[0];
+  //remove first element of the allRecipes array
+    // allRecipes.shift();
+  // //add the first element to the rear of the allRecipes array
+      // allRecipes.push(toAddToEnd);
+  // //use the helper function to display the new allRecipes array
+
+
+// }
+
+// shiftForward(allRecipes);
 
 
 console.log('hello world');
