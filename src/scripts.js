@@ -14,6 +14,7 @@ const box4 = document.getElementById('boxFour');
 
 const forwardButton = document.getElementById('goForward');
 const backwardButton = document.getElementById('goBackward');
+const boxOfRecipes = document.querySelector('.box-of-recipes');
 const recipeName = document.querySelector('.recipe-name');
 const recipeImage = document.querySelector('.recipe-image');
 const favoriteButton = document.getElementById('addFavorite');
@@ -34,8 +35,31 @@ const mainDish = document.getElementById('mainDish');
 const dessert = document.getElementById('dessert');
 
 const displayAllRecipes = () => {
-  const allRecipes = new RecipeRepository(recipeData).repositoryData;
+  let allRecipes = new RecipeRepository(recipeData).repositoryData;
+
   allRecipes.sort((a, b) => 0.5 - Math.random());
+
+  let showInDom = allRecipes
+
+  .filter((recipe,index)=> (index <= 2))
+  .map((recipe,index)=>
+    boxOfRecipes.innerHTML +=
+    `<section class="recipe-boxes" id="${recipe.id}">
+      <h3 class="recipe-name">${recipe.name}</h3>
+      <img class="recipe-image" src="${recipe.image}" alt="recipe image" />
+      <section class="recipe-actions">
+        <button class="recipe-action-buttons" id="addToCook">
+          Add to Cook
+        </button>
+        <button class="recipe-action-buttons" id="addFavorite">
+          Favorite
+        </button>
+      </section>
+    </section>
+  `
+)
+// console.log(allRecipes);
+  //main section .innerHTML = showInDOM
 
 }
 
