@@ -12,6 +12,10 @@ const box2 = document.getElementById('boxTwo');
 const box3 = document.getElementById('boxThree');
 const box4 = document.getElementById('boxFour');
 
+const mainSection = document.querySelector('.main-section');
+const recipeView = document.querySelector('.recipe-view');
+const pageTitle = document.querySelector('.page-title-section');
+
 const forwardButton = document.getElementById('goForward');
 const backwardButton = document.getElementById('goBackward');
 const boxOfRecipes = document.querySelector('.box-of-recipes');
@@ -42,12 +46,12 @@ const displayAllRecipes = () => {
 
   let showInDom = allRecipes
   .filter((recipe,index)=> (index <= 2))
-  .map((recipe,index)=>
+  .map((recipe,mapIndex)=>
     boxOfRecipes.innerHTML +=
     `<section class="recipe-boxes" id="${recipe.id}">
       <h3 class="recipe-name">${recipe.name}</h3>
-      <img class="recipe-image" src="${recipe.image}" alt="recipe image" />
-      <section class="recipe-actions">
+      <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
+      <section class="recipe-actions"
         <button class="recipe-action-buttons" id="addToCook">
           Add to Cook
         </button>
@@ -57,7 +61,6 @@ const displayAllRecipes = () => {
       </section>
     </section>`
   )
-
 };
 
 const shiftForward = () => {
@@ -72,17 +75,64 @@ const shiftBackward = () => {
   displayAllRecipes();
 }
 
-const selectRecipe = () => {
+const selectRecipe = (selectedIndex) => {
+  const selectedRecipe = new Recipe(allRecipes[selectedIndex]);
+  console.log(selectedRecipe);
+  hideElement(mainSection);
+  pageTitle.innerText = `Is this your next meal?`;
+  showElement(recipeView);
+  showElement(homeButton);
+
+recipeView.innerHTML = ""
+
+recipeView.innerHTML = `
+  <section class="recipe-boxes" id="boxFour">
+    <h3 class="recipe-name">${selectedRecipe.singleRecipe.name}</h3>
+    <img class="recipe-image" src="${selectedRecipe.singleRecipe.image}" alt="recipe image" />
+    <section class="recipe-actions">
+      <button class="recipe-action-buttons" id="addToCook">
+        Add to Cook
+      </button>
+      <button class="recipe-action-buttons" id="addFavorite">
+        Favorite
+      </button>
+    </section>
+    </section>
+
+    <section class="recipe-details-section">
+      <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
+      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames()}</article>
+      <section class="other-recipe-info">
+        <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost()}</article>
+        <article class="other-cost">Other Cost</article>
+        <article class="other-cost">Other Cost</article>
+      </section>
+    </section>
+    `
   // when clicking a recipe
-  //main becomes hidden
-  //recipe -view becomes not hidden
-  //home button becomes not hidden
+    //how do we listen to the recipes? which of the three?
+
+//if image that was clicked on, includes this id in the same object, return entire object
+
+
+
   //we need to access the instructions and ingredients
+    //make a new Recipe instance?
+
   // we need to know which box was clicked as well
   //we need to diplay the calculated cost
+    //this is in
   //css with the bottom section as well
+}
+const showElement = (element) => {
+  element.classList.remove('hidden');
+}
+
+const hideElement = (element) => {
+  element.classList.add('hidden');
 }
 
 window.addEventListener('load', e => displayAllRecipes());
 forwardButton.addEventListener('click', e => shiftForward());
 backwardButton.addEventListener('click', e => shiftBackward());
+boxOfRecipes.addEventListener('click', e => selectRecipe(event.target.id));
