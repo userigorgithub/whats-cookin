@@ -34,10 +34,11 @@ const sideDish = document.getElementById('sideDish');
 const mainDish = document.getElementById('mainDish');
 const dessert = document.getElementById('dessert');
 
+const allRecipes = new RecipeRepository(recipeData).repositoryData;
+    allRecipes.sort((a, b) => 0.5 - Math.random());
 
 const displayAllRecipes = () => {
-  let allRecipes = new RecipeRepository(recipeData).repositoryData;
-  allRecipes.sort((a, b) => 0.5 - Math.random());
+  boxOfRecipes.innerHTML ="";
 
   let showInDom = allRecipes
   .filter((recipe,index)=> (index <= 2))
@@ -55,25 +56,22 @@ const displayAllRecipes = () => {
         </button>
       </section>
     </section>`
-    )}
+  )
 
-// const shiftForward = (allRecipes) => {
-  //capture the value of the first element of the array
-  // allRecipes = 17
-  // console.log(allRecipes);
-  // const toAddToEnd = allRecipes[0];
-  //remove first element of the allRecipes array
-    // allRecipes.shift();
-  // //add the first element to the rear of the allRecipes array
-      // allRecipes.push(toAddToEnd);
-  // //use the helper function to display the new allRecipes array
+};
 
+const shiftForward = () => {
+    allRecipes.push(allRecipes[0]);
+    allRecipes.shift()
+    displayAllRecipes();
+}
 
-// }
+const shiftBackward = () => {
+  allRecipes.unshift(allRecipes[allRecipes.length-1])
+  allRecipes.pop();
+  displayAllRecipes();
+}
 
-// shiftForward(allRecipes);
-
-
-console.log('hello world');
-
-window.addEventListener('load', displayAllRecipes);
+window.addEventListener('load', e => displayAllRecipes());
+forwardButton.addEventListener('click', e => shiftForward());
+backwardButton.addEventListener('click', e => shiftBackward());
