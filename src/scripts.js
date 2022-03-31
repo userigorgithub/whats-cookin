@@ -75,6 +75,13 @@ const shiftBackward = () => {
   displayAllRecipes();
 }
 
+const goHome = () => {
+  hideElement(homeButton);
+  hideElement(recipeView);
+  showElement(mainSection);
+  pageTitle.innerText = `Let's Find a Recipe!`
+}
+
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(allRecipes[selectedIndex]);
   console.log(selectedRecipe);
@@ -136,3 +143,4 @@ window.addEventListener('load', e => displayAllRecipes());
 forwardButton.addEventListener('click', e => shiftForward());
 backwardButton.addEventListener('click', e => shiftBackward());
 boxOfRecipes.addEventListener('click', e => selectRecipe(event.target.id));
+homeButton.addEventListener('click', e => goHome());
