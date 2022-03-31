@@ -72,6 +72,17 @@ const shiftBackward = () => {
   displayAllRecipes();
 }
 
+const selectRecipe = () => {
+  // when clicking a recipe
+  //main becomes hidden
+  //recipe -view becomes not hidden
+  //home button becomes not hidden
+  //we need to access the instructions and ingredients
+  // we need to know which box was clicked as well
+  //we need to diplay the calculated cost
+  //css with the bottom section as well
+}
+
 window.addEventListener('load', e => displayAllRecipes());
 forwardButton.addEventListener('click', e => shiftForward());
 backwardButton.addEventListener('click', e => shiftBackward());
