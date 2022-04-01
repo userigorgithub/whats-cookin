@@ -1,14 +1,18 @@
 import { expect } from 'chai';
 import User from '../src/classes/User';
+import Recipe from '../src/classes/Recipe';
 import usersData from '../src/data/users.js';
+import recipeData from '../src/data/recipes.js';
 
 describe('User', () => {
 
-  let user;
+  let user, recipe;
 
   beforeEach(() => {
 
     user = new User(usersData[0]);
+    recipe = new Recipe(recipeData[0]);
+    user.addToFavorite(recipe.singleRecipe);
   });
 
   it('should be a function', () => {
@@ -39,5 +43,13 @@ describe('User', () => {
 	   expect(user.returnUserFirstName()).to.equal('Saige');
   });
 
+  it('should be able to favorite a recipe', () => {
+	  expect(user.favoriteRecipes[0]).to.equal(recipeData[0]);
+  });
+
+  it('should not be able to have duplicate recipe', () => {
+    user.addToFavorite(recipe.singleRecipe);
+	  expect(user.favoriteRecipes.length).to.equal(1);
+  });
 
 });
