@@ -8,7 +8,7 @@ describe('User', () => {
 
   beforeEach(() => {
 
-    user = new User();
+    user = new User(usersData[0]);
   });
 
   it('should be a function', () => {
@@ -17,5 +17,9 @@ describe('User', () => {
 
   it('should be an instance of User', () => {
     expect(user).to.be.an.instanceOf(User);
+  });
+
+  it('should hold a single user', () => {
+    expect(user.singleUser).to.equal(usersData[0]);
   });
 });

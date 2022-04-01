@@ -1,6 +1,6 @@
 class User {
-  constructor() {
-
+  constructor(singleUser) {
+    this.singleUser = singleUser;
   }
 }
 
