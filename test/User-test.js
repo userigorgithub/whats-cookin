@@ -13,6 +13,7 @@ describe('User', () => {
     user = new User(usersData[0]);
     recipe = new Recipe(recipeData[0]);
     user.addToFavorite(recipe.singleRecipe);
+    user.addToCook(recipe.singleRecipe);
   });
 
   it('should be a function', () => {
@@ -61,5 +62,16 @@ describe('User', () => {
     user.deleteFromFavorites(45454545);
 	  expect(user.favoriteRecipes[0]).to.deep.equal(recipeData[0]);
   });
+
+  it('should be able to add to want to cook a recipe', () => {
+	  expect(user.recipesToCook[0]).to.equal(recipeData[0]);
+  });
+
+  it('should not be able to add duplicate recipe in want-to-cook', () => {
+    user.addToCook(recipe.singleRecipe);
+    expect(user.recipesToCook.length).to.equal(1);
+  });
+
+
 
 });

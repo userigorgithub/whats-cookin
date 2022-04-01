@@ -2,6 +2,7 @@ class User {
   constructor(singleUser) {
     this.singleUser = singleUser;
     this.favoriteRecipes = [];
+    this.recipesToCook = [];
   }
 
   returnUserFirstName() {
@@ -21,6 +22,12 @@ class User {
     })
     if (targetIndex) {
       this.favoriteRecipes.splice(this.favoriteRecipes.indexOf(targetIndex),1);
+    }
+  }
+
+  addToCook(recipe) {
+    if (!this.recipesToCook.includes(recipe)) {
+      this.recipesToCook.push(recipe)
     }
   }
 }
