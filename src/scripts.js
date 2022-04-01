@@ -157,10 +157,12 @@ const userSearch = (searchText) => {
 window.addEventListener("load", (e) => displayAllRecipes());
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
-boxOfRecipes.addEventListener("click", (e) => selectRecipe(event.target.id));
+boxOfRecipes.addEventListener("click", (e) => {
+  if (event.target.className === "recipe-image") {
+    selectRecipe(event.target.id);
+  }
+});
 homeButton.addEventListener("click", (e) => goHome());
-
-console.log(searchBar);
 searchBar.addEventListener("keyup", (e) => {
   userSearch(event.target.value);
   //}
