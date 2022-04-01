@@ -15,6 +15,16 @@ class User {
     }
   }
 
+  deleteFromFavorites(id) {
+    const targetIndex = this.favoriteRecipes.find((favRecipe) => {
+      return favRecipe.id === id;
+    })
+    if (targetIndex) {
+      this.favoriteRecipes.splice(this.favoriteRecipes.indexOf(targetIndex),1);
+    }
+  }
+}
+
 
 
 //to add: addToFavorite & addToCook:
@@ -29,6 +39,5 @@ class User {
 
 
 
-}
 
 export default User;
