@@ -40,22 +40,14 @@ class User {
     }
   }
 
+  filterFavsByTag(searchTag) {
+    const filteredTags = this.favoriteRecipes.filter((recipe) =>
+      recipe.tags.includes(searchTag)
+    );
+    return filteredTags;
+  }
+
 
 }
-
-
-
-//to add: addToFavorite & addToCook:
-//create property empty array
-//!includes? in array
-//push
-
-//to remove: removeFromFavorite & removeFromCook:
-//forEach in array
-//user.singleUser.id matches id para?
-//splice from array
-
-
-
 
 export default User;

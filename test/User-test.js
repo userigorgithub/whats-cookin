@@ -6,12 +6,14 @@ import recipeData from '../src/data/recipes.js';
 
 describe('User', () => {
 
-  let user, recipe;
+  let user, recipe, recipe1, recipe2;
 
   beforeEach(() => {
 
     user = new User(usersData[0]);
     recipe = new Recipe(recipeData[0]);
+    recipe1 = new Recipe(recipeData[1]);
+    recipe2 = new Recipe(recipeData[2]);
     user.addToFavorite(recipe.singleRecipe);
     user.addToCook(recipe.singleRecipe);
   });
@@ -82,5 +84,16 @@ describe('User', () => {
 	  expect(user.recipesToCook[0]).to.deep.equal(recipeData[0]);
   });
 
+  it('should filter recipes in favorites by tag', () => {
+    user.addToFavorite(recipe1.singleRecipe);
+    user.addToFavorite(recipe2.singleRecipe);
+    expect(user.filterFavsByTag('snack').length).to.equal(1);
+    expect(user.filterFavsByTag('main dish').length).to.equal(1);
+  });
 
+  it('should not filter recipes in favorites by incorrect tag', () => {
+    user.addToFavorite(recipe1.singleRecipe);
+    user.addToFavorite(recipe2.singleRecipe);
+    expect(user.filterFavsByTag('SNACK').length).to.equal(0);
+  });
 });
