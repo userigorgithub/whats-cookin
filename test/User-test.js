@@ -24,11 +24,16 @@ describe('User', () => {
   });
 
   it('should have a name', () => {
-	expect(user.singleUser.name).to.equal('Saige O\'Kon');
+	   expect(user.singleUser.name).to.equal('Saige O\'Kon');
   });
 
   it('should have an id', () => {
-	expect(user.singleUser.id).to.equal(1);
+	   expect(user.singleUser.id).to.equal(1);
   });
+
+  it('should be able to split user\'s name', () => {
+	   expect(user.returnUserFirstName()).to.equal('Saige');
+  });
+
 
 });
