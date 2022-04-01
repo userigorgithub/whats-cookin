@@ -8,6 +8,18 @@ class User {
     return splitName[0];
   }
 
+
+
+
+//to add: favories & toCook:
+//create property empty array
+//
+
+//to remove: favorites & toCook:
+//
+
+
+
 }
 
 export default User;

@@ -31,6 +31,10 @@ describe('User', () => {
 	   expect(user.singleUser.id).to.equal(1);
   });
 
+  it('should have a pantry', () => {
+	   expect(user.singleUser.pantry).to.equal(usersData[0].pantry);
+  });
+
   it('should be able to split user\'s name', () => {
 	   expect(user.returnUserFirstName()).to.equal('Saige');
   });
