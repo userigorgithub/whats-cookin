@@ -27,4 +27,8 @@ describe('User', () => {
 	expect(user.singleUser.name).to.equal('Saige O\'Kon');
   });
 
+  it('should have an id', () => {
+	expect(user.singleUser.id).to.equal(1);
+  });
+
 });
