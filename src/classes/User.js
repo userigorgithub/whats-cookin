@@ -12,7 +12,7 @@ class User {
 
   addToFavorite(recipe) {
     if (!this.favoriteRecipes.includes(recipe)) {
-      this.favoriteRecipes.push(recipe)
+      this.favoriteRecipes.push(recipe);
     }
   }
 
@@ -27,7 +27,7 @@ class User {
 
   addToCook(recipe) {
     if (!this.recipesToCook.includes(recipe)) {
-      this.recipesToCook.push(recipe)
+      this.recipesToCook.push(recipe);
     }
   }
 
@@ -43,11 +43,16 @@ class User {
   filterFavsByTag(searchTag) {
     const filteredTags = this.favoriteRecipes.filter((recipe) =>
       recipe.tags.includes(searchTag)
-    );
+    )
     return filteredTags;
   }
 
-
+  filterFavsByName(searchName) {
+    const filteredNames = this.favoriteRecipes.filter((recipe) =>
+      recipe.name.includes(searchName)
+    )
+    return filteredNames;
+  }
 }
 
 export default User;

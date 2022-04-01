@@ -94,6 +94,19 @@ describe('User', () => {
   it('should not filter recipes in favorites by incorrect tag', () => {
     user.addToFavorite(recipe1.singleRecipe);
     user.addToFavorite(recipe2.singleRecipe);
-    expect(user.filterFavsByTag('SNACK').length).to.equal(0);
+    expect(user.filterFavsByTag('SLACK').length).to.equal(0);
+  });
+
+  it('should filter recipes in favorites by name', () => {
+    user.addToFavorite(recipe1.singleRecipe);
+    user.addToFavorite(recipe2.singleRecipe);
+    expect(user.filterFavsByName('Loaded Chocolate Chip Pudding Cookie Cups')[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
+    expect(user.filterFavsByName('Maple Dijon Apple Cider Grilled Pork Chops')[0].name).to.deep.equal('Maple Dijon Apple Cider Grilled Pork Chops');
+  });
+
+  it('should not filter recipes in favorites by incorrect name', () => {
+    user.addToFavorite(recipe1.singleRecipe);
+    user.addToFavorite(recipe2.singleRecipe);
+    expect(user.filterFavsByName('Loaded Pudding Cookie Cups')).to.deep.equal([]);
   });
 });
