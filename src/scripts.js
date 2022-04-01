@@ -38,7 +38,9 @@ const sideDish = document.getElementById("sideDish");
 const mainDish = document.getElementById("mainDish");
 const dessert = document.getElementById("dessert");
 
-const allRecipes = new RecipeRepository(recipeData).repositoryData;
+const recipesMethods = new RecipeRepository(recipeData);
+const allRecipes = recipesMethods.repositoryData;
+
 allRecipes.sort((a, b) => 0.5 - Math.random());
 
 const displayAllRecipes = () => {
@@ -84,7 +86,6 @@ const goHome = () => {
 
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(allRecipes[selectedIndex]);
-  console.log(selectedRecipe);
   hideElement(mainSection);
   pageTitle.innerText = `Is this your next meal?`;
   showElement(recipeView);
@@ -141,8 +142,11 @@ const hideElement = (element) => {
 
 const userSearch = (searchText) => {
   if (event.target.className.includes("search-input")) {
-    allRecipes.filterByTag(event.target.value);
-    allRecipes.filterByName(event.target.value);
+    console.log(
+      recipesMethods
+        .filterByTag(searchText)
+        .concat(recipesMethods.filterByName(searchText))
+    );
   } else {
     mainSection.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
@@ -159,9 +163,12 @@ backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => selectRecipe(event.target.id));
 homeButton.addEventListener("click", (e) => goHome());
 
-searchBar.addEventListener("keypress", function (e) {
+console.log(searchBar);
+searchBar.addEventListener("keyup", (e) => {
   // if (e.key === "Enter") {
-  console.log(searchBar.value);
+  //need to.lowercase()
+  //console.log(e);
+  userSearch(event.target.value);
   //}
 });
 //userSearch(searchText));
