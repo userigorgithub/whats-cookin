@@ -1,7 +1,8 @@
 import "./styles.css";
 import apiCalls from "./apiCalls";
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import "./images/turing-logo.png";
+import "./images/logo.png";
+import "./images/search.png";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
@@ -53,7 +54,7 @@ const displayAllRecipes = (searchResults = allRecipes) => {
         (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
       <h3 class="recipe-name">${recipe.name}</h3>
       <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
-      <section class="recipe-actions"
+      <section class="recipe-actions">
         <button class="recipe-action-buttons" id="addToCook">
           To Cook
         </button>
