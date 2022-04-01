@@ -55,7 +55,7 @@ const displayAllRecipes = (searchResults = allRecipes) => {
       <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
       <section class="recipe-actions"
         <button class="recipe-action-buttons" id="addToCook">
-          Add to Cook
+          To Cook
         </button>
         <button class="recipe-action-buttons" id="addFavorite">
           Favorite
