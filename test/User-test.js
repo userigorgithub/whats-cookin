@@ -48,7 +48,7 @@ describe('User', () => {
 	  expect(user.favoriteRecipes[0]).to.equal(recipeData[0]);
   });
 
-  it('should not be able to have duplicate recipe', () => {
+  it('should not be able to have duplicate recipe in favorites', () => {
     user.addToFavorite(recipe.singleRecipe);
 	  expect(user.favoriteRecipes.length).to.equal(1);
   });
@@ -58,12 +58,12 @@ describe('User', () => {
 	  expect(user.favoriteRecipes.includes(recipeData[0])).to.equal(false);
   });
 
-  it('should not be able to delete recipe that is not in an array', () => {
+  it('should not be able to delete recipe that is not in an array in favorites', () => {
     user.deleteFromFavorites(45454545);
 	  expect(user.favoriteRecipes[0]).to.deep.equal(recipeData[0]);
   });
 
-  it('should be able to add to want to cook a recipe', () => {
+  it('should be able to add to want-to-cook a recipe', () => {
 	  expect(user.recipesToCook[0]).to.equal(recipeData[0]);
   });
 
@@ -72,6 +72,15 @@ describe('User', () => {
     expect(user.recipesToCook.length).to.equal(1);
   });
 
+  it('should be able to delete want-to-cook recipe', () => {
+    user.deleteFromCook(recipeData[0].id);
+	  expect(user.recipesToCook.includes(recipeData[0])).to.equal(false);
+  });
+
+  it('should not be able to delete recipe that is not in an array in want-to-cook', () => {
+    user.deleteFromCook(45454545);
+	  expect(user.recipesToCook[0]).to.deep.equal(recipeData[0]);
+  });
 
 
 });

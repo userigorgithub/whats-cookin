@@ -30,6 +30,17 @@ class User {
       this.recipesToCook.push(recipe)
     }
   }
+
+  deleteFromCook(id) {
+    const targetIndex = this.recipesToCook.find((toCookRecipe) => {
+      return toCookRecipe.id === id;
+    })
+    if (targetIndex) {
+      this.recipesToCook.splice(this.recipesToCook.indexOf(targetIndex),1);
+    }
+  }
+
+
 }
 
 
