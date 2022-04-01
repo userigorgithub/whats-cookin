@@ -43,10 +43,10 @@ const allRecipes = recipesMethods.repositoryData;
 
 allRecipes.sort((a, b) => 0.5 - Math.random());
 
-const displayAllRecipes = () => {
+const displayAllRecipes = (searchResults = allRecipes) => {
   boxOfRecipes.innerHTML = "";
 
-  let showInDom = allRecipes
+  let showInDom = searchResults
     .filter((recipe, index) => index <= 2)
     .map(
       (recipe, mapIndex) =>
@@ -142,20 +142,16 @@ const hideElement = (element) => {
 
 const userSearch = (searchText) => {
   if (event.target.className.includes("search-input")) {
-    console.log(
-      recipesMethods
-        .filterByTag(searchText)
-        .concat(recipesMethods.filterByName(searchText))
-    );
+    var searchResults = recipesMethods
+      .filterByTag(searchText)
+      .concat(recipesMethods.filterByName(searchText));
   } else {
     mainSection.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
-  //send searchBar.value into userSearch
-  //params args
-  //how to reference
+  console.log(searchResults);
+  displayAllRecipes(searchResults);
 };
-//
 
 window.addEventListener("load", (e) => displayAllRecipes());
 forwardButton.addEventListener("click", (e) => shiftForward());
@@ -165,9 +161,6 @@ homeButton.addEventListener("click", (e) => goHome());
 
 console.log(searchBar);
 searchBar.addEventListener("keyup", (e) => {
-  // if (e.key === "Enter") {
-  //need to.lowercase()
-  //console.log(e);
   userSearch(event.target.value);
   //}
 });
