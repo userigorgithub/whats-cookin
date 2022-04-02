@@ -89,6 +89,37 @@ const goHome = () => {
   hideElement(recipeView);
   showElement(mainSection);
   pageTitle.innerText = `Let's Find a Recipe!`;
+  displayAllRecipes()
+  searchBar.value = ""
+};
+
+const goToFavorites = () => {
+  showElement(homeButton);
+  hideElement(recipeView);
+  showElement(mainSection);
+  // searchBar.value = "";
+  currentRecipes = randomUser.favoriteRecipes
+  if(currentRecipes.length) {
+    pageTitle.innerText = `Your Favorite Recipes!`
+  } else {
+    pageTitle.innerText = `You Haven't Selected Any Favorites!`;
+  }
+  displayAllRecipes(currentRecipes);
+};
+
+const goToWantToCook = () => {
+  showElement(homeButton);
+  hideElement(recipeView);
+  showElement(mainSection);
+  // searchBar.value = "";
+  pageTitle.innerText = `Your Recipes To Cook!`;
+  currentRecipes = randomUser.recipesToCook
+  if(currentRecipes.length) {
+    pageTitle.innerText = `Your Recipes To Cook!`
+  } else {
+    pageTitle.innerText = `You Don't Have Any Recipes To Cook!`;
+  }
+  displayAllRecipes(currentRecipes);
 };
 
 const selectRecipe = (selectedIndex) => {
@@ -138,14 +169,22 @@ const hideElement = (element) => {
 };
 
 const userSearch = (searchText) => {
+  console.log(currentRecipes);
   if (event.target.className.includes("search-input")) {
     currentRecipes = allRecipes
       .filterByTag(searchText)
       .concat(allRecipes.filterByName(searchText));
-  } else {
-    mainSection.innerText =
-      "Sorry, we couldn't find what you're looking for, please try again.";
   }
+
+  if(searchText === "") {
+    pageTitle.innerText = `Let's find a recipe 222!`
+  } else if(currentRecipes.length){
+    pageTitle.innerText = `Here are your results for ${searchText}`
+  } else {
+    pageTitle.innerText =
+    "Sorry, we couldn't find what you're looking for, please try again.";
+  }
+
   displayAllRecipes(currentRecipes);
 };
 
@@ -162,17 +201,8 @@ boxOfRecipes.addEventListener("click", (e) => {
   }
   if (event.target.className === "to-cook-buttons") {
     toggleToCook(allRecipes.repositoryData[event.target.id]);
-
-    // //CONDIOTIONAL if includes, do delete, if not , add to cook ?????
-    // randomUser.deleteFromCook(allRecipes[event.target.id]);
-    // //if its able to delete it, break the loop?
-    // randomUser.addToCook(allRecipes[event.target.id]);
-    // console.log(randomUser);
-    // console.log("Cond to cook is working");
-    // console.log(event.target.id);
   }
   if (event.target.className === "favorites-buttons") {
-    // randomUser.addToFavorite(allRecipes[event.target.id]);
     toggleFavorites(allRecipes.repositoryData[event.target.id]);
     console.log("fave user", randomUser);
     console.log("2nd faves Cond is working");
@@ -200,6 +230,8 @@ const toggleFavorites = (recipe) => {
 };
 
 homeButton.addEventListener("click", (e) => goHome());
+favoritesButton.addEventListener("click", (e) => goToFavorites());
+wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => {
   userSearch(event.target.value);
 });
