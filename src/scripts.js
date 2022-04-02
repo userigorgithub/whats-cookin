@@ -6,12 +6,9 @@ import "./images/search.png";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
+import User from "../src/classes/User";
 import recipeData from "../src/data/recipes.js";
-
-const box1 = document.getElementById("boxOne");
-const box2 = document.getElementById("boxTwo");
-const box3 = document.getElementById("boxThree");
-const box4 = document.getElementById("boxFour");
+import usersData from "../src/data/users.js";
 
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
@@ -41,6 +38,9 @@ const dessert = document.getElementById("dessert");
 
 const recipesMethods = new RecipeRepository(recipeData);
 const allRecipes = recipesMethods.repositoryData;
+//const or let displayedRecipes , each time we sort, displayed recipes will be currently displayed recipes, either faves array, all array, or wanna cook array, or tags array, or names array
+//consider changing searchResults to displayedRecipes
+//whatever we're about to display, feed in as param to displayAllRecipes
 
 allRecipes.sort((a, b) => 0.5 - Math.random());
 
