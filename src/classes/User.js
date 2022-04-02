@@ -16,13 +16,13 @@ class User {
     }
   }
 
-  deleteFromFavorites(id) {
-    const targetIndex = this.favoriteRecipes.find((favRecipe) => {
-      return favRecipe.id === id;
-    })
-    if (targetIndex) {
-      this.favoriteRecipes.splice(this.favoriteRecipes.indexOf(targetIndex),1);
-    }
+  deleteFromFavorites(recipe) {
+    // const targetIndex = this.favoriteRecipes.find((favRecipe) => {
+    //   return favRecipe.id === id;
+    // });
+    // if (targetIndex) {
+    this.favoriteRecipes.splice(this.favoriteRecipes.indexOf(recipe), 1);
+    //}
   }
 
   addToCook(recipe) {
@@ -31,26 +31,26 @@ class User {
     }
   }
 
-  deleteFromCook(id) {
-    const targetIndex = this.recipesToCook.find((toCookRecipe) => {
-      return toCookRecipe.id === id;
-    })
-    if (targetIndex) {
-      this.recipesToCook.splice(this.recipesToCook.indexOf(targetIndex),1);
-    }
+  deleteFromCook(recipe) {
+    // const targetIndex = this.recipesToCook.find((toCookRecipe) => {
+    //   return toCookRecipe.id === id;
+    // })
+    // if (targetIndex) {
+    this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
+    //}
   }
 
   filterFavsByTag(searchTag) {
     const filteredTags = this.favoriteRecipes.filter((recipe) =>
       recipe.tags.includes(searchTag)
-    )
+    );
     return filteredTags;
   }
 
   filterFavsByName(searchName) {
     const filteredNames = this.favoriteRecipes.filter((recipe) =>
       recipe.name.includes(searchName)
-    )
+    );
     return filteredNames;
   }
 }

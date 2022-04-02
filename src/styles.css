@@ -113,7 +113,8 @@ h1 {
   border: none;
 }
 
-.recipe-action-buttons {
+.to-cook-buttons,
+.favorites-buttons {
   border-radius: 8%;
   color: #344443;
   cursor: pointer;

@@ -6,20 +6,20 @@ import "./images/search.png";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
+import User from "../src/classes/User";
 import recipeData from "../src/data/recipes.js";
-
-const box1 = document.getElementById("boxOne");
-const box2 = document.getElementById("boxTwo");
-const box3 = document.getElementById("boxThree");
-const box4 = document.getElementById("boxFour");
+import usersData from "../src/data/users.js";
 
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
 const pageTitle = document.querySelector(".page-title-section");
+const welcomeUser = document.querySelector(".user-welcome");
 
 const forwardButton = document.getElementById("goForward");
 const backwardButton = document.getElementById("goBackward");
+
 const boxOfRecipes = document.querySelector(".box-of-recipes");
+const recipeBoxes = document.querySelector("recipe-boxes");
 const recipeName = document.querySelector(".recipe-name");
 const recipeImage = document.querySelector(".recipe-image");
 const favoriteButton = document.getElementById("addFavorite");
@@ -41,8 +41,16 @@ const dessert = document.getElementById("dessert");
 
 const recipesMethods = new RecipeRepository(recipeData);
 const allRecipes = recipesMethods.repositoryData;
+//const or let displayedRecipes , each time we sort, displayed recipes will be currently displayed recipes, either faves array, all array, or wanna cook array, or tags array, or names array
+//consider changing searchResults to displayedRecipes
+//whatever we're about to display, feed in as param to displayAllRecipes
 
 allRecipes.sort((a, b) => 0.5 - Math.random());
+
+const randomUser = new User(
+  usersData[Math.floor(Math.random() * usersData.length)]
+);
+console.log(randomUser);
 
 const displayAllRecipes = (searchResults = allRecipes) => {
   boxOfRecipes.innerHTML = "";
@@ -55,10 +63,10 @@ const displayAllRecipes = (searchResults = allRecipes) => {
       <h3 class="recipe-name">${recipe.name}</h3>
       <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
       <section class="recipe-actions">
-        <button class="recipe-action-buttons" id="addToCook">
+        <button class="to-cook-buttons" id=${mapIndex}>
           To Cook
         </button>
-        <button class="recipe-action-buttons" id="addFavorite">
+        <button class="favorites-buttons" id=${mapIndex}>
           Favorite
         </button>
       </section>
@@ -101,10 +109,10 @@ const selectRecipe = (selectedIndex) => {
       selectedRecipe.singleRecipe.image
     }" alt="recipe image" />
     <section class="recipe-actions">
-      <button class="recipe-action-buttons" id="addToCook">
+      <button class="to-cook-buttons" id=${selectedIndex}>
         Add to Cook
       </button>
-      <button class="recipe-action-buttons" id="addFavorite">
+      <button class="favorites-buttons" id=${selectedIndex}>
         Favorite
       </button>
     </section>
@@ -120,18 +128,6 @@ const selectRecipe = (selectedIndex) => {
       </section>
     </section>
     `;
-  // when clicking a recipe
-  //how do we listen to the recipes? which of the three?
-
-  //if image that was clicked on, includes this id in the same object, return entire object
-
-  //we need to access the instructions and ingredients
-  //make a new Recipe instance?
-
-  // we need to know which box was clicked as well
-  //we need to diplay the calculated cost
-  //this is in
-  //css with the bottom section as well
 };
 const showElement = (element) => {
   element.classList.remove("hidden");
@@ -150,19 +146,60 @@ const userSearch = (searchText) => {
     mainSection.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
-  console.log(searchResults);
   displayAllRecipes(searchResults);
 };
 
-window.addEventListener("load", (e) => displayAllRecipes());
+window.addEventListener("load", (e) => {
+  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  displayAllRecipes();
+});
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
-boxOfRecipes.addEventListener("click", (e) => selectRecipe(event.target.id));
-homeButton.addEventListener("click", (e) => goHome());
+boxOfRecipes.addEventListener("click", (e) => {
+  console.log("recipe boxes target", event.target);
+  if (event.target.className === "recipe-image") {
+    selectRecipe(event.target.id);
+  }
+  if (event.target.className === "to-cook-buttons") {
+    toggleToCook(allRecipes[event.target.id]);
 
-console.log(searchBar);
+    // //CONDIOTIONAL if includes, do delete, if not , add to cook ?????
+    // randomUser.deleteFromCook(allRecipes[event.target.id]);
+    // //if its able to delete it, break the loop?
+    // randomUser.addToCook(allRecipes[event.target.id]);
+    // console.log(randomUser);
+    // console.log("Cond to cook is working");
+    // console.log(event.target.id);
+  }
+  if (event.target.className === "favorites-buttons") {
+    // randomUser.addToFavorite(allRecipes[event.target.id]);
+    toggleFavorites(allRecipes[event.target.id]);
+    console.log("fave user", randomUser);
+    console.log("2nd faves Cond is working");
+  }
+});
+
+const toggleToCook = (recipe) => {
+  console.log(randomUser.recipesToCook.includes(recipe));
+  if (randomUser.recipesToCook.includes(recipe)) {
+    randomUser.deleteFromCook(recipe);
+  } else {
+    randomUser.addToCook(recipe);
+  }
+  console.log("cook user", randomUser);
+};
+
+const toggleFavorites = (recipe) => {
+  console.log(randomUser.favoriteRecipes.includes(recipe));
+  if (randomUser.favoriteRecipes.includes(recipe)) {
+    randomUser.deleteFromFavorites(recipe);
+  } else {
+    randomUser.addToFavorite(recipe);
+  }
+  console.log("cook user", randomUser);
+};
+
+homeButton.addEventListener("click", (e) => goHome());
 searchBar.addEventListener("keyup", (e) => {
   userSearch(event.target.value);
-  //}
 });
-//userSearch(searchText));
