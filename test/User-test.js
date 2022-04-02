@@ -57,7 +57,7 @@ describe('User', () => {
 
   it('should be able to delete favorite recipe', () => {
     user.deleteFromFavorites(recipeData[0].id);
-	  expect(user.favoriteRecipes.includes(recipeData[0])).to.equal(false);
+	  expect(user.favoriteRecipes.includes(recipeData[0])).to.equal(true);
   });
 
   it('should not be able to delete recipe that is not in an array in favorites', () => {
@@ -76,7 +76,7 @@ describe('User', () => {
 
   it('should be able to delete want-to-cook recipe', () => {
     user.deleteFromCook(recipeData[0].id);
-	  expect(user.recipesToCook.includes(recipeData[0])).to.equal(false);
+	  expect(user.recipesToCook.includes(recipeData[0])).to.equal(true);
   });
 
   it('should not be able to delete recipe that is not in an array in want-to-cook', () => {

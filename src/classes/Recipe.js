@@ -15,7 +15,7 @@ class Recipe {
   }
 
   calculateRecipeCost() {
-    const totalPrice = this.singleRecipe.ingredients.reduce((acc, cur) =>{
+    const totalPrice = this.singleRecipe.ingredients.reduce((acc, cur) => {
       acc += (cur.quantity.amount * this.allIngredients.provideIngredientCostPerUnit(cur.id))
       return acc;
     }, 0);
@@ -23,7 +23,7 @@ class Recipe {
   }
 
   getInstructions() {
-    const instructions = this.singleRecipe.instructions.reduce((acc, cur) =>{
+    const instructions = this.singleRecipe.instructions.reduce((acc, cur) => {
       acc += `${cur.number}. ${cur.instruction} \n`;
       return acc;
     }, '');
