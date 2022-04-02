@@ -17,7 +17,9 @@ const welcomeUser = document.querySelector(".user-welcome");
 
 const forwardButton = document.getElementById("goForward");
 const backwardButton = document.getElementById("goBackward");
+
 const boxOfRecipes = document.querySelector(".box-of-recipes");
+const recipeBoxes = document.querySelector("recipe-boxes");
 const recipeName = document.querySelector(".recipe-name");
 const recipeImage = document.querySelector(".recipe-image");
 const favoriteButton = document.getElementById("addFavorite");
@@ -107,10 +109,10 @@ const selectRecipe = (selectedIndex) => {
       selectedRecipe.singleRecipe.image
     }" alt="recipe image" />
     <section class="recipe-actions">
-      <button class="recipe-action-buttons" id="addToCook">
+      <button class="to-cook-buttons" id=${selectedIndex}>
         Add to Cook
       </button>
-      <button class="recipe-action-buttons" id="addFavorite">
+      <button class="favorites-buttons" id=${selectedIndex}>
         Favorite
       </button>
     </section>
@@ -154,24 +156,48 @@ window.addEventListener("load", (e) => {
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => {
+  console.log("recipe boxes target", event.target);
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
   }
   if (event.target.className === "to-cook-buttons") {
-    //CONDIOTIONAL if includes, do delete, if not , add to cook ?????
-    randomUser.deleteFromCook(allRecipes[event.target.id]);
-    //if its able to delete it, break the loop?
-    randomUser.addToCook(allRecipes[event.target.id]);
-    console.log(randomUser);
-    console.log("Cond to cook is working");
-    console.log(event.target.id);
+    toggleToCook(allRecipes[event.target.id]);
+
+    // //CONDIOTIONAL if includes, do delete, if not , add to cook ?????
+    // randomUser.deleteFromCook(allRecipes[event.target.id]);
+    // //if its able to delete it, break the loop?
+    // randomUser.addToCook(allRecipes[event.target.id]);
+    // console.log(randomUser);
+    // console.log("Cond to cook is working");
+    // console.log(event.target.id);
   }
   if (event.target.className === "favorites-buttons") {
-    randomUser.addToFavorite(allRecipes[event.target.id]);
-    console.log(randomUser);
+    // randomUser.addToFavorite(allRecipes[event.target.id]);
+    toggleFavorites(allRecipes[event.target.id]);
+    console.log("fave user", randomUser);
     console.log("2nd faves Cond is working");
   }
 });
+
+const toggleToCook = (recipe) => {
+  console.log(randomUser.recipesToCook.includes(recipe));
+  if (randomUser.recipesToCook.includes(recipe)) {
+    randomUser.deleteFromCook(recipe);
+  } else {
+    randomUser.addToCook(recipe);
+  }
+  console.log("cook user", randomUser);
+};
+
+const toggleFavorites = (recipe) => {
+  console.log(randomUser.favoriteRecipes.includes(recipe));
+  if (randomUser.favoriteRecipes.includes(recipe)) {
+    randomUser.deleteFromFavorites(recipe);
+  } else {
+    randomUser.addToFavorite(recipe);
+  }
+  console.log("cook user", randomUser);
+};
 
 homeButton.addEventListener("click", (e) => goHome());
 searchBar.addEventListener("keyup", (e) => {
