@@ -126,18 +126,6 @@ const selectRecipe = (selectedIndex) => {
       </section>
     </section>
     `;
-  // when clicking a recipe
-  //how do we listen to the recipes? which of the three?
-
-  //if image that was clicked on, includes this id in the same object, return entire object
-
-  //we need to access the instructions and ingredients
-  //make a new Recipe instance?
-
-  // we need to know which box was clicked as well
-  //we need to diplay the calculated cost
-  //this is in
-  //css with the bottom section as well
 };
 const showElement = (element) => {
   element.classList.remove("hidden");
@@ -166,11 +154,11 @@ window.addEventListener("load", (e) => {
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => {
-  // console.log(event.target.id);
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
   }
   if (event.target.className === "to-cook-buttons") {
+    //CONDIOTIONAL if includes, do delete, if not , add to cook ?????
     randomUser.deleteFromCook(allRecipes[event.target.id]);
     //if its able to delete it, break the loop?
     randomUser.addToCook(allRecipes[event.target.id]);
