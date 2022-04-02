@@ -39,23 +39,19 @@ const sideDish = document.getElementById("sideDish");
 const mainDish = document.getElementById("mainDish");
 const dessert = document.getElementById("dessert");
 
-const recipesMethods = new RecipeRepository(recipeData);
-const allRecipes = recipesMethods.repositoryData;
-//const or let displayedRecipes , each time we sort, displayed recipes will be currently displayed recipes, either faves array, all array, or wanna cook array, or tags array, or names array
-//consider changing searchResults to displayedRecipes
-//whatever we're about to display, feed in as param to displayAllRecipes
+const allRecipes = new RecipeRepository(recipeData);
+allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
 
-allRecipes.sort((a, b) => 0.5 - Math.random());
+let currentRecipes  = allRecipes.repositoryData;
 
 const randomUser = new User(
   usersData[Math.floor(Math.random() * usersData.length)]
 );
-console.log(randomUser);
 
-const displayAllRecipes = (searchResults = allRecipes) => {
+const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
   boxOfRecipes.innerHTML = "";
 
-  let showInDom = searchResults
+  let showInDom = currentRecipes
     .filter((recipe, index) => index <= 2)
     .map(
       (recipe, mapIndex) =>
@@ -75,26 +71,61 @@ const displayAllRecipes = (searchResults = allRecipes) => {
 };
 
 const shiftForward = () => {
-  allRecipes.push(allRecipes[0]);
-  allRecipes.shift();
-  displayAllRecipes();
+  console.log(currentRecipes);
+  currentRecipes.push(currentRecipes[0]);
+  currentRecipes.shift();
+  displayAllRecipes(currentRecipes);
 };
 
 const shiftBackward = () => {
-  allRecipes.unshift(allRecipes[allRecipes.length - 1]);
-  allRecipes.pop();
-  displayAllRecipes();
+  currentRecipes.unshift(currentRecipes[currentRecipes.length - 1]);
+  currentRecipes.pop();
+  displayAllRecipes(currentRecipes);
 };
 
 const goHome = () => {
+  currentRecipes = allRecipes.repositoryData;
   hideElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
   pageTitle.innerText = `Let's Find a Recipe!`;
+  displayAllRecipes(currentRecipes)
+  searchBar.value = ""
+};
+
+const goToFavorites = () => {
+  showElement(homeButton);
+  hideElement(recipeView);
+  showElement(mainSection);
+  searchBar.placeHolder = 'Search Favorite Recipes';
+  currentRecipes = randomUser.favoriteRecipes
+  if(currentRecipes.length) {
+    pageTitle.innerText = `Your Favorite Recipes!`
+  } else {
+    pageTitle.innerText = `You Haven't Selected Any Favorites!`;
+  }
+  displayAllRecipes(currentRecipes);
+};
+
+const goToWantToCook = () => {
+  showElement(homeButton);
+  hideElement(recipeView);
+  showElement(mainSection);
+  // searchBar.value = 'Search Recipes To Cook';
+  // pageTitle.innerText = `Your Recipes To Cook!`;
+  currentRecipes = randomUser.recipesToCook
+  if(currentRecipes.length) {
+    pageTitle.innerText = `Your Recipes To Cook!`
+  } else {
+    pageTitle.innerText = `You Don't Have Any Recipes To Cook!`;
+  }
+  displayAllRecipes(currentRecipes);
 };
 
 const selectRecipe = (selectedIndex) => {
-  const selectedRecipe = new Recipe(allRecipes[selectedIndex]);
+
+  const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
+
   hideElement(mainSection);
   pageTitle.innerText = `Is this your next meal?`;
   showElement(recipeView);
@@ -137,16 +168,48 @@ const hideElement = (element) => {
   element.classList.add("hidden");
 };
 
-const userSearch = (searchText) => {
+// const userSearchWantToCook = (searchText) => {
+//   if (event.target.className.includes("search-input")) {
+//     currentRecipes = allRecipes
+//       .filterByTag(searchText)
+//       .concat(allRecipes.filterByName(searchText));
+//   }
+// }
+
+const userSearchFavorites = (searchText) => {
   if (event.target.className.includes("search-input")) {
-    var searchResults = recipesMethods
-      .filterByTag(searchText)
-      .concat(recipesMethods.filterByName(searchText));
-  } else {
-    mainSection.innerText =
-      "Sorry, we couldn't find what you're looking for, please try again.";
+    currentRecipes = randomUser
+      .filterFavsByTag(searchText)
+      .concat(randomUser.filterFavsByName(searchText));
   }
-  displayAllRecipes(searchResults);
+  if(searchText === "") {
+    pageTitle.innerText = `Let's Look at Your Favorites 222!`
+  } else if(currentRecipes.length){
+    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites`
+  } else {
+    pageTitle.innerText =
+    "Sorry, we couldn't find what you're looking for, please try again.";
+  }
+  displayAllRecipes(currentRecipes);
+}
+
+  const userSearchAllRecipes = (searchText) => {
+    if (event.target.className.includes("search-input")) {
+      currentRecipes = allRecipes
+        .filterByTag(searchText)
+        .concat(allRecipes.filterByName(searchText));
+    }
+
+  if(searchText === "") {
+    pageTitle.innerText = `Let's find a recipe 222!`
+  } else if(currentRecipes.length){
+    pageTitle.innerText = `Here are your results for ${searchText}`
+  } else {
+    pageTitle.innerText =
+    "Sorry, we couldn't find what you're looking for, please try again.";
+  }
+
+  displayAllRecipes(currentRecipes);
 };
 
 window.addEventListener("load", (e) => {
@@ -156,50 +219,42 @@ window.addEventListener("load", (e) => {
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => {
-  console.log("recipe boxes target", event.target);
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
   }
   if (event.target.className === "to-cook-buttons") {
-    toggleToCook(allRecipes[event.target.id]);
-
-    // //CONDIOTIONAL if includes, do delete, if not , add to cook ?????
-    // randomUser.deleteFromCook(allRecipes[event.target.id]);
-    // //if its able to delete it, break the loop?
-    // randomUser.addToCook(allRecipes[event.target.id]);
-    // console.log(randomUser);
-    // console.log("Cond to cook is working");
-    // console.log(event.target.id);
+    toggleToCook(allRecipes.repositoryData[event.target.id]);
   }
   if (event.target.className === "favorites-buttons") {
-    // randomUser.addToFavorite(allRecipes[event.target.id]);
-    toggleFavorites(allRecipes[event.target.id]);
-    console.log("fave user", randomUser);
-    console.log("2nd faves Cond is working");
+    toggleFavorites(allRecipes.repositoryData[event.target.id]);
   }
 });
 
 const toggleToCook = (recipe) => {
-  console.log(randomUser.recipesToCook.includes(recipe));
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
   } else {
     randomUser.addToCook(recipe);
   }
-  console.log("cook user", randomUser);
 };
 
 const toggleFavorites = (recipe) => {
-  console.log(randomUser.favoriteRecipes.includes(recipe));
   if (randomUser.favoriteRecipes.includes(recipe)) {
     randomUser.deleteFromFavorites(recipe);
   } else {
     randomUser.addToFavorite(recipe);
   }
-  console.log("cook user", randomUser);
 };
 
 homeButton.addEventListener("click", (e) => goHome());
+favoritesButton.addEventListener("click", (e) => goToFavorites());
+wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => {
-  userSearch(event.target.value);
+  //conditional to use the correct search function
+  if(homeButton.classList.contains('hidden')){
+    userSearchAllRecipes(event.target.value)
+  } else {
+    userSearchFavorites(event.target.value)
+  }
 });
+//if home button classListcontains is hidden then searchAllRecipes
