@@ -10,7 +10,7 @@ body {
   flex-direction: column;
   margin: 0px;
   overflow: hidden;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100vw;
   border-radius: 5%;
   border: none;
@@ -113,23 +113,34 @@ h1 {
   border: none;
 }
 
+.recipe-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .to-cook-buttons,
 .favorites-buttons {
-  border-radius: 8%;
   color: #344443;
   cursor: pointer;
-  display: flex;
-  flex-direction: row;
   padding: 5%;
-  height: 75%;
-  width: 100%;
+  height: 15%;
+  width: 15%;
 }
+
+.favorites-buttons:hover {
+  transform: scale(1.1);
+}
+
+.to-cook-buttons:hover {
+  transform: scale(1.1);
+}
+
 .box-of-recipes {
   width: 80%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
 .recipe-boxes {
@@ -141,8 +152,8 @@ h1 {
   justify-content: center;
 }
 .recipe-image {
-  height: 80%;
-  width: 80%;
+  height: 210px;
+  width: 210px;
 }
 .recipe-name {
   font-size: 110%;

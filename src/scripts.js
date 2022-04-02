@@ -3,6 +3,10 @@ import apiCalls from "./apiCalls";
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/logo.png";
 import "./images/search.png";
+import "./images/add.png";
+import "./images/minus.png";
+import "./images/love.png";
+import "./images/heart.png";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
@@ -42,7 +46,7 @@ const dessert = document.getElementById("dessert");
 const allRecipes = new RecipeRepository(recipeData);
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
 
-let currentRecipes  = allRecipes.repositoryData;
+let currentRecipes = allRecipes.repositoryData;
 
 const randomUser = new User(
   usersData[Math.floor(Math.random() * usersData.length)]
@@ -57,14 +61,12 @@ const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
       (recipe, mapIndex) =>
         (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
       <h3 class="recipe-name">${recipe.name}</h3>
-      <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
+      <section class="recipe-image-holder"></section>
+        <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
       <section class="recipe-actions">
-        <button class="to-cook-buttons" id=${mapIndex}>
-          To Cook
-        </button>
-        <button class="favorites-buttons" id=${mapIndex}>
-          Favorite
-        </button>
+        <img class="favorites-buttons" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
+        <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="plus-icon"/>
+
       </section>
     </section>`)
     );
@@ -89,18 +91,18 @@ const goHome = () => {
   hideElement(recipeView);
   showElement(mainSection);
   pageTitle.innerText = `Let's Find a Recipe!`;
-  displayAllRecipes(currentRecipes)
-  searchBar.value = ""
+  displayAllRecipes(currentRecipes);
+  searchBar.value = "";
 };
 
 const goToFavorites = () => {
   showElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
-  searchBar.placeHolder = 'Search Favorite Recipes';
-  currentRecipes = randomUser.favoriteRecipes
-  if(currentRecipes.length) {
-    pageTitle.innerText = `Your Favorite Recipes!`
+  searchBar.placeHolder = "Search Favorite Recipes";
+  currentRecipes = randomUser.favoriteRecipes;
+  if (currentRecipes.length) {
+    pageTitle.innerText = `Your Favorite Recipes!`;
   } else {
     pageTitle.innerText = `You Haven't Selected Any Favorites!`;
   }
@@ -113,9 +115,9 @@ const goToWantToCook = () => {
   showElement(mainSection);
   // searchBar.value = 'Search Recipes To Cook';
   // pageTitle.innerText = `Your Recipes To Cook!`;
-  currentRecipes = randomUser.recipesToCook
-  if(currentRecipes.length) {
-    pageTitle.innerText = `Your Recipes To Cook!`
+  currentRecipes = randomUser.recipesToCook;
+  if (currentRecipes.length) {
+    pageTitle.innerText = `Your Recipes To Cook!`;
   } else {
     pageTitle.innerText = `You Don't Have Any Recipes To Cook!`;
   }
@@ -123,7 +125,6 @@ const goToWantToCook = () => {
 };
 
 const selectRecipe = (selectedIndex) => {
-
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
 
   hideElement(mainSection);
@@ -182,31 +183,31 @@ const userSearchFavorites = (searchText) => {
       .filterFavsByTag(searchText)
       .concat(randomUser.filterFavsByName(searchText));
   }
-  if(searchText === "") {
-    pageTitle.innerText = `Let's Look at Your Favorites 222!`
-  } else if(currentRecipes.length){
-    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites`
+  if (searchText === "") {
+    pageTitle.innerText = `Let's Look at Your Favorites 222!`;
+  } else if (currentRecipes.length) {
+    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites`;
   } else {
     pageTitle.innerText =
-    "Sorry, we couldn't find what you're looking for, please try again.";
+      "Sorry, we couldn't find what you're looking for, please try again.";
   }
   displayAllRecipes(currentRecipes);
-}
+};
 
-  const userSearchAllRecipes = (searchText) => {
-    if (event.target.className.includes("search-input")) {
-      currentRecipes = allRecipes
-        .filterByTag(searchText)
-        .concat(allRecipes.filterByName(searchText));
-    }
+const userSearchAllRecipes = (searchText) => {
+  if (event.target.className.includes("search-input")) {
+    currentRecipes = allRecipes
+      .filterByTag(searchText)
+      .concat(allRecipes.filterByName(searchText));
+  }
 
-  if(searchText === "") {
-    pageTitle.innerText = `Let's find a recipe 222!`
-  } else if(currentRecipes.length){
-    pageTitle.innerText = `Here are your results for ${searchText}`
+  if (searchText === "") {
+    pageTitle.innerText = `Let's find a recipe 222!`;
+  } else if (currentRecipes.length) {
+    pageTitle.innerText = `Here are your results for ${searchText}`;
   } else {
     pageTitle.innerText =
-    "Sorry, we couldn't find what you're looking for, please try again.";
+      "Sorry, we couldn't find what you're looking for, please try again.";
   }
 
   displayAllRecipes(currentRecipes);
@@ -251,10 +252,10 @@ favoritesButton.addEventListener("click", (e) => goToFavorites());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => {
   //conditional to use the correct search function
-  if(homeButton.classList.contains('hidden')){
-    userSearchAllRecipes(event.target.value)
+  if (homeButton.classList.contains("hidden")) {
+    userSearchAllRecipes(event.target.value);
   } else {
-    userSearchFavorites(event.target.value)
+    userSearchFavorites(event.target.value);
   }
 });
 //if home button classListcontains is hidden then searchAllRecipes
