@@ -164,6 +164,8 @@ h1 {
 .instructions {
   height: 60%;
   padding: 5%;
+  overflow-y: scroll;
+  scroll-behavior: auto;
 }
 
 .ingredients {
