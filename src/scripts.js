@@ -97,7 +97,7 @@ const goToFavorites = () => {
   showElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
-  // searchBar.value = 'Search Favorite Recipes';
+  searchBar.placeHolder = 'Search Favorite Recipes';
   currentRecipes = randomUser.favoriteRecipes
   if(currentRecipes.length) {
     pageTitle.innerText = `Your Favorite Recipes!`
@@ -251,11 +251,10 @@ favoritesButton.addEventListener("click", (e) => goToFavorites());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => {
   //conditional to use the correct search function
-  console.log(homeButton.classList.contains('hidden'))
   if(homeButton.classList.contains('hidden')){
     userSearchAllRecipes(event.target.value)
   } else {
-    userSearchFavorites(event.target.value)}
-
-  });
+    userSearchFavorites(event.target.value)
+  }
+});
 //if home button classListcontains is hidden then searchAllRecipes
