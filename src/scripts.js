@@ -61,10 +61,10 @@ const displayAllRecipes = (searchResults = allRecipes) => {
       <h3 class="recipe-name">${recipe.name}</h3>
       <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
       <section class="recipe-actions">
-        <button class="recipe-action-buttons" id="addToCook">
+        <button class="to-cook-buttons" id=${mapIndex}>
           To Cook
         </button>
-        <button class="recipe-action-buttons" id="addFavorite">
+        <button class="favorites-buttons" id=${mapIndex}>
           Favorite
         </button>
       </section>
@@ -166,10 +166,25 @@ window.addEventListener("load", (e) => {
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => {
+  // console.log(event.target.id);
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
   }
+  if (event.target.className === "to-cook-buttons") {
+    randomUser.deleteFromCook(allRecipes[event.target.id]);
+    //if its able to delete it, break the loop?
+    randomUser.addToCook(allRecipes[event.target.id]);
+    console.log(randomUser);
+    console.log("Cond to cook is working");
+    console.log(event.target.id);
+  }
+  if (event.target.className === "favorites-buttons") {
+    randomUser.addToFavorite(allRecipes[event.target.id]);
+    console.log(randomUser);
+    console.log("2nd faves Cond is working");
+  }
 });
+
 homeButton.addEventListener("click", (e) => goHome());
 searchBar.addEventListener("keyup", (e) => {
   userSearch(event.target.value);
