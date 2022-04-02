@@ -13,6 +13,7 @@ import usersData from "../src/data/users.js";
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
 const pageTitle = document.querySelector(".page-title-section");
+const welcomeUser = document.querySelector(".user-welcome");
 
 const forwardButton = document.getElementById("goForward");
 const backwardButton = document.getElementById("goBackward");
@@ -43,6 +44,11 @@ const allRecipes = recipesMethods.repositoryData;
 //whatever we're about to display, feed in as param to displayAllRecipes
 
 allRecipes.sort((a, b) => 0.5 - Math.random());
+
+const randomUser = new User(
+  usersData[Math.floor(Math.random() * usersData.length)]
+);
+console.log(randomUser);
 
 const displayAllRecipes = (searchResults = allRecipes) => {
   boxOfRecipes.innerHTML = "";
@@ -150,11 +156,13 @@ const userSearch = (searchText) => {
     mainSection.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
-  console.log(searchResults);
   displayAllRecipes(searchResults);
 };
 
-window.addEventListener("load", (e) => displayAllRecipes());
+window.addEventListener("load", (e) => {
+  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  displayAllRecipes();
+});
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => {
@@ -165,6 +173,4 @@ boxOfRecipes.addEventListener("click", (e) => {
 homeButton.addEventListener("click", (e) => goHome());
 searchBar.addEventListener("keyup", (e) => {
   userSearch(event.target.value);
-  //}
 });
-//userSearch(searchText));
