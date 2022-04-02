@@ -26,11 +26,17 @@ describe('Recipe Repository', () => {
   it('should filter recipes by tag', () => {
     expect(recipeRepository.filterByTag('side dish').length).to.equal(22);
     expect(recipeRepository.filterByTag('main dish').length).to.equal(12);
-    expect(recipeRepository.filterByTag('MAIN DISH').length).to.equal(0);
+  });
+
+  it('should not filter recipes by incorrect tag', () => {
+    expect(recipeRepository.filterByTag('MEAN DISH').length).to.equal(0);
   });
 
   it('should filter recipes by name', () => {
     expect(recipeRepository.filterByName('Loaded Chocolate Chip Pudding Cookie Cups')[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
-    expect(recipeRepository.filterByName('Chocolate Chip Cookie Cups')).to.deep.equal([]);
+  });
+
+  it('should not filter recipes by incorrect name', () => {
+    expect(recipeRepository.filterByName('Chocolate Chip Cookie Cake')).to.deep.equal([]);
   });
 });

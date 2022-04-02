@@ -1,10 +1,10 @@
-import ingredientsData from "../data/ingredients.js";
-import Ingredient from "../classes/Ingredient";
+import ingredientsData from '../data/ingredients.js';
+import Ingredient from '../classes/Ingredient';
 
 class Recipe {
   constructor(singleRecipe) {
     this.singleRecipe = singleRecipe;
-    this.allIngredients = new Ingredient;
+    this.allIngredients = new Ingredient();
   }
 
   storeIngredientNames() {
@@ -15,28 +15,20 @@ class Recipe {
   }
 
   calculateRecipeCost() {
-    const totalPrice = this.singleRecipe.ingredients.reduce((acc,cur) =>{
-
+    const totalPrice = this.singleRecipe.ingredients.reduce((acc, cur) => {
       acc += (cur.quantity.amount * this.allIngredients.provideIngredientCostPerUnit(cur.id))
-      return acc
-    },0)
-    return `$${(totalPrice / 100).toFixed(2)} USD`
+      return acc;
+    }, 0);
+    return `$${(totalPrice / 100).toFixed(2)} USD`;
   }
 
   getInstructions() {
-    const instructions = this.singleRecipe.instructions.reduce((acc,cur) =>{
-      acc += `${cur.number}. ${cur.instruction} \n`
-      return acc
-    },"")
-
-    return instructions
+    const instructions = this.singleRecipe.instructions.reduce((acc, cur) => {
+      acc += `${cur.number}. ${cur.instruction} \n`;
+      return acc;
+    }, '');
+    return instructions;
   }
-
-
-
 }
+
 export default Recipe;
-
-
-//1. instructions
-//2. more instruction
