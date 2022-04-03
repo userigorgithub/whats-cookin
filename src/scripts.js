@@ -1,3 +1,5 @@
+
+
 import "./styles.css";
 import apiCalls from "./apiCalls";
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
@@ -33,6 +35,7 @@ const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
 
 //---------Global Variables----------//
+
 const allRecipes = new RecipeRepository(recipeData);
 allRecipes.addDefaultPreferences();
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
@@ -44,6 +47,8 @@ const randomUser = new User(
 );
 
 //----------Functions----------//
+
+
 const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
   boxOfRecipes.innerHTML = "";
 
@@ -299,4 +304,5 @@ searchBar.addEventListener("keyup", (e) => {
     userSearchFavorites(event.target.value);
   }
 });
+
 //if home button classListcontains is hidden then searchAllRecipes
