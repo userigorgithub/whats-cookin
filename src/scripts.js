@@ -14,6 +14,7 @@ import User from "../src/classes/User";
 import recipeData from "../src/data/recipes.js";
 import usersData from "../src/data/users.js";
 
+//----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
 const pageTitle = document.querySelector(".page-title-section");
@@ -23,11 +24,12 @@ const forwardButton = document.getElementById("goForward");
 const backwardButton = document.getElementById("goBackward");
 
 const boxOfRecipes = document.querySelector(".box-of-recipes");
-const recipeBoxes = document.querySelector("recipe-boxes");
-const recipeName = document.querySelector(".recipe-name");
-const recipeImage = document.querySelector(".recipe-image");
+// const recipeBoxes = document.querySelector("recipe-boxes");
+//const recipeName = document.querySelector(".recipe-name");
+//const recipeImage = document.querySelector(".recipe-image");
 const favoriteButton = document.getElementById("addFavorite");
 const addToCookButton = document.getElementById("addToCook");
+// const addToCookButtons = document.querySelectorAll(".to-cook-buttons");
 
 const homeButton = document.getElementById("homeButton");
 const favoritesButton = document.getElementById("favoritesButton");
@@ -39,10 +41,11 @@ const costRecipe = document.querySelector(".cost-recipe");
 
 const searchBar = document.getElementById("search");
 
-const sideDish = document.getElementById("sideDish");
-const mainDish = document.getElementById("mainDish");
-const dessert = document.getElementById("dessert");
+//const sideDish = document.getElementById("sideDish");
+//const mainDish = document.getElementById("mainDish");
+//const dessert = document.getElementById("dessert");
 
+//---------Globla Variables----------//
 const allRecipes = new RecipeRepository(recipeData);
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
 
@@ -52,6 +55,7 @@ const randomUser = new User(
   usersData[Math.floor(Math.random() * usersData.length)]
 );
 
+//----------Functions----------//
 const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
   boxOfRecipes.innerHTML = "";
 
@@ -66,7 +70,6 @@ const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
       <section class="recipe-actions">
         <img class="favorites-buttons" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
         <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="plus-icon"/>
-
       </section>
     </section>`)
     );
@@ -169,14 +172,6 @@ const hideElement = (element) => {
   element.classList.add("hidden");
 };
 
-// const userSearchWantToCook = (searchText) => {
-//   if (event.target.className.includes("search-input")) {
-//     currentRecipes = allRecipes
-//       .filterByTag(searchText)
-//       .concat(allRecipes.filterByName(searchText));
-//   }
-// }
-
 const userSearchFavorites = (searchText) => {
   if (event.target.className.includes("search-input")) {
     currentRecipes = randomUser
@@ -209,33 +204,25 @@ const userSearchAllRecipes = (searchText) => {
     pageTitle.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
-
   displayAllRecipes(currentRecipes);
 };
-
-window.addEventListener("load", (e) => {
-  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-  displayAllRecipes();
-});
-forwardButton.addEventListener("click", (e) => shiftForward());
-backwardButton.addEventListener("click", (e) => shiftBackward());
-boxOfRecipes.addEventListener("click", (e) => {
-  if (event.target.className === "recipe-image") {
-    selectRecipe(event.target.id);
-  }
-  if (event.target.className === "to-cook-buttons") {
-    toggleToCook(allRecipes.repositoryData[event.target.id]);
-  }
-  if (event.target.className === "favorites-buttons") {
-    toggleFavorites(allRecipes.repositoryData[event.target.id]);
-  }
-});
-
-const toggleToCook = (recipe) => {
+//-----------------------------------------------------------------------------
+const toggleToCook = (recipe, id) => {
+  console.log(id);
+  const addToCookButtons = document.querySelectorAll(".to-cook-buttons");
+  //adds qs when function fires
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
+    console.log("click, delete it");
+    addToCookButtons[id].src = "./images/add.png";
+    // s = class
+    console.log("addToCookButtons:", addToCookButtons);
   } else {
     randomUser.addToCook(recipe);
+    console.log(addToCookButton);
+    addToCookButtons[id].src = "./images/minus.png";
+    //s = class
+    console.log("addToCookButtons:", addToCookButtons);
   }
 };
 
@@ -246,6 +233,29 @@ const toggleFavorites = (recipe) => {
     randomUser.addToFavorite(recipe);
   }
 };
+
+//----------Event Listeners----------//
+window.addEventListener("load", (e) => {
+  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  displayAllRecipes();
+});
+
+forwardButton.addEventListener("click", (e) => shiftForward());
+backwardButton.addEventListener("click", (e) => shiftBackward());
+boxOfRecipes.addEventListener("click", (e) => {
+  if (event.target.className === "recipe-image") {
+    selectRecipe(event.target.id);
+  }
+  if (event.target.className === "to-cook-buttons") {
+    toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
+  }
+  if (event.target.className === "favorites-buttons") {
+    toggleFavorites(
+      allRecipes.repositoryData[event.target.id],
+      event.target.id
+    );
+  }
+});
 
 homeButton.addEventListener("click", (e) => goHome());
 favoritesButton.addEventListener("click", (e) => goToFavorites());
