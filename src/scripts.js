@@ -104,6 +104,7 @@ const goToFavorites = () => {
   showElement(mainSection);
   searchBar.placeHolder = "Search Favorite Recipes";
   currentRecipes = randomUser.favoriteRecipes;
+  //should also keep the same heart or plus as the main page
   if (currentRecipes.length) {
     pageTitle.innerText = `Your Favorite Recipes!`;
   } else {
@@ -119,6 +120,7 @@ const goToWantToCook = () => {
   // searchBar.value = 'Search Recipes To Cook';
   // pageTitle.innerText = `Your Recipes To Cook!`;
   currentRecipes = randomUser.recipesToCook;
+  //should also keep the same heart or plus as the main page
   if (currentRecipes.length) {
     pageTitle.innerText = `Your Recipes To Cook!`;
   } else {
@@ -127,6 +129,25 @@ const goToWantToCook = () => {
   displayAllRecipes(currentRecipes);
 };
 
+// const displayClicked = (currentRecipes = allRecipes.repositoryData) => {
+//   boxOfRecipes.innerHTML = "";
+//
+//   let showInDom = currentRecipes
+//     .filter((recipe, index) => index <= 2)
+//     .map(
+//       (recipe, mapIndex) =>
+//         (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
+//       <h3 class="recipe-name">${recipe.name}</h3>
+//       <section class="recipe-image-holder"></section>
+//         <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
+//       <section class="recipe-actions">
+//         <img class="favorites-buttons" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
+//         <img class="to-cook-buttons" id=${mapIndex} src="./images/minus.png" alt="minus-icon"/>
+//       </section>
+//     </section>`)
+//     );
+// };
+//-----------------------------------------
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
 
@@ -221,16 +242,20 @@ const toggleToCook = (recipe, id) => {
     randomUser.addToCook(recipe);
     console.log(addToCookButton);
     addToCookButtons[id].src = "./images/minus.png";
+    //minus needs to carry over on recipe view page as well
     //s = class
     console.log("addToCookButtons:", addToCookButtons);
   }
 };
 
-const toggleFavorites = (recipe) => {
+const toggleFavorites = (recipe, id) => {
+  const addToFavoritesButtons = document.querySelectorAll(".favorites-buttons");
   if (randomUser.favoriteRecipes.includes(recipe)) {
     randomUser.deleteFromFavorites(recipe);
+    addToFavoritesButtons[id].src = "./images/love.png";
   } else {
     randomUser.addToFavorite(recipe);
+    addToFavoritesButtons[id].src = "./images/heart.png";
   }
 };
 
