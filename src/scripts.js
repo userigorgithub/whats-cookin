@@ -110,7 +110,7 @@ const goToFavorites = () => {
   } else {
     pageTitle.innerText = `You Haven't Selected Any Favorites!`;
   }
-  displayAllRecipes(currentRecipes);
+  displayClicked(currentRecipes);
 };
 
 const goToWantToCook = () => {
@@ -126,27 +126,27 @@ const goToWantToCook = () => {
   } else {
     pageTitle.innerText = `You Don't Have Any Recipes To Cook!`;
   }
-  displayAllRecipes(currentRecipes);
+  displayClicked(currentRecipes);
 };
 
-// const displayClicked = (currentRecipes = allRecipes.repositoryData) => {
-//   boxOfRecipes.innerHTML = "";
-//
-//   let showInDom = currentRecipes
-//     .filter((recipe, index) => index <= 2)
-//     .map(
-//       (recipe, mapIndex) =>
-//         (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
-//       <h3 class="recipe-name">${recipe.name}</h3>
-//       <section class="recipe-image-holder"></section>
-//         <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
-//       <section class="recipe-actions">
-//         <img class="favorites-buttons" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
-//         <img class="to-cook-buttons" id=${mapIndex} src="./images/minus.png" alt="minus-icon"/>
-//       </section>
-//     </section>`)
-//     );
-// };
+const displayClicked = (currentRecipes = allRecipes.repositoryData) => {
+  boxOfRecipes.innerHTML = "";
+
+  let showInDom = currentRecipes
+    .filter((recipe, index) => index <= 2)
+    .map(
+      (recipe, mapIndex) =>
+        (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
+      <h3 class="recipe-name">${recipe.name}</h3>
+      <section class="recipe-image-holder"></section>
+        <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
+      <section class="recipe-actions">
+        <img class="favorites-buttons" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
+        <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="minus-icon"/>
+      </section>
+    </section>`)
+    );
+};
 //-----------------------------------------
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
@@ -179,8 +179,6 @@ const selectRecipe = (selectedIndex) => {
       <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames()}</article>
       <section class="other-recipe-info">
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost()}</article>
-        <article class="other-cost">Other Cost</article>
-        <article class="other-cost">Other Cost</article>
       </section>
     </section>
     `;
@@ -253,11 +251,23 @@ const toggleFavorites = (recipe, id) => {
   if (randomUser.favoriteRecipes.includes(recipe)) {
     randomUser.deleteFromFavorites(recipe);
     addToFavoritesButtons[id].src = "./images/love.png";
+    randomUser.favorited = false;
+    //randomUser.favorited === false
+    //create method in User class for when to display which icon
   } else {
     randomUser.addToFavorite(recipe);
+    randomUser.favorited = true;
     addToFavoritesButtons[id].src = "./images/heart.png";
   }
 };
+
+function displayIcons() {
+  if (randomUser.favorited === true) {
+    addToFavoritesButtons.src = "./images/heart.png";
+  } else {
+    addToFavoritesButtons.src = "./images/love.png";
+  }
+}
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => {

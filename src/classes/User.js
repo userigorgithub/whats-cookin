@@ -3,16 +3,18 @@ class User {
     this.singleUser = singleUser;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
+    this.favorited = true;
   }
 
   returnUserFirstName() {
-    const splitName = this.singleUser.name.split(' ');
+    const splitName = this.singleUser.name.split(" ");
     return splitName[0];
   }
 
   addToFavorite(recipe) {
     if (!this.favoriteRecipes.includes(recipe)) {
       this.favoriteRecipes.push(recipe);
+      this.favorited = true;
     }
   }
 
@@ -21,7 +23,7 @@ class User {
       if (favRecipe.id === recipe.id) {
         this.favoriteRecipes.splice(this.favoriteRecipes.indexOf(recipe), 1);
       }
-    })
+    });
   }
 
   addToCook(recipe) {
@@ -35,7 +37,7 @@ class User {
       if (favRecipe.id === recipe.id) {
         this.recipesToCook.splice(this.recipesToCook.indexOf(recipe), 1);
       }
-    })
+    });
   }
 
   filterFavsByTag(searchTag) {
