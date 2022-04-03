@@ -36,6 +36,13 @@ const searchBar = document.getElementById("search");
 
 //---------Global Variables----------//
 
+const loadFetch = () => {
+  fetchAll()
+  Promise.all(usersData,ingredientsData,recipeData)
+}
+
+loadFetch();
+
 const allRecipes = new RecipeRepository(recipeData);
 allRecipes.addDefaultPreferences();
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
