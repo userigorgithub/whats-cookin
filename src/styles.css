@@ -34,8 +34,12 @@ body {
 .fork-to-table {
 }
 .logo-image {
-  height: 35%;
-  width: 35%;
+  margin-top: 20%;
+  height: 65%;
+  width: 65%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .nav-bar {
   width: 50%;
@@ -183,7 +187,7 @@ h1 {
   padding: 5%;
 }
 .other-recipe-info {
-  height: 10%;
+  height: 13%;
   display: flex;
   justify-content: space-around;
 }
