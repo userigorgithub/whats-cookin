@@ -3,7 +3,6 @@ class User {
     this.singleUser = singleUser;
     this.favoriteRecipes = [];
     this.recipesToCook = [];
-    this.favorited = true;
   }
 
   returnUserFirstName() {
@@ -14,7 +13,6 @@ class User {
   addToFavorite(recipe) {
     if (!this.favoriteRecipes.includes(recipe)) {
       this.favoriteRecipes.push(recipe);
-      this.favorited = true;
     }
   }
 
