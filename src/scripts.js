@@ -2,7 +2,7 @@
 
 import "./styles.css";
 import apiCalls from "./apiCalls";
-import {userData, ingredientsData, recipeData, fetchAll} from "./apiCalls.js";
+import {usersData, ingredientsData, recipeData, fetchAll} from "./apiCalls.js";
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/logo.png";
 import "./images/search.png";
@@ -14,8 +14,8 @@ import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
 import User from "../src/classes/User";
-import recipeData from "../src/data/recipes.js";
-import usersData from "../src/data/users.js";
+// import recipeData from "../src/data/recipes.js";
+// import usersData from "../src/data/users.js";
 
 //----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");

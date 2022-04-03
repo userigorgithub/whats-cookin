@@ -13,9 +13,8 @@ fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients')
 
 recipeData =
 fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes')
-.then(response => response.json())
+.then(response => response.json());
 }
 
-
-
+export {fetchAll, usersData, ingredientsData, recipeData};
 console.log('I will be a fetch request!')
