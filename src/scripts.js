@@ -2,6 +2,7 @@
 
 import "./styles.css";
 import apiCalls from "./apiCalls";
+import {userData, ingredientsData, recipeData, fetchAll} from "./apiCalls.js";
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/logo.png";
 import "./images/search.png";
@@ -38,10 +39,10 @@ const searchBar = document.getElementById("search");
 
 const loadFetch = () => {
   fetchAll()
-  Promise.all(usersData,ingredientsData,recipeData)
+  Promise.all([usersData, ingredientsData, recipeData])
+  .then(data => )
 }
 
-loadFetch();
 
 const allRecipes = new RecipeRepository(recipeData);
 allRecipes.addDefaultPreferences();
