@@ -32,10 +32,11 @@ const ingredients = document.querySelector(".ingredients");
 const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
 
-//---------Globla Variables----------//
+//---------Global Variables----------//
 const allRecipes = new RecipeRepository(recipeData);
+allRecipes.addDefaultPreferences();
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
-
+console.log("line 39", allRecipes);
 let currentRecipes = allRecipes.repositoryData;
 
 const randomUser = new User(
@@ -48,18 +49,34 @@ const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
 
   let showInDom = currentRecipes
     .filter((recipe, index) => index <= 2)
-    .map(
-      (recipe, mapIndex) =>
-        (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
+    .map((recipe, mapIndex) => {
+      let heart = "hidden";
+      let love = "";
+      let add = "";
+      let minus = "hidden";
+      if (allRecipes.repositoryData[mapIndex].addedToCook) {
+        minus = "";
+        add = "hidden";
+        console.log(allRecipes.repositoryData[mapIndex]);
+      }
+      if (allRecipes.repositoryData[mapIndex].favorited) {
+        heart = "";
+        love = "hidden";
+        console.log(allRecipes.repositoryData[mapIndex]);
+      }
+      boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
       <h3 class="recipe-name">${recipe.name}</h3>
       <section class="recipe-image-holder"></section>
         <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
       <section class="recipe-actions">
-        <img class="favorites-buttons" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
-        <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="plus-icon"/>
+        <img class="favorites-buttons ${love}" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
+        <img class="favorites-buttons ${heart}" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
+        <img class="to-cook-buttons ${add}" id=${mapIndex} src="./images/add.png" alt="plus-icon"/>
+        <img class="to-cook-buttons ${minus}" id=${mapIndex} src="./images/minus.png" alt="minus-icon"/>
       </section>
-    </section>`)
-    );
+    </section>`;
+      return boxOfRecipes;
+    });
 };
 
 const shiftForward = () => {
@@ -91,46 +108,50 @@ const goToFavorites = () => {
   showElement(mainSection);
   searchBar.placeHolder = "Search Favorite Recipes";
   currentRecipes = randomUser.favoriteRecipes;
+  console.log("user faves", randomUser.favoriteRecipes);
   if (currentRecipes.length) {
     pageTitle.innerText = `Your Favorite Recipes!`;
   } else {
     pageTitle.innerText = `You Haven't Selected Any Favorites!`;
   }
-  displayClicked(currentRecipes);
+  displayAllRecipes(currentRecipes);
 };
 
 const goToWantToCook = () => {
   showElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
-  // searchBar.value = 'Search Recipes To Cook';
   currentRecipes = randomUser.recipesToCook;
   if (currentRecipes.length) {
     pageTitle.innerText = `Your Recipes To Cook!`;
   } else {
     pageTitle.innerText = `You Don't Have Any Recipes To Cook!`;
   }
-  displayClicked(currentRecipes);
+  displayAllRecipes(currentRecipes);
 };
 
-const displayClicked = (currentRecipes = allRecipes.repositoryData) => {
-  boxOfRecipes.innerHTML = "";
+// const displayClicked = (currentRecipes = allRecipes.repositoryData) => {
+//   boxOfRecipes.innerHTML = "";
+//
+//   let showInDom = currentRecipes
+//     .filter((recipe, index) => index <= 2)
+//     .map(
+//       (recipe, mapIndex) =>
+//         (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
+//       <h3 class="recipe-name">${recipe.name}</h3>
+//       <section class="recipe-image-holder"></section>
+//         <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
+//       <section class="recipe-actions">
+//         <img class="favorites-buttons" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
+//         <img class="favorites-buttons" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
+//         <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="add-icon"/>
+//       </section>
+//         <img class="to-cook-buttons" id=${mapIndex} src="./images/minus.png" alt="minus-icon"/>
+//       </section>
+//     </section>`)
+//     );
+// };
 
-  let showInDom = currentRecipes
-    .filter((recipe, index) => index <= 2)
-    .map(
-      (recipe, mapIndex) =>
-        (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
-      <h3 class="recipe-name">${recipe.name}</h3>
-      <section class="recipe-image-holder"></section>
-        <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
-      <section class="recipe-actions">
-        <img class="favorites-buttons" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
-        <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="add-icon"/>
-      </section>
-    </section>`)
-    );
-};
 //-----------------------------------------
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
@@ -208,33 +229,35 @@ const userSearchAllRecipes = (searchText) => {
 //-----------------------------------------------------------------------------
 const toggleToCook = (recipe, id) => {
   const addToCookButtons = document.querySelectorAll(".to-cook-buttons");
+  console.log("line 224", recipe);
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
-    addToCookButtons[id].src = "./images/add.png";
+    //addToCookButtons[id].src = "./images/add.png";
+    allRecipes.repositoryData[id].addedToCook = false;
   } else {
     randomUser.addToCook(recipe);
-    addToCookButtons[id].src = "./images/minus.png";
+    //addToCookButtons[id].src = "./images/minus.png";
+    allRecipes.repositoryData[id].addedToCook = true;
+    console.log("line 233", allRecipes.repositoryData[id]);
   }
+  displayAllRecipes(currentRecipes);
 };
 
 const toggleFavorites = (recipe, id) => {
   const addToFavoritesButtons = document.querySelectorAll(".favorites-buttons");
   if (randomUser.favoriteRecipes.includes(recipe)) {
+    allRecipes.repositoryData[id].favorited = false;
     randomUser.deleteFromFavorites(recipe);
-    addToFavoritesButtons[id].src = "./images/love.png";
+    //  addToFavoritesButtons[id].src = "./images/love.png";
   } else {
+    console.log("253", recipe);
+    allRecipes.repositoryData[id].favorited = true;
+    console.log(allRecipes.repositoryData[id]);
     randomUser.addToFavorite(recipe);
-    addToFavoritesButtons[id].src = "./images/heart.png";
+    //addToFavoritesButtons[id].src = "./images/heart.png";
   }
+  displayAllRecipes(currentRecipes);
 };
-
-function displayIcons() {
-  if (randomUser.favorited === true) {
-    addToFavoritesButtons.src = "./images/heart.png";
-  } else {
-    addToFavoritesButtons.src = "./images/love.png";
-  }
-}
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => {
@@ -245,13 +268,15 @@ window.addEventListener("load", (e) => {
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) => {
+  console.log("264", event.target.className);
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
   }
-  if (event.target.className === "to-cook-buttons") {
+  if (event.target.className.includes("to-cook-buttons")) {
+    console.log("YaY condtional working");
     toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
   }
-  if (event.target.className === "favorites-buttons") {
+  if (event.target.className.includes("favorites-buttons")) {
     toggleFavorites(
       allRecipes.repositoryData[event.target.id],
       event.target.id
