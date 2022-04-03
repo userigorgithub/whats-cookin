@@ -2,8 +2,8 @@
 
 import "./styles.css";
 import apiCalls from "./apiCalls";
-import {usersData, ingredientsData, recipeData, fetchAll} from "./apiCalls.js";
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+import {fetchAll, apiUsersData, apiIngredientsData, apiRecipeData} from "./apiCalls.js";
+// An example of how you tell webpack to use an image (also need to link to it in the index.html) apiUsersData, apiIngredientsData, apiRecipeData,
 import "./images/logo.png";
 import "./images/search.png";
 import "./images/add.png";
@@ -14,8 +14,6 @@ import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
 import User from "../src/classes/User";
-// import recipeData from "../src/data/recipes.js";
-// import usersData from "../src/data/users.js";
 
 //----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");
@@ -36,23 +34,47 @@ const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
 
 //---------Global Variables----------//
-
+let recipeData, usersData, ingredientsData, currentRecipes, allRecipes;
 const loadFetch = () => {
+  console.log('scripts JS loadFetch is working')
   fetchAll()
-  Promise.all([usersData, ingredientsData, recipeData])
-  .then(data => )
+  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
+  .then(data => setGlobalVariables(data));
 }
 
+const setGlobalVariables = (data) => {
+usersData = data[0].usersData;
+ingredientsData = data[1].ingredientsData;
+recipeData = data[2].recipeData;
+console.log('recipe data within setglobal variables',recipeData)
 
-const allRecipes = new RecipeRepository(recipeData);
+ allRecipes = new RecipeRepository(recipeData);
 allRecipes.addDefaultPreferences();
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
 console.log("line 39", allRecipes);
-let currentRecipes = allRecipes.repositoryData;
+ currentRecipes = allRecipes.repositoryData;
 
 const randomUser = new User(
   usersData[Math.floor(Math.random() * usersData.length)]
-);
+)
+
+welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+displayAllRecipes();
+
+}
+console.log('recipe data globally',recipeData)
+
+//--------------------
+// console.log('we shoudl have recipe data here',recipeData)
+// const allRecipes = new RecipeRepository(recipeData);
+// allRecipes.addDefaultPreferences();
+// allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+// console.log("line 39", allRecipes);
+// let currentRecipes = allRecipes.repositoryData;
+//
+// const randomUser = new User(
+//   usersData[Math.floor(Math.random() * usersData.length)]
+// );
 
 //----------Functions----------//
 
@@ -278,8 +300,20 @@ const toggleFavorites = (recipe, id) => {
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => {
-  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-  displayAllRecipes();
+  loadFetch();
+  // console.log('we shoudl have recipe data here',recipeData)
+  // const allRecipes = new RecipeRepository(recipeData);
+  // allRecipes.addDefaultPreferences();
+  // allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+  // console.log("line 39", allRecipes);
+  // let currentRecipes = allRecipes.repositoryData;
+  //
+  // const randomUser = new User(
+  //   usersData[Math.floor(Math.random() * usersData.length)]
+  // );
+
+  // welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  // displayAllRecipes();
 });
 
 forwardButton.addEventListener("click", (e) => shiftForward());

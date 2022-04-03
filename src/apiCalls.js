@@ -1,20 +1,24 @@
 // Your fetch requests will live here!
-let usersData, ingredientsData, recipeData;
+let apiUsersData, apiIngredientsData, apiRecipeData;
 
 const fetchAll = () => {
 
-usersData =
+apiUsersData =
 fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users')
-.then(response => response.json());
+.then(response => response.json())
 
-ingredientsData =
+
+apiIngredientsData =
 fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients')
 .then(response => response.json());
 
-recipeData =
+apiRecipeData =
 fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes')
-.then(response => response.json());
+.then(response => response.json())
+
+
+
 }
 
-export {fetchAll, usersData, ingredientsData, recipeData};
+export {fetchAll, apiUsersData, apiIngredientsData, apiRecipeData}
 console.log('I will be a fetch request!')
