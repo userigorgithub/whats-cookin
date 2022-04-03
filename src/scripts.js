@@ -54,15 +54,16 @@ const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
       let love = "";
       let add = "";
       let minus = "hidden";
+      console.log(allRecipes.repositoryData[mapIndex]);
       if (allRecipes.repositoryData[mapIndex].addedToCook) {
         minus = "";
         add = "hidden";
-        console.log(allRecipes.repositoryData[mapIndex]);
+        // console.log(allRecipes.repositoryData[mapIndex]);
       }
       if (allRecipes.repositoryData[mapIndex].favorited) {
         heart = "";
         love = "hidden";
-        console.log(allRecipes.repositoryData[mapIndex]);
+        // console.log(allRecipes.repositoryData[mapIndex]);
       }
       boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
       <h3 class="recipe-name">${recipe.name}</h3>
@@ -245,7 +246,9 @@ const toggleToCook = (recipe, id) => {
 
 const toggleFavorites = (recipe, id) => {
   const addToFavoritesButtons = document.querySelectorAll(".favorites-buttons");
+  console.log("We are in togglefaves section");
   if (randomUser.favoriteRecipes.includes(recipe)) {
+    console.log("recipe present in faves");
     allRecipes.repositoryData[id].favorited = false;
     randomUser.deleteFromFavorites(recipe);
     //  addToFavoritesButtons[id].src = "./images/love.png";
@@ -253,10 +256,11 @@ const toggleFavorites = (recipe, id) => {
     console.log("253", recipe);
     allRecipes.repositoryData[id].favorited = true;
     console.log(allRecipes.repositoryData[id]);
-    randomUser.addToFavorite(recipe);
+    randomUser.addToFavorite(allRecipes.repositoryData[id]);
+
     //addToFavoritesButtons[id].src = "./images/heart.png";
   }
-  displayAllRecipes(currentRecipes);
+  displayAllRecipes(allRecipes.repositoryData);
 };
 
 //----------Event Listeners----------//
