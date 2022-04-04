@@ -1,16 +1,74 @@
 import { expect } from 'chai';
 import Recipe from '../src/classes/Recipe';
-import recipeData from '../src/data/recipes.js';
-import ingredientsData from '../src/data/ingredients.js';
+import Ingredient from '../src/classes/Ingredient';
+// import recipeData from '../src/data/recipes.js';
+// import ingredientsData from '../src/data/ingredients.js';
 
 describe("Recipe", () => {
 
-  let recipe;
-  let recipeInstructions = '';
+  let recipeData, recipe, ingredientsData, ingredients;
+  // let recipeInstructions = '';
 
   beforeEach(() => {
 
+    recipeData = [
+      {
+        "id": 1,
+        "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+        "ingredients": [
+          {
+            "id": 1,
+            "quantity": {
+              "amount": 1.5,
+              "unit": "c"
+            }
+          },
+          {
+            "id": 2,
+            "quantity": {
+              "amount": 0.5,
+              "unit": "tsp"
+            }
+          },
+          {
+            "id": 3,
+            "quantity": {
+              "amount": 1,
+              "unit": "large"
+            },
+          }
+        ],
+        "instructions": [
+          {
+            "instruction": "Cook something.",
+            "number": 1
+          },
+        ],
+        "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+        "tags": ["antipasti", "side dish", "snack", "appetizer", "antipasto", "hor d'oeuvre"]
+      }
+    ]
+
+    ingredientsData = [
+      {
+        id: 1,
+        name: "wheat flour",
+        estimatedCostInCents: 142,
+      },
+      {
+        id: 2,
+        name: "bicarbonate of soda",
+        estimatedCostInCents: 582,
+      },
+      {
+        id: 3,
+        name: "eggs",
+        estimatedCostInCents: 472,
+      }
+    ]
+
     recipe = new Recipe(recipeData[0]);
+    ingredients = new Ingredient(ingredientsData);
   });
 
   it('should be a function', () => {
@@ -26,18 +84,18 @@ describe("Recipe", () => {
   });
 
   it('should determine the names of ingredients needed in a recipe', () => {
-    expect(recipe.storeIngredientNames()[0]).to.deep.equal('wheat flour');
-    expect(recipe.storeIngredientNames()[1]).to.deep.equal('bicarbonate of soda');
+    expect(recipe.storeIngredientNames(ingredients)).to.deep.equal(['wheat flour', 'bicarbonate of soda', 'eggs']);
+    // expect(recipe.storeIngredientNames()[1]).to.deep.equal('bicarbonate of soda');
   });
 
   it('should calculate the cost of ingredients for a recipe', () => {
-    expect(recipe.calculateRecipeCost()).to.equal('$177.76 USD')
+    expect(recipe.calculateRecipeCost(ingredients)).to.equal('$9.76 USD')
   });
 
   it('should return recipe\'s directions/instructions', () => {
-    recipe = new Recipe(recipeData[11]);
-    expect(recipe.getInstructions()).to.equal('1. Add all ingredients to a blender (except graham crackers if using). Cover and blend until well pureed then serve topped with crushed graham crackers if desired.*The banana is mostly what gives this smoothie it\'s sweetness, so I recommend using one that is speckled (not mushy though).Recipe Source: Cooking Classy \n')
-    recipe = new Recipe(recipeData[5]);
-    expect(recipe.getInstructions()).to.equal('1. To make the Cupcakes: Preheat oven to 350 degrees. Line 12 cupcake tins with paper holders. \n2. Whisk together dry Fruit Cocktail Cupcakes ingredients. \n3. Add in wet Fruit Cocktail Cupcakes ingredients and stir with a rubber spatula until thoroughly combined. Fill cupcake tins evenly, and bake for 20 minutes or until thin knife inserted in center comes out clean. \n');
+    // recipe = new Recipe(recipeData[0]);
+    expect(recipe.getInstructions()).to.equal('1. Cook something. \n')
+    // recipe = new Recipe(recipeData[5]);
+    // expect(recipe.getInstructions()).to.equal('1. To make the Cupcakes: Preheat oven to 350 degrees. Line 12 cupcake tins with paper holders. \n2. Whisk together dry Fruit Cocktail Cupcakes ingredients. \n3. Add in wet Fruit Cocktail Cupcakes ingredients and stir with a rubber spatula until thoroughly combined. Fill cupcake tins evenly, and bake for 20 minutes or until thin knife inserted in center comes out clean. \n');
   });
 });
