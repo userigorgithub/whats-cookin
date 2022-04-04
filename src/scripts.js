@@ -1,6 +1,6 @@
 import "./styles.css";
 import apiCalls from "./apiCalls";
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
+import {fetchAll, apiUsersData, apiIngredientsData, apiRecipeData} from "./apiCalls.js";
 import "./images/logo.png";
 import "./images/search.png";
 import "./images/add.png";
@@ -11,9 +11,6 @@ import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
 import User from "../src/classes/User";
-import recipeData from "../src/data/recipes.js";
-import usersData from "../src/data/users.js";
-
 //----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
@@ -31,19 +28,34 @@ const instructions = document.querySelector(".instructions");
 const ingredients = document.querySelector(".ingredients");
 const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
-
 //---------Global Variables----------//
-const allRecipes = new RecipeRepository(recipeData);
-allRecipes.addDefaultPreferences();
-allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
-console.log("line 39", allRecipes);
-let currentRecipes = allRecipes.repositoryData;
-
-const randomUser = new User(
-  usersData[Math.floor(Math.random() * usersData.length)]
-);
-
+let recipeData, usersData, ingredientsData, currentRecipes, allRecipes, randomUser;
 //----------Functions----------//
+const loadPage = () => {
+  console.log('scripts JS loadFetch is working')
+  fetchAll()
+  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
+  .then(data => setGlobalVariablesAndDisplay(data));
+}
+
+const setGlobalVariablesAndDisplay = (data) => {
+  usersData = data[0].usersData;
+  ingredientsData = data[1].ingredientsData;
+  recipeData = data[2].recipeData;
+  console.log('recipe data within setglobal variables',recipeData)
+
+  allRecipes = new RecipeRepository(recipeData);
+  allRecipes.addDefaultPreferences();
+  allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+  console.log("line 39", allRecipes);
+  currentRecipes = allRecipes.repositoryData;
+
+  randomUser = new User(usersData[Math.floor(Math.random() * usersData.length)]);
+
+  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  displayAllRecipes();
+}
+
 const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
   boxOfRecipes.innerHTML = "";
 
@@ -108,6 +120,7 @@ const goToFavorites = () => {
   hideElement(recipeView);
   showElement(mainSection);
   searchBar.placeHolder = "Search Favorite Recipes";
+  // currentRecipes needs a version of all recipes that are filtered to where userfavorite is yes?
   currentRecipes = randomUser.favoriteRecipes;
   console.log("user faves", randomUser.favoriteRecipes);
   if (currentRecipes.length) {
@@ -131,29 +144,6 @@ const goToWantToCook = () => {
   displayAllRecipes(currentRecipes);
 };
 
-// const displayClicked = (currentRecipes = allRecipes.repositoryData) => {
-//   boxOfRecipes.innerHTML = "";
-//
-//   let showInDom = currentRecipes
-//     .filter((recipe, index) => index <= 2)
-//     .map(
-//       (recipe, mapIndex) =>
-//         (boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
-//       <h3 class="recipe-name">${recipe.name}</h3>
-//       <section class="recipe-image-holder"></section>
-//         <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
-//       <section class="recipe-actions">
-//         <img class="favorites-buttons" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
-//         <img class="favorites-buttons" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
-//         <img class="to-cook-buttons" id=${mapIndex} src="./images/add.png" alt="add-icon"/>
-//       </section>
-//         <img class="to-cook-buttons" id=${mapIndex} src="./images/minus.png" alt="minus-icon"/>
-//       </section>
-//     </section>`)
-//     );
-// };
-
-//-----------------------------------------
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
 
@@ -182,8 +172,7 @@ const selectRecipe = (selectedIndex) => {
       <section class="other-recipe-info">
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost()}</article>
       </section>
-    </section>
-    `;
+    </section>`;
 };
 const showElement = (element) => {
   element.classList.remove("hidden");
@@ -233,11 +222,9 @@ const toggleToCook = (recipe, id) => {
   console.log("line 224", recipe);
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
-    //addToCookButtons[id].src = "./images/add.png";
     allRecipes.repositoryData[id].addedToCook = false;
   } else {
     randomUser.addToCook(recipe);
-    //addToCookButtons[id].src = "./images/minus.png";
     allRecipes.repositoryData[id].addedToCook = true;
     console.log("line 233", allRecipes.repositoryData[id]);
   }
@@ -251,22 +238,18 @@ const toggleFavorites = (recipe, id) => {
     console.log("recipe present in faves");
     allRecipes.repositoryData[id].favorited = false;
     randomUser.deleteFromFavorites(recipe);
-    //  addToFavoritesButtons[id].src = "./images/love.png";
   } else {
     console.log("253", recipe);
     allRecipes.repositoryData[id].favorited = true;
     console.log(allRecipes.repositoryData[id]);
     randomUser.addToFavorite(allRecipes.repositoryData[id]);
-
-    //addToFavoritesButtons[id].src = "./images/heart.png";
   }
   displayAllRecipes(allRecipes.repositoryData);
 };
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => {
-  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-  displayAllRecipes();
+  loadPage();
 });
 
 forwardButton.addEventListener("click", (e) => shiftForward());
@@ -299,4 +282,3 @@ searchBar.addEventListener("keyup", (e) => {
     userSearchFavorites(event.target.value);
   }
 });
-//if home button classListcontains is hidden then searchAllRecipes
