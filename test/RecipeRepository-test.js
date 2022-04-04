@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import RecipeRepository from '../src/classes/RecipeRepository';
-// import recipeData from '../src/data/recipes.js';
 
 describe('Recipe Repository', () => {
 
@@ -76,5 +75,11 @@ describe('Recipe Repository', () => {
 
   it('should not filter recipes by incorrect name', () => {
     expect(recipeRepository.filterByName('Chocolate Chip Cookie Cake')).to.deep.equal([]);
+  });
+
+  it('should be able to have default values of false', () => {
+    recipeRepository.addDefaultPreferences();
+    expect(recipeRepository.repositoryData[0].favorited).to.equal(false);
+    expect(recipeRepository.repositoryData[0].addedToCook).to.equal(false);
   });
 });
