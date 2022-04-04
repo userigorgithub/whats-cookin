@@ -1,6 +1,5 @@
 import { expect } from 'chai';
 import RecipeRepository from '../src/classes/RecipeRepository';
-// import recipeData from '../src/data/recipes.js';
 
 describe('Recipe Repository', () => {
 
@@ -10,39 +9,39 @@ describe('Recipe Repository', () => {
 
     recipeData = [
       {
-        "id": 1,
-        "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
-        "ingredients": [
+        'id': 1,
+        'image': 'https://spoonacular.com/recipeImages/595736-556x370.jpg',
+        'ingredients': [
           {
-            "id": 1,
-            "quantity": {
-              "amount": 1.5,
-              "unit": "c"
+            'id': 1,
+            'quantity': {
+              'amount': 1.5,
+              'unit': 'c'
             }
           },
           {
-            "id": 2,
-            "quantity": {
-              "amount": 0.5,
-              "unit": "tsp"
+            'id': 2,
+            'quantity': {
+              'amount': 0.5,
+              'unit': 'tsp'
             }
           },
           {
-            "id": 3,
-            "quantity": {
-              "amount": 1,
-              "unit": "large"
+            'id': 3,
+            'quantity': {
+              'amount': 1,
+              'unit': 'large'
             },
           },
         ],
-        "instructions": [
+        'instructions': [
           {
-            "instruction": "Cook something.",
-            "number": 1
+            'instruction': 'Cook something.',
+            'number': 1
           },
         ],
-        "name": "Loaded Chocolate Chip Pudding Cookie Cups",
-        "tags": ["antipasti", "side dish", "snack", "appetizer", "antipasto", "hor d'oeuvre"]
+        'name': 'Loaded Chocolate Chip Pudding Cookie Cups',
+        'tags': ['antipasti', 'side dish', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre']
       },
     ]
 
@@ -76,5 +75,11 @@ describe('Recipe Repository', () => {
 
   it('should not filter recipes by incorrect name', () => {
     expect(recipeRepository.filterByName('Chocolate Chip Cookie Cake')).to.deep.equal([]);
+  });
+
+  it('should be able to have default values of false', () => {
+    recipeRepository.addDefaultPreferences();
+    expect(recipeRepository.repositoryData[0].favorited).to.equal(false);
+    expect(recipeRepository.repositoryData[0].addedToCook).to.equal(false);
   });
 });

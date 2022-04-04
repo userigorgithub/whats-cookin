@@ -16,15 +16,12 @@ class RecipeRepository {
     );
     return filteredNames;
   }
+
   addDefaultPreferences() {
     this.repositoryData.forEach((recipe) => {
       recipe.favorited = false;
       recipe.addedToCook = false;
     });
-    //favorites
-    //forEach ind recipe, set faves to false
-    //add-to-cook
-    //forEach ind recipe, set atc to false
   }
 }
 

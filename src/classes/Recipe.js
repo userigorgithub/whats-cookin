@@ -1,10 +1,8 @@
-// import ingredientsData from '../data/ingredients.js';
-import Ingredient from "../classes/Ingredient";
+import Ingredient from '../classes/Ingredient';
 
 class Recipe {
   constructor(singleRecipe) {
     this.singleRecipe = singleRecipe;
-    // this.allIngredients = new Ingredient();
   }
 
   storeIngredientNames(ingredientsData) {
@@ -31,7 +29,7 @@ class Recipe {
     const instructions = this.singleRecipe.instructions.reduce((acc, cur) => {
       acc += `${cur.number}. ${cur.instruction} \n`;
       return acc;
-    }, "");
+    }, '');
     return instructions;
   }
 }
