@@ -35,6 +35,10 @@ const ingredients = document.querySelector(".ingredients");
 const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
 const searchContainer = document.querySelector(".search-container");
+const mains = document.getElementById("mains");
+const snacks = document.getElementById("snacks");
+const sides = document.getElementById("sides");
+const bottomSection = document.querySelector(".bottom-section");
 
 //---------Global Variables----------//
 let recipeData,
@@ -148,6 +152,7 @@ const goHome = () => {
   console.log("going home current recipes", currentRecipes);
 
   hideElement(homeButton);
+  showElement(bottomSection);
   hideElement(recipeView);
   showElement(mainSection);
   showElement(favoritesButton);
@@ -177,6 +182,7 @@ const goHome = () => {
 };
 
 const goToFavorites = () => {
+  showElement(bottomSection);
   showElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
@@ -199,6 +205,7 @@ const goToFavorites = () => {
 };
 
 const goToWantToCook = () => {
+  showElement(bottomSection);
   showElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
@@ -222,7 +229,7 @@ const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
-
+  hideElement(bottomSection);
   hideElement(mainSection);
   hideElement(searchContainer);
   pageTitle.innerText = `Is this your next meal?`;
@@ -276,20 +283,21 @@ const userSearchFavorites = (searchText) => {
 
 const userSearchAllRecipes = (searchText) => {
   allRecipes = new RecipeRepository(recipeData);
-  if (event.target.className.includes("search-input")) {
-    currentRecipes.repositoryData = allRecipes
-      .filterByTag(searchText)
-      .concat(allRecipes.filterByName(searchText));
-  }
+  // event.target.className.includes("search-input")
+  currentRecipes.repositoryData = allRecipes
+    .filterByTag(searchText)
+    .concat(allRecipes.filterByName(searchText));
+  showElement(homeButton);
 
   if (searchText === "") {
-    pageTitle.innerText = `Let's find a recipe 222!`;
+    pageTitle.innerText = `Let's find a recipe!`;
   } else if (currentRecipes.repositoryData.length) {
     pageTitle.innerText = `Here are your results for ${searchText}`;
   } else {
     pageTitle.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
+  console.log("current resps", currentRecipes);
   displayAllRecipes(currentRecipes);
 };
 //-----------------------------------------------------------------------------
@@ -339,3 +347,12 @@ homeButton.addEventListener("click", (e) => goHome());
 favoritesButton.addEventListener("click", (e) => goToFavorites());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => searchItems(event.target.value));
+snacks.addEventListener("click", (e) => {
+  (searchBar.value = "snack"), userSearchAllRecipes("snack");
+});
+mains.addEventListener("click", (e) => {
+  (searchBar.value = "main dish"), userSearchAllRecipes("main dish");
+});
+sides.addEventListener("click", (e) => {
+  (searchBar.value = "side dish"), userSearchAllRecipes("side dish");
+});
