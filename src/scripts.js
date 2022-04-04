@@ -126,10 +126,10 @@ const handleBoxOfRecipeEvents = () => {
 };
 
 const searchItems = () => {
-  if (homeButton.classList.contains("hidden")) {
-    userSearchAllRecipes(event.target.value);
-  } else {
+  if (favoritesButton.classList.contains("hidden")) {
     userSearchFavorites(event.target.value);
+  } else if(homeButton.classList.contains("hidden")){
+    userSearchAllRecipes(event.target.value);
   }
 };
 
