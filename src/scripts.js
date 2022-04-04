@@ -54,11 +54,7 @@ const setGlobalVariablesAndDisplay = (data) => {
 
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   displayAllRecipes();
-
 }
-console.log('recipe data globally',recipeData)
-
-
 
 const displayAllRecipes = (currentRecipes = allRecipes.repositoryData) => {
   boxOfRecipes.innerHTML = "";
@@ -124,6 +120,7 @@ const goToFavorites = () => {
   hideElement(recipeView);
   showElement(mainSection);
   searchBar.placeHolder = "Search Favorite Recipes";
+  // currentRecipes needs a version of all recipes that are filtered to where userfavorite is yes?
   currentRecipes = randomUser.favoriteRecipes;
   console.log("user faves", randomUser.favoriteRecipes);
   if (currentRecipes.length) {
@@ -147,7 +144,6 @@ const goToWantToCook = () => {
   displayAllRecipes(currentRecipes);
 };
 
-//-----------------------------------------
 const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
 
@@ -176,8 +172,7 @@ const selectRecipe = (selectedIndex) => {
       <section class="other-recipe-info">
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost()}</article>
       </section>
-    </section>
-    `;
+    </section>`;
 };
 const showElement = (element) => {
   element.classList.remove("hidden");
