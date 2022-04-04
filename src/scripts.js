@@ -46,7 +46,7 @@ const setGlobalVariablesAndDisplay = (data) => {
 
   allRecipes = new RecipeRepository(recipeData);
   allRecipes.addDefaultPreferences();
-  allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+  // allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
   currentRecipes = allRecipes;
   randomUser = new User(usersData[Math.floor(Math.random() * usersData.length)]);
 
@@ -105,6 +105,7 @@ const shiftBackward = () => {
 const goHome = () => {
   console.log('going home should have all 50 recipes', allRecipes)
     console.log('going home current recipes', currentRecipes)
+
   hideElement(homeButton);
   hideElement(recipeView);
   showElement(mainSection);
@@ -112,7 +113,26 @@ const goHome = () => {
   showElement(wantToCookButton);
   showElement(searchContainer);
   pageTitle.innerText = `Let's Find a Recipe!`;
-  displayAllRecipes(allRecipes);
+
+
+const restoreRecipes = new RecipeRepository(recipeData);
+// allRecipes.addDefaultPreferences();
+allRecipes.repositoryData.map(recipe => {
+  currentRecipes.repositoryData.forEach(curRecipe => {
+    if(recipe.id === curRecipe.id) {
+      recipe.addedToCook = curRecipe.addedToCook;
+      recipe.favorited = curRecipe.favorited;
+    };
+  });
+  return recipe
+});
+
+allRecipes = restoreRecipes;
+currentRecipes = restoreRecipes
+console.log('allrecipes all 50 recipes', allRecipes)
+  console.log('going current recipes', currentRecipes)
+  console.log('restoreRecipes',restoreRecipes)
+  displayAllRecipes(restoreRecipes);
   searchBar.value = "";
 };
 
@@ -148,7 +168,7 @@ const goToWantToCook = () => {
   currentRecipes.repositoryData = allRecipes.repositoryData
   .filter(recipe => recipe.addedToCook)
 
-  if (currentRecipes.length) {
+  if (currentRecipes.repositoryData.length) {
     pageTitle.innerText = `Your Recipes To Cook!`;
   } else {
     pageTitle.innerText = `You Don't Have Any Recipes To Cook!`;
@@ -157,7 +177,7 @@ const goToWantToCook = () => {
 };
 
 const selectRecipe = (selectedIndex) => {
-  console.log(ingredientsData);
+
   const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
 
   hideElement(mainSection);
@@ -229,7 +249,7 @@ const userSearchAllRecipes = (searchText) => {
 };
 //-----------------------------------------------------------------------------
 const toggleToCook = (recipe, id) => {
-  const addToCookButtons = document.querySelectorAll(".to-cook-buttons");
+  // const addToCookButtons = document.querySelectorAll(".to-cook-buttons");
   console.log("line 224", recipe);
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
@@ -244,7 +264,7 @@ const toggleToCook = (recipe, id) => {
 };
 
 const toggleFavorites = (recipe, id) => {
-  const addToFavoritesButtons = document.querySelectorAll(".favorites-buttons");
+  // const addToFavoritesButtons = document.querySelectorAll(".favorites-buttons");
   console.log("We are in togglefaves section");
   if (randomUser.favoriteRecipes.includes(recipe)) {
     console.log("recipe present in faves");
