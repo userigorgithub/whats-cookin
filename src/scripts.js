@@ -132,6 +132,7 @@ const searchItems = () => {
     userSearchFavorites(event.target.value);
   }
 };
+
 const shiftForward = () => {
   console.log(currentRecipes.repositoryData);
   currentRecipes.repositoryData.push(currentRecipes.repositoryData[0]);
@@ -270,14 +271,16 @@ const userSearchFavorites = (searchText) => {
       .filterFavsByTag(searchText)
       .concat(randomUser.filterFavsByName(searchText));
   }
+  showElement(homeButton)
   if (searchText === "") {
     pageTitle.innerText = `Let's Look at Your Favorites!`;
   } else if (currentRecipes.repositoryData.length) {
-    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites:`;
+    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites`;
   } else {
     pageTitle.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
+  goToFavorites();
   displayAllRecipes(currentRecipes);
 };
 
