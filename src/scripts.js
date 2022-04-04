@@ -34,7 +34,7 @@ const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
 
 //---------Global Variables----------//
-let recipeData, usersData, ingredientsData, currentRecipes, allRecipes;
+let recipeData, usersData, ingredientsData, currentRecipes, allRecipes, randomUser;
 const loadFetch = () => {
   console.log('scripts JS loadFetch is working')
   fetchAll()
@@ -54,7 +54,7 @@ allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
 console.log("line 39", allRecipes);
  currentRecipes = allRecipes.repositoryData;
 
-const randomUser = new User(
+ randomUser = new User(
   usersData[Math.floor(Math.random() * usersData.length)]
 )
 
