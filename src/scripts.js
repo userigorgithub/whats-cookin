@@ -34,6 +34,7 @@ const ingredients = document.querySelector(".ingredients");
 const costRecipe = document.querySelector(".cost-recipe");
 const searchBar = document.getElementById("search");
 const searchContainer = document.querySelector(".search-container");
+
 //---------Global Variables----------//
 let recipeData,
   usersData,
@@ -41,6 +42,7 @@ let recipeData,
   currentRecipes,
   randomUser,
   allRecipes;
+
 //----------Functions----------//
 const loadPage = () => {
   console.log("scripts JS loadFetch is working");
@@ -193,14 +195,16 @@ const goToWantToCook = () => {
 };
 
 const selectRecipe = (selectedIndex) => {
-  const selectedRecipe = new Recipe(currentRecipes[selectedIndex]);
+  const selectedRecipe = new Recipe(
+    currentRecipes.repositoryData[selectedIndex]
+  );
 
   hideElement(mainSection);
   pageTitle.innerText = `Is this your next meal?`;
   showElement(recipeView);
   showElement(homeButton);
 
-  recipeView.innerHTML = "";
+  // recipeView.innerHTML = "lfjdflgdfhgdfjkhgdfjkhgdfjkg";
 
   recipeView.innerHTML = `
   <section class="recipe-boxes" id="boxFour">
@@ -225,7 +229,8 @@ const selectRecipe = (selectedIndex) => {
 const showElement = (element) => {
   element.classList.remove("hidden");
 };
-
+//${selectedRecipe.singleRecipe.name}
+//${selectedRecipe.singleRecipe.image}
 const hideElement = (element) => {
   element.classList.add("hidden");
 };
