@@ -1,5 +1,3 @@
-// import ingredientsData from '../data/ingredients.js';
-
 class Ingredient {
   constructor(ingredientList) {
     this.ingredientList = ingredientList;
