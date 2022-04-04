@@ -1,10 +1,8 @@
-// import ingredientsData from '../data/ingredients.js';
 import Ingredient from "../classes/Ingredient";
 
 class Recipe {
   constructor(singleRecipe) {
     this.singleRecipe = singleRecipe;
-    // this.allIngredients = new Ingredient();
   }
 
   storeIngredientNames(ingredientsData) {

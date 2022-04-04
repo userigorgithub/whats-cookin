@@ -1,12 +1,9 @@
 import { expect } from "chai";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
-// import recipeData from '../src/data/recipes.js';
-// import ingredientsData from '../src/data/ingredients.js';
 
 describe("Recipe", () => {
   let recipeData, recipe, ingredientsData, ingredients;
-  // let recipeInstructions = '';
 
   beforeEach(() => {
     recipeData = [
@@ -94,7 +91,6 @@ describe("Recipe", () => {
       "bicarbonate of soda",
       "eggs",
     ]);
-    // expect(recipe.storeIngredientNames()[1]).to.deep.equal('bicarbonate of soda');
   });
 
   it("should calculate the cost of ingredients for a recipe", () => {
@@ -102,9 +98,6 @@ describe("Recipe", () => {
   });
 
   it("should return recipe's directions/instructions", () => {
-    // recipe = new Recipe(recipeData[0]);
     expect(recipe.getInstructions()).to.equal("1. Cook something. \n");
-    // recipe = new Recipe(recipeData[5]);
-    // expect(recipe.getInstructions()).to.equal('1. To make the Cupcakes: Preheat oven to 350 degrees. Line 12 cupcake tins with paper holders. \n2. Whisk together dry Fruit Cocktail Cupcakes ingredients. \n3. Add in wet Fruit Cocktail Cupcakes ingredients and stir with a rubber spatula until thoroughly combined. Fill cupcake tins evenly, and bake for 20 minutes or until thin knife inserted in center comes out clean. \n');
   });
 });
