@@ -75,6 +75,7 @@ console.log('recipe data globally',recipeData)
 //   usersData[Math.floor(Math.random() * usersData.length)]
 // );
 
+
 //----------Functions----------//
 
 
@@ -300,19 +301,6 @@ const toggleFavorites = (recipe, id) => {
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => {
   loadPage();
-  // console.log('we shoudl have recipe data here',recipeData)
-  // const allRecipes = new RecipeRepository(recipeData);
-  // allRecipes.addDefaultPreferences();
-  // allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
-  // console.log("line 39", allRecipes);
-  // let currentRecipes = allRecipes.repositoryData;
-  //
-  // const randomUser = new User(
-  //   usersData[Math.floor(Math.random() * usersData.length)]
-  // );
-
-  // welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-  // displayAllRecipes();
 });
 
 forwardButton.addEventListener("click", (e) => shiftForward());
