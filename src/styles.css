@@ -1,7 +1,4 @@
 /*  Global */
-/* * {
-  border: 1px solid black;
-} */
 
 body {
   background-color: #f7f5f6;
@@ -23,9 +20,9 @@ body {
   height: 20%;
   width: 100%;
 }
+
 .logo-title {
   align-items: center;
-  /* border: 2px solid white; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -41,12 +38,14 @@ body {
   margin-top: 13%;
   width: 65%;
 }
+
 .nav-bar {
   align-items: center;
   display: flex;
   justify-content: space-evenly;
   width: 50%;
 }
+
 .nav-buttons {
   color: #344443;
   cursor: pointer;
@@ -71,13 +70,14 @@ body {
   justify-content: center;
   width: 30%;
 }
+
 .search-image {
   background-color: #f7f5f6;
-  /* border: none; */
   height: 60%;
   padding-right: 2%;
   width: 8%;
 }
+
 .user-welcome {
   color: #f7f5f6;
   font-size: 200%;
@@ -97,6 +97,7 @@ body {
   justify-content: center;
   width: 100%;
 }
+
 /*  Main and Recipe View */
 .main-section {
   align-items: stretch;
@@ -112,6 +113,7 @@ body {
   justify-content: center;
   width: 16%;
 }
+
 .shift-view {
   color: #344443;
   border: none;
@@ -128,6 +130,7 @@ body {
   justify-content: center;
   width: 100%;
 }
+
 .to-cook-buttons,
 .favorites-buttons {
   color: #344443;
@@ -207,6 +210,7 @@ body {
   height: 13%;
   justify-content: space-around;
 }
+
 /*  Bottom Section */
 .bottom-section {
   align-items: center;
@@ -227,13 +231,13 @@ body {
   display: flex;
   height: 70px;
   justify-content: center;
-  /* inset 0px -3px 1px 1px rgba(204, 198, 197, 0.5); */
   width: 70px;
 }
 
 .filter-buttons:hover {
   transform: scale(1.1);
 }
+
 /*  Hidden */
 .hidden {
   display: none;
