@@ -1,13 +1,10 @@
 import { expect } from 'chai';
 import User from '../src/classes/User';
 import Recipe from '../src/classes/Recipe';
-// import usersData from '../src/data/users.js';
-// import recipeData from '../src/data/recipes.js';
 
 describe('User', () => {
 
   let usersData, user, recipeData, recipe;
-  // let recipe1, recipe2;
 
   beforeEach(() => {
 
@@ -72,8 +69,7 @@ describe('User', () => {
 
     user = new User(usersData[0]);
     recipe = new Recipe(recipeData[0]);
-    // recipe1 = new Recipe(recipeData[1]);
-    // recipe2 = new Recipe(recipeData[2]);
+
     user.addToFavorite(recipe.singleRecipe);
     user.addToCook(recipe.singleRecipe);
   });
@@ -146,27 +142,21 @@ describe('User', () => {
 
   it('should filter recipes in favorites by tag', () => {
     user.addToFavorite(recipe.singleRecipe);
-    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByTag('snack').length).to.equal(1);
-    // expect(user.filterFavsByTag('main dish').length).to.equal(1);
   });
 
   it('should not filter recipes in favorites by incorrect tag', () => {
     user.addToFavorite(recipe.singleRecipe);
-    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByTag('SLACK').length).to.equal(0);
   });
 
   it('should filter recipes in favorites by name', () => {
     user.addToFavorite(recipe.singleRecipe);
-    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByName('Loaded Chocolate Chip Pudding Cookie Cups')[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
-    // expect(user.filterFavsByName('Maple Dijon Apple Cider Grilled Pork Chops')[0].name).to.deep.equal('Maple Dijon Apple Cider Grilled Pork Chops');
   });
 
   it('should not filter recipes in favorites by incorrect name', () => {
     user.addToFavorite(recipe.singleRecipe);
-    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByName('Loaded Pudding Cookie Cups')).to.deep.equal([]);
   });
 });
