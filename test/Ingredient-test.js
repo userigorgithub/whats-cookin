@@ -1,15 +1,33 @@
 import { expect } from 'chai';
 import Ingredient from '../src/classes/Ingredient';
-import recipeData from '../src/data/recipes.js';
-import ingredientsData from '../src/data/ingredients.js';
+// import recipeData from '../src/data/recipes.js';
+// import ingredientsData from '../src/data/ingredients.js';
 
 describe("Ingredient", () => {
 
-  let ingredient;
+  let ingredientsData, ingredient;
 
   beforeEach(() => {
 
-    ingredient = new Ingredient(recipeData[0].ingredients);
+    ingredientsData = [
+      {
+        id: 1,
+        name: "wheat flour",
+        estimatedCostInCents: 142,
+      },
+      {
+        id: 2,
+        name: "bicarbonate of soda",
+        estimatedCostInCents: 582,
+      },
+      {
+        id: 3,
+        name: "eggs",
+        estimatedCostInCents: 472,
+      },
+    ]
+
+    ingredient = new Ingredient(ingredientsData);
   });
 
   it('should be a function', () => {
@@ -21,16 +39,16 @@ describe("Ingredient", () => {
   });
 
   it('should be able to contain all of the ingredients', () => {
-    expect(ingredient.ingredientList.length).to.equal(11);
+    expect(ingredient.ingredientList.length).to.equal(3);
   });
 
   it('should be able to search by ingredient id', () => {
-    expect(ingredient.addNameOfIngredient(20081)).to.equal('wheat flour');
-    expect(ingredient.addNameOfIngredient(1123)).to.equal('eggs');
+    expect(ingredient.addNameOfIngredient(1)).to.equal('wheat flour');
+    expect(ingredient.addNameOfIngredient(3)).to.equal('eggs');
   });
 
   it('should be able to provide the Ingredient cost per unit', () => {
-    expect(ingredient.provideIngredientCostPerUnit(20081)).to.equal(142);
-    expect(ingredient.provideIngredientCostPerUnit(1123)).to.equal(472);
+    expect(ingredient.provideIngredientCostPerUnit(1)).to.equal(142);
+    expect(ingredient.provideIngredientCostPerUnit(3)).to.equal(472);
   });
 });

@@ -1,19 +1,79 @@
 import { expect } from 'chai';
 import User from '../src/classes/User';
 import Recipe from '../src/classes/Recipe';
-import usersData from '../src/data/users.js';
-import recipeData from '../src/data/recipes.js';
+// import usersData from '../src/data/users.js';
+// import recipeData from '../src/data/recipes.js';
 
 describe('User', () => {
 
-  let user, recipe, recipe1, recipe2;
+  let usersData, user, recipeData, recipe;
+  // let recipe1, recipe2;
 
   beforeEach(() => {
 
+    usersData = [
+      {
+        "name": "Saige O'Kon",
+        "id": 1,
+        "pantry": [
+          {
+            "ingredient": 1,
+            "amount": 1
+          },
+          {
+            "ingredient": 2,
+            "amount": 10
+          },
+          {
+            "ingredient": 3,
+            "amount": 5
+          }
+        ]
+      }
+    ]
+
+    recipeData = [
+      {
+        "id": 1,
+        "image": "https://spoonacular.com/recipeImages/595736-556x370.jpg",
+        "ingredients": [
+          {
+            "id": 1,
+            "quantity": {
+              "amount": 1.5,
+              "unit": "c"
+            }
+          },
+          {
+            "id": 2,
+            "quantity": {
+              "amount": 0.5,
+              "unit": "tsp"
+            }
+          },
+          {
+            "id": 3,
+            "quantity": {
+              "amount": 1,
+              "unit": "large"
+            },
+          }
+        ],
+        "instructions": [
+          {
+            "instruction": "Cook something.",
+            "number": 1
+          },
+        ],
+        "name": "Loaded Chocolate Chip Pudding Cookie Cups",
+        "tags": ["antipasti", "side dish", "snack", "appetizer", "antipasto", "hor d'oeuvre"]
+      },
+    ]
+
     user = new User(usersData[0]);
     recipe = new Recipe(recipeData[0]);
-    recipe1 = new Recipe(recipeData[1]);
-    recipe2 = new Recipe(recipeData[2]);
+    // recipe1 = new Recipe(recipeData[1]);
+    // recipe2 = new Recipe(recipeData[2]);
     user.addToFavorite(recipe.singleRecipe);
     user.addToCook(recipe.singleRecipe);
   });
@@ -85,28 +145,28 @@ describe('User', () => {
   });
 
   it('should filter recipes in favorites by tag', () => {
-    user.addToFavorite(recipe1.singleRecipe);
-    user.addToFavorite(recipe2.singleRecipe);
+    user.addToFavorite(recipe.singleRecipe);
+    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByTag('snack').length).to.equal(1);
-    expect(user.filterFavsByTag('main dish').length).to.equal(1);
+    // expect(user.filterFavsByTag('main dish').length).to.equal(1);
   });
 
   it('should not filter recipes in favorites by incorrect tag', () => {
-    user.addToFavorite(recipe1.singleRecipe);
-    user.addToFavorite(recipe2.singleRecipe);
+    user.addToFavorite(recipe.singleRecipe);
+    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByTag('SLACK').length).to.equal(0);
   });
 
   it('should filter recipes in favorites by name', () => {
-    user.addToFavorite(recipe1.singleRecipe);
-    user.addToFavorite(recipe2.singleRecipe);
+    user.addToFavorite(recipe.singleRecipe);
+    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByName('Loaded Chocolate Chip Pudding Cookie Cups')[0].name).to.equal('Loaded Chocolate Chip Pudding Cookie Cups');
-    expect(user.filterFavsByName('Maple Dijon Apple Cider Grilled Pork Chops')[0].name).to.deep.equal('Maple Dijon Apple Cider Grilled Pork Chops');
+    // expect(user.filterFavsByName('Maple Dijon Apple Cider Grilled Pork Chops')[0].name).to.deep.equal('Maple Dijon Apple Cider Grilled Pork Chops');
   });
 
   it('should not filter recipes in favorites by incorrect name', () => {
-    user.addToFavorite(recipe1.singleRecipe);
-    user.addToFavorite(recipe2.singleRecipe);
+    user.addToFavorite(recipe.singleRecipe);
+    // user.addToFavorite(recipe2.singleRecipe);
     expect(user.filterFavsByName('Loaded Pudding Cookie Cups')).to.deep.equal([]);
   });
 });
