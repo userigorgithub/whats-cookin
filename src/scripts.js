@@ -104,6 +104,29 @@ const displayAllRecipes = (currentRecipes = allRecipes) => {
     });
 };
 
+const handleBoxOfRecipeEvents = () => {
+  if (event.target.className === "recipe-image") {
+    selectRecipe(event.target.id);
+  }
+  if (event.target.className.includes("to-cook-buttons")) {
+    console.log("YaY condtional working");
+    toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
+  }
+  if (event.target.className.includes("favorites-buttons")) {
+    toggleFavorites(
+      allRecipes.repositoryData[event.target.id],
+      event.target.id
+    );
+  }
+};
+
+const searchItems = () => {
+  if (homeButton.classList.contains("hidden")) {
+    userSearchAllRecipes(event.target.value);
+  } else {
+    userSearchFavorites(event.target.value);
+  }
+};
 const shiftForward = () => {
   console.log(currentRecipes.repositoryData);
   currentRecipes.repositoryData.push(currentRecipes.repositoryData[0]);
@@ -204,8 +227,8 @@ const selectRecipe = (selectedIndex) => {
   showElement(recipeView);
   showElement(homeButton);
 
-  // recipeView.innerHTML = "lfjdflgdfhgdfjkhgdfjkhgdfjkg";
-
+  recipeView.innerHTML = "lfjdflgdfhgdfjkhgdfjkhgdfjkg";
+  //recipeView.innerHTML = "";
   recipeView.innerHTML = `
   <section class="recipe-boxes" id="boxFour">
     <h3 class="recipe-name">${selectedRecipe.singleRecipe.name}</h3>
@@ -306,37 +329,14 @@ const toggleFavorites = (recipe, id) => {
 };
 
 //----------Event Listeners----------//
-window.addEventListener("load", (e) => {
-  loadPage();
-});
 
+window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
-boxOfRecipes.addEventListener("click", (e) => {
-  console.log("264", event.target.className);
-  if (event.target.className === "recipe-image") {
-    selectRecipe(event.target.id);
-  }
-  if (event.target.className.includes("to-cook-buttons")) {
-    console.log("YaY condtional working");
-    toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
-  }
-  if (event.target.className.includes("favorites-buttons")) {
-    toggleFavorites(
-      allRecipes.repositoryData[event.target.id],
-      event.target.id
-    );
-  }
-});
-
+boxOfRecipes.addEventListener("click", (e) =>
+  handleBoxOfRecipeEvents(event.target.className)
+);
 homeButton.addEventListener("click", (e) => goHome());
 favoritesButton.addEventListener("click", (e) => goToFavorites());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
-searchBar.addEventListener("keyup", (e) => {
-  //conditional to use the correct search function
-  if (homeButton.classList.contains("hidden")) {
-    userSearchAllRecipes(event.target.value);
-  } else {
-    userSearchFavorites(event.target.value);
-  }
-});
+searchBar.addEventListener("keyup", (e) => searchItems(event.target.value));
