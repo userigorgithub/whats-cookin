@@ -231,8 +231,9 @@ const userSearchFavorites = (searchText) => {
 };
 
 const userSearchAllRecipes = (searchText) => {
+allRecipes = new RecipeRepository(recipeData)
   if (event.target.className.includes("search-input")) {
-    currentRecipes.repositoryData = allRecipes.repositoryData
+    currentRecipes.repositoryData = allRecipes
       .filterByTag(searchText)
       .concat(allRecipes.filterByName(searchText));
   }
