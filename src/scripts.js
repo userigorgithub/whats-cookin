@@ -16,6 +16,7 @@ import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
 import User from "../src/classes/User";
+
 //----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
@@ -223,29 +224,27 @@ const selectRecipe = (selectedIndex) => {
   );
 
   hideElement(mainSection);
+  hideElement(searchContainer);
   pageTitle.innerText = `Is this your next meal?`;
   showElement(recipeView);
   showElement(homeButton);
-
-  recipeView.innerHTML = "lfjdflgdfhgdfjkhgdfjkhgdfjkg";
-  //recipeView.innerHTML = "";
+  recipeView.innerHTML = "";
   recipeView.innerHTML = `
   <section class="recipe-boxes" id="boxFour">
     <h3 class="recipe-name">${selectedRecipe.singleRecipe.name}</h3>
     <img class="recipe-image" src="${
       selectedRecipe.singleRecipe.image
     }" alt="recipe image" />
-    <section class="recipe-actions">
-      <img class="favorites-buttons" src="./images/heart.png" alt="heart-icon" id=${selectedIndex}/>
-      <img class="to-cook-buttons" src="./images/add.png" alt="add-icon" id=${selectedIndex}/>
     </section>
-    </section>
-
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
-      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames()}</article>
+      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(
+        ingredientsData
+      )}</article>
       <section class="other-recipe-info">
-        <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost()}</article>
+        <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(
+          ingredientsData
+        )}</article>
       </section>
     </section>`;
 };
