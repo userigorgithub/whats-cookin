@@ -64,7 +64,7 @@ const setGlobalVariablesAndDisplay = (data) => {
 
   allRecipes = new RecipeRepository(recipeData);
   allRecipes.addDefaultPreferences();
-  // allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+  allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
   currentRecipes = allRecipes;
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
@@ -232,7 +232,7 @@ const selectRecipe = (selectedIndex) => {
   hideElement(bottomSection);
   hideElement(mainSection);
   hideElement(searchContainer);
-  pageTitle.innerText = `Is this your next meal?`;
+  pageTitle.innerText = `Is This Your Next Meal?`;
   showElement(recipeView);
   showElement(homeButton);
   recipeView.innerHTML = "";
@@ -273,7 +273,7 @@ const userSearchFavorites = (searchText) => {
   if (searchText === "") {
     pageTitle.innerText = `Let's Look at Your Favorites!`;
   } else if (currentRecipes.repositoryData.length) {
-    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites`;
+    pageTitle.innerText = `Here are your results for ${searchText} in your Favorites:`;
   } else {
     pageTitle.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
@@ -290,9 +290,9 @@ const userSearchAllRecipes = (searchText) => {
   showElement(homeButton);
 
   if (searchText === "") {
-    pageTitle.innerText = `Let's find a recipe!`;
+    pageTitle.innerText = `Let's Find a Recipe!`;
   } else if (currentRecipes.repositoryData.length) {
-    pageTitle.innerText = `Here are your results for ${searchText}`;
+    pageTitle.innerText = `Here are your results for ${searchText}:`;
   } else {
     pageTitle.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";

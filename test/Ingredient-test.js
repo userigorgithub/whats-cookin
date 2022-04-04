@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import Ingredient from '../src/classes/Ingredient';
 
-describe("Ingredient", () => {
+describe('Ingredient', () => {
 
   let ingredientsData, ingredient;
 
@@ -10,17 +10,17 @@ describe("Ingredient", () => {
     ingredientsData = [
       {
         id: 1,
-        name: "wheat flour",
+        name: 'wheat flour',
         estimatedCostInCents: 142,
       },
       {
         id: 2,
-        name: "bicarbonate of soda",
+        name: 'bicarbonate of soda',
         estimatedCostInCents: 582,
       },
       {
         id: 3,
-        name: "eggs",
+        name: 'eggs',
         estimatedCostInCents: 472,
       },
     ]
