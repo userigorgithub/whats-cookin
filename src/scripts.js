@@ -1,9 +1,7 @@
-
-
 import "./styles.css";
 import apiCalls from "./apiCalls";
 import {fetchAll, apiUsersData, apiIngredientsData, apiRecipeData} from "./apiCalls.js";
-// An example of how you tell webpack to use an image (also need to link to it in the index.html) apiUsersData, apiIngredientsData, apiRecipeData,
+// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/logo.png";
 import "./images/search.png";
 import "./images/add.png";
@@ -35,20 +33,21 @@ const searchBar = document.getElementById("search");
 
 //---------Global Variables----------//
 let recipeData, usersData, ingredientsData, currentRecipes, allRecipes, randomUser;
-const loadFetch = () => {
+
+const loadPage = () => {
   console.log('scripts JS loadFetch is working')
   fetchAll()
   Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
-  .then(data => setGlobalVariables(data));
+  .then(data => setGlobalVariablesAndDisplay(data));
 }
 
-const setGlobalVariables = (data) => {
+const setGlobalVariablesAndDisplay = (data) => {
 usersData = data[0].usersData;
 ingredientsData = data[1].ingredientsData;
 recipeData = data[2].recipeData;
 console.log('recipe data within setglobal variables',recipeData)
 
- allRecipes = new RecipeRepository(recipeData);
+allRecipes = new RecipeRepository(recipeData);
 allRecipes.addDefaultPreferences();
 allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
 console.log("line 39", allRecipes);
@@ -300,7 +299,7 @@ const toggleFavorites = (recipe, id) => {
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => {
-  loadFetch();
+  loadPage();
   // console.log('we shoudl have recipe data here',recipeData)
   // const allRecipes = new RecipeRepository(recipeData);
   // allRecipes.addDefaultPreferences();
@@ -346,5 +345,3 @@ searchBar.addEventListener("keyup", (e) => {
     userSearchFavorites(event.target.value);
   }
 });
-
-//if home button classListcontains is hidden then searchAllRecipes
