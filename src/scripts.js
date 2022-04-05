@@ -306,6 +306,7 @@ const userSearchFavorites = (searchText) => {
     pageTitle.innerText =
       "Sorry, we couldn't find what you're looking for, please try again.";
   }
+  goToFavorites();
   displayAllRecipes(currentRecipes);
 };
 
