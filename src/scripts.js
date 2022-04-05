@@ -39,6 +39,7 @@ const mains = document.getElementById("mains");
 const snacks = document.getElementById("snacks");
 const sides = document.getElementById("sides");
 const bottomSection = document.querySelector(".bottom-section");
+// const boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions")
 
 //---------Global Variables----------//
 let recipeData,
@@ -125,6 +126,20 @@ const handleBoxOfRecipeEvents = () => {
   }
 };
 
+const handleBoxOfSelectedRecipeEvents = () => {
+  if (event.target.className.includes("to-cook-buttons")) {
+    console.log("YaY condtional working");
+    toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
+  }
+  if (event.target.className.includes("favorites-buttons")) {
+    toggleFavorites(
+      allRecipes.repositoryData[event.target.id],
+      event.target.id
+    );
+  }
+  selectRecipe(event.target.id)
+};
+
 const searchItems = () => {
   if (favoritesButton.classList.contains("hidden")) {
     userSearchFavorites(event.target.value);
@@ -183,6 +198,7 @@ const goHome = () => {
 };
 
 const goToFavorites = () => {
+  goHome();
   showElement(bottomSection);
   showElement(homeButton);
   hideElement(recipeView);
@@ -206,6 +222,7 @@ const goToFavorites = () => {
 };
 
 const goToWantToCook = () => {
+  goHome();
   showElement(bottomSection);
   showElement(homeButton);
   hideElement(recipeView);
@@ -230,32 +247,61 @@ const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
+
+
   hideElement(bottomSection);
   hideElement(mainSection);
   hideElement(searchContainer);
   pageTitle.innerText = `Is This Your Next Meal?`;
   showElement(recipeView);
   showElement(homeButton);
+
+  let heart = "hidden";
+  let love = "";
+  let add = "";
+  let minus = "hidden";
+  // console.log("ids of mapped recipes that are showing on DOM", recipe.id);
+  if (currentRecipes.repositoryData[selectedIndex].addedToCook) {
+    minus = "";
+    add = "hidden";
+  }
+  if (currentRecipes.repositoryData[selectedIndex].favorited) {
+    heart = "";
+    love = "hidden";
+    // console.log(allRecipes.repositoryData[mapIndex]);
+  }
   recipeView.innerHTML = "";
-  recipeView.innerHTML = `
+  recipeView.innerHTML += `
   <section class="recipe-boxes" id="boxFour">
     <h3 class="recipe-name">${selectedRecipe.singleRecipe.name}</h3>
     <img class="recipe-image" src="${
       selectedRecipe.singleRecipe.image
     }" alt="recipe image" />
+    <section class="selected-recipe-actions">
+    <img class="favorites-buttons ${love}" id=${selectedIndex} src="./images/love.png" alt="love-icon" />
+    <img class="favorites-buttons ${heart}" id=${selectedIndex} src="./images/heart.png" alt="heart-icon" />
+    <img class="to-cook-buttons ${add}" id=${selectedIndex} src="./images/add.png" alt="plus-icon" />
+    <img class="to-cook-buttons ${minus}" id=${selectedIndex} src="./images/minus.png" alt="minus-icon" />
+
+    </section>
     </section>
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
-      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(
-        ingredientsData
-      )}</article>
+      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(ingredientsData)}</article>
       <section class="other-recipe-info">
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(
           ingredientsData
         )}</article>
       </section>
     </section>`;
+var boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions")
+    boxOfSelectedRecipe.addEventListener("click", (e) => {
+    console.log(event.target.className)
+      handleBoxOfSelectedRecipeEvents(event.target.className)
+      });
 };
+
+
 const showElement = (element) => {
   element.classList.remove("hidden");
 };
@@ -286,11 +332,12 @@ const userSearchFavorites = (searchText) => {
 
 const userSearchAllRecipes = (searchText) => {
   allRecipes = new RecipeRepository(recipeData);
+  allRecipes.addDefaultPreferences();
   // event.target.className.includes("search-input")
   currentRecipes.repositoryData = allRecipes
     .filterByTag(searchText)
     .concat(allRecipes.filterByName(searchText));
-  showElement(homeButton);
+  // showElement(homeButton);
 
   if (searchText === "") {
     pageTitle.innerText = `Let's Find a Recipe!`;
@@ -302,6 +349,7 @@ const userSearchAllRecipes = (searchText) => {
   }
   console.log("current resps", currentRecipes);
   displayAllRecipes(currentRecipes);
+  // goHome();
 };
 //-----------------------------------------------------------------------------
 const toggleToCook = (recipe, id) => {
@@ -315,7 +363,6 @@ const toggleToCook = (recipe, id) => {
     allRecipes.repositoryData[id].addedToCook = true;
     console.log("line 233", allRecipes.repositoryData[id]);
   }
-
   displayAllRecipes(currentRecipes);
 };
 
@@ -346,6 +393,9 @@ backwardButton.addEventListener("click", (e) => shiftBackward());
 boxOfRecipes.addEventListener("click", (e) =>
   handleBoxOfRecipeEvents(event.target.className)
 );
+
+
+
 homeButton.addEventListener("click", (e) => goHome());
 favoritesButton.addEventListener("click", (e) => goToFavorites());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
