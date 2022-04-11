@@ -1,18 +1,14 @@
 let apiUsersData, apiIngredientsData, apiRecipeData;
 
+const fetchData = (param) => {
+  return fetch(`https://what-s-cookin-starter-kit.herokuapp.com/api/v1/${param}`)
+    .then(response => response.json());
+};
+
 const fetchAll = () => {
-
-apiUsersData =
-fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/users')
-.then(response => response.json())
-
-apiIngredientsData =
-fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/ingredients')
-.then(response => response.json());
-
-apiRecipeData =
-fetch('https://what-s-cookin-starter-kit.herokuapp.com/api/v1/recipes')
-.then(response => response.json());
+  apiUsersData = fetchData('users');
+  apiIngredientsData = fetchData('ingredients');
+  apiRecipeData = fetchData('recipes');
 }
 
 export {fetchAll, apiUsersData, apiIngredientsData, apiRecipeData}
