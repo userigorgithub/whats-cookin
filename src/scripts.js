@@ -97,7 +97,7 @@ const displayAllRecipes = (currentRecipes = allRecipes) => {
       boxOfRecipes.innerHTML += `<section class="recipe-boxes" id="${recipe.id}">
       <h3 class="recipe-name">${recipe.name}</h3>
       <section class="recipe-image-holder"></section>
-        <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="recipe image" />
+        <img class="recipe-image" id=${mapIndex} src="${recipe.image}" alt="${recipe.name}" />
       <section class="recipe-actions">
         <img class="favorites-buttons ${love}" id=${mapIndex} src="./images/love.png" alt="love-icon"/>
         <img class="favorites-buttons ${heart}" id=${mapIndex} src="./images/heart.png" alt="heart-icon"/>
