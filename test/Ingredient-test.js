@@ -9,19 +9,19 @@ describe('Ingredient', () => {
 
     ingredientsData = [
       {
-        id: 1,
-        name: 'wheat flour',
-        estimatedCostInCents: 142,
+        'id': 1,
+        'name': 'wheat flour',
+        'estimatedCostInCents': 142,
       },
       {
-        id: 2,
-        name: 'bicarbonate of soda',
-        estimatedCostInCents: 582,
+        'id': 2,
+        'name': 'bicarbonate of soda',
+        'estimatedCostInCents': 582,
       },
       {
-        id: 3,
-        name: 'eggs',
-        estimatedCostInCents: 472,
+        'id': 3,
+        'name': 'eggs',
+        'estimatedCostInCents': 472,
       },
     ]
 
@@ -37,7 +37,7 @@ describe('Ingredient', () => {
   });
 
   it('should be able to contain all of the ingredients', () => {
-    expect(ingredient.ingredientList.length).to.equal(3);
+    expect(ingredient.ingredientList).to.equal(ingredientsData);
   });
 
   it('should be able to search by ingredient id', () => {

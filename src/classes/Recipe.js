@@ -7,7 +7,6 @@ class Recipe {
 
   storeIngredientNames(ingredientsData) {
     const specificIngredient = new Ingredient(ingredientsData);
-
     const foodItemList = this.singleRecipe.ingredients.map((foodItem) =>
       specificIngredient.addNameOfIngredient(foodItem.id)
     );
@@ -17,9 +16,7 @@ class Recipe {
   calculateRecipeCost(ingredientsData) {
     const specificIngredient = new Ingredient(ingredientsData);
     const totalPrice = this.singleRecipe.ingredients.reduce((acc, cur) => {
-      acc +=
-        cur.quantity.amount *
-        specificIngredient.provideIngredientCostPerUnit(cur.id);
+      acc += cur.quantity.amount * specificIngredient.provideIngredientCostPerUnit(cur.id);
       return acc;
     }, 0);
     return `$${(totalPrice / 100).toFixed(2)} USD`;
