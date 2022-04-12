@@ -4,7 +4,7 @@ import Recipe from '../src/classes/Recipe';
 
 describe('User', () => {
 
-  let usersData, user, recipeData, recipe;
+  let usersData, user, usersData2, user2, recipeData, recipe;
 
   beforeEach(() => {
 
@@ -15,7 +15,7 @@ describe('User', () => {
         'pantry': [
           {
             'ingredient': 1,
-            'amount': 1
+            'amount': 2
           },
           {
             'ingredient': 2,
@@ -24,6 +24,23 @@ describe('User', () => {
           {
             'ingredient': 3,
             'amount': 5
+          }
+        ]
+      }
+    ]
+
+    usersData2 = [
+      {
+        "name": "Ephraim Goyette",
+        "id": 2,
+        "pantry": [
+          {
+            "ingredient": 2,
+            "amount": 3
+          },
+          {
+            "ingredient": 3,
+            "amount": 7
           }
         ]
       }
@@ -68,6 +85,7 @@ describe('User', () => {
     ]
 
     user = new User(usersData[0]);
+    user2 = new User(usersData2[0]);
     recipe = new Recipe(recipeData[0]);
 
     user.addToFavorite(recipe.singleRecipe);
@@ -88,10 +106,12 @@ describe('User', () => {
 
   it('should have a name', () => {
 	   expect(user.singleUser.name).to.equal('Saige O\'Kon');
+     expect(user2.singleUser.name).to.equal('Ephraim Goyette');
   });
 
   it('should have an id', () => {
 	   expect(user.singleUser.id).to.equal(1);
+     expect(user2.singleUser.id).to.equal(2);
   });
 
   it('should have a pantry', () => {
@@ -100,6 +120,7 @@ describe('User', () => {
 
   it('should be able to split user\'s name', () => {
 	   expect(user.returnUserFirstName()).to.equal('Saige');
+     expect(user2.returnUserFirstName()).to.equal('Ephraim');
   });
 
   it('should be able to favorite a recipe', () => {
@@ -108,7 +129,41 @@ describe('User', () => {
 
   it('should not be able to have duplicate recipe in favorites', () => {
     user.addToFavorite(recipe.singleRecipe);
-	  expect(user.favoriteRecipes.length).to.equal(1);
+	  expect(user.favoriteRecipes).to.deep.equal([{
+      'id': 1,
+      'image': 'https://spoonacular.com/recipeImages/595736-556x370.jpg',
+      'ingredients': [
+        {
+          'id': 1,
+          'quantity': {
+            'amount': 1.5,
+            'unit': 'c'
+          }
+        },
+        {
+          'id': 2,
+          'quantity': {
+            'amount': 0.5,
+            'unit': 'tsp'
+          }
+        },
+        {
+          'id': 3,
+          'quantity': {
+            'amount': 1,
+            'unit': 'large'
+          },
+        }
+      ],
+      'instructions': [
+        {
+          'instruction': 'Cook something.',
+          'number': 1
+        },
+      ],
+      'name': 'Loaded Chocolate Chip Pudding Cookie Cups',
+      'tags': ['antipasti', 'side dish', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre']
+    }]);
   });
 
   it('should be able to delete favorite recipe', () => {
@@ -127,7 +182,41 @@ describe('User', () => {
 
   it('should not be able to add duplicate recipe in want-to-cook', () => {
     user.addToCook(recipe.singleRecipe);
-    expect(user.recipesToCook.length).to.equal(1);
+    expect(user.recipesToCook).to.deep.equal([{
+      'id': 1,
+      'image': 'https://spoonacular.com/recipeImages/595736-556x370.jpg',
+      'ingredients': [
+        {
+          'id': 1,
+          'quantity': {
+            'amount': 1.5,
+            'unit': 'c'
+          }
+        },
+        {
+          'id': 2,
+          'quantity': {
+            'amount': 0.5,
+            'unit': 'tsp'
+          }
+        },
+        {
+          'id': 3,
+          'quantity': {
+            'amount': 1,
+            'unit': 'large'
+          },
+        }
+      ],
+      'instructions': [
+        {
+          'instruction': 'Cook something.',
+          'number': 1
+        },
+      ],
+      'name': 'Loaded Chocolate Chip Pudding Cookie Cups',
+      'tags': ['antipasti', 'side dish', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre']
+    }]);
   });
 
   it('should be able to delete want-to-cook recipe', () => {
@@ -142,12 +231,46 @@ describe('User', () => {
 
   it('should filter recipes in favorites by tag', () => {
     user.addToFavorite(recipe.singleRecipe);
-    expect(user.filterFavsByTag('snack').length).to.equal(1);
+    expect(user.filterFavsByTag('snack')).to.deep.equal([{
+      'id': 1,
+      'image': 'https://spoonacular.com/recipeImages/595736-556x370.jpg',
+      'ingredients': [
+        {
+          'id': 1,
+          'quantity': {
+            'amount': 1.5,
+            'unit': 'c'
+          }
+        },
+        {
+          'id': 2,
+          'quantity': {
+            'amount': 0.5,
+            'unit': 'tsp'
+          }
+        },
+        {
+          'id': 3,
+          'quantity': {
+            'amount': 1,
+            'unit': 'large'
+          },
+        }
+      ],
+      'instructions': [
+        {
+          'instruction': 'Cook something.',
+          'number': 1
+        },
+      ],
+      'name': 'Loaded Chocolate Chip Pudding Cookie Cups',
+      'tags': ['antipasti', 'side dish', 'snack', 'appetizer', 'antipasto', 'hor d\'oeuvre']
+    }]);
   });
 
   it('should not filter recipes in favorites by incorrect tag', () => {
     user.addToFavorite(recipe.singleRecipe);
-    expect(user.filterFavsByTag('SLACK').length).to.equal(0);
+    expect(user.filterFavsByTag('SLACK')).to.deep.equal([]);
   });
 
   it('should filter recipes in favorites by name', () => {
