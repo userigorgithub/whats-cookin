@@ -8,39 +8,39 @@ describe('Recipe', () => {
   beforeEach(() => {
     recipeData = [
       {
-        id: 1,
-        image: 'https://spoonacular.com/recipeImages/595736-556x370.jpg',
-        ingredients: [
+        'id': 1,
+        'image': 'https://spoonacular.com/recipeImages/595736-556x370.jpg',
+        'ingredients': [
           {
-            id: 1,
-            quantity: {
-              amount: 1.5,
-              unit: 'c',
+            'id': 1,
+            'quantity': {
+              'amount': 1.5,
+              'unit': 'c',
             },
           },
           {
-            id: 2,
-            quantity: {
-              amount: 0.5,
-              unit: 'tsp',
+            'id': 2,
+            'quantity': {
+              'amount': 0.5,
+              'unit': 'tsp',
             },
           },
           {
-            id: 3,
-            quantity: {
-              amount: 1,
-              unit: 'large',
+            'id': 3,
+            'quantity': {
+              'amount': 1,
+              'unit': 'large',
             },
           },
         ],
-        instructions: [
+        'instructions': [
           {
-            instruction: 'Cook something.',
-            number: 1,
+            'instruction': 'Cook something.',
+            'number': 1,
           },
         ],
-        name: 'Loaded Chocolate Chip Pudding Cookie Cups',
-        tags: [
+        'name': 'Loaded Chocolate Chip Pudding Cookie Cups',
+        'tags': [
           'antipasti',
           'side dish',
           'snack',
@@ -53,19 +53,19 @@ describe('Recipe', () => {
 
     ingredientsData = [
       {
-        id: 1,
-        name: 'wheat flour',
-        estimatedCostInCents: 142,
+        'id': 1,
+        'name': 'wheat flour',
+        'estimatedCostInCents': 142,
       },
       {
-        id: 2,
-        name: 'bicarbonate of soda',
-        estimatedCostInCents: 582,
+        'id': 2,
+        'name': 'bicarbonate of soda',
+        'estimatedCostInCents': 582,
       },
       {
-        id: 3,
-        name: 'eggs',
-        estimatedCostInCents: 472,
+        'id': 3,
+        'name': 'eggs',
+        'estimatedCostInCents': 472,
       },
     ];
 
