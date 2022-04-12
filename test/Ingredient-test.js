@@ -37,7 +37,7 @@ describe('Ingredient', () => {
   });
 
   it('should be able to contain all of the ingredients', () => {
-    expect(ingredient.ingredientList.length).to.equal(3);
+    expect(ingredient.ingredientList).to.equal(ingredientsData);
   });
 
   it('should be able to search by ingredient id', () => {
