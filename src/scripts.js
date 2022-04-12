@@ -16,6 +16,7 @@ import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
 import User from "../src/classes/User";
+import Pantry from "..src/classes/Pantry";
 
 //----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");
@@ -134,13 +135,13 @@ const handleBoxOfSelectedRecipeEvents = () => {
       event.target.id
     );
   }
-  selectRecipe(event.target.id)
+  selectRecipe(event.target.id);
 };
 
 const searchItems = () => {
   if (favoritesButton.classList.contains("hidden")) {
     userSearchFavorites(event.target.value);
-  } else if(homeButton.classList.contains("hidden")){
+  } else if (homeButton.classList.contains("hidden")) {
     userSearchAllRecipes(event.target.value);
   }
 };
@@ -261,7 +262,9 @@ const selectRecipe = (selectedIndex) => {
   recipeView.innerHTML += `
   <section class="recipe-boxes" id="boxFour">
     <h3 class="recipe-name">${selectedRecipe.singleRecipe.name}</h3>
-    <img class="recipe-image" src="${selectedRecipe.singleRecipe.image}" alt="recipe image" />
+    <img class="recipe-image" src="${
+      selectedRecipe.singleRecipe.image
+    }" alt="recipe image" />
     <section class="selected-recipe-actions">
       <img class="favorites-buttons ${love}" id=${selectedIndex} src="./images/love.png" alt="love-icon" />
       <img class="favorites-buttons ${heart}" id=${selectedIndex} src="./images/heart.png" alt="heart-icon" />
@@ -271,16 +274,20 @@ const selectRecipe = (selectedIndex) => {
     </section>
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
-      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(ingredientsData)}</article>
+      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(
+        ingredientsData
+      )}</article>
       <section class="other-recipe-info">
-        <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(ingredientsData)}</article>
+        <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(
+          ingredientsData
+        )}</article>
       </section>
     </section>`;
 
-      var boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions")
-      boxOfSelectedRecipe.addEventListener("click", (e) => {
-      handleBoxOfSelectedRecipeEvents(event.target.className)
-      });
+  var boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions");
+  boxOfSelectedRecipe.addEventListener("click", (e) => {
+    handleBoxOfSelectedRecipeEvents(event.target.className);
+  });
 };
 
 const showElement = (element) => {
@@ -297,7 +304,7 @@ const userSearchFavorites = (searchText) => {
       .filterFavsByTag(searchText)
       .concat(randomUser.filterFavsByName(searchText));
   }
-  showElement(homeButton)
+  showElement(homeButton);
   if (searchText === "") {
     pageTitle.innerText = `Let's Look at Your Favorites!`;
   } else if (currentRecipes.repositoryData.length) {
@@ -353,11 +360,19 @@ const toggleFavorites = (recipe, id) => {
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
-boxOfRecipes.addEventListener("click", (e) => handleBoxOfRecipeEvents(event.target.className));
+boxOfRecipes.addEventListener("click", (e) =>
+  handleBoxOfRecipeEvents(event.target.className)
+);
 homeButton.addEventListener("click", (e) => goHome());
 favoritesButton.addEventListener("click", (e) => goToFavorites());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => searchItems(event.target.value));
-snacks.addEventListener("click", (e) => {(searchBar.value = "snack"), userSearchAllRecipes("snack")});
-mains.addEventListener("click", (e) => {(searchBar.value = "main dish"), userSearchAllRecipes("main dish")});
-sides.addEventListener("click", (e) => {(searchBar.value = "side dish"), userSearchAllRecipes("side dish")});
+snacks.addEventListener("click", (e) => {
+  (searchBar.value = "snack"), userSearchAllRecipes("snack");
+});
+mains.addEventListener("click", (e) => {
+  (searchBar.value = "main dish"), userSearchAllRecipes("main dish");
+});
+sides.addEventListener("click", (e) => {
+  (searchBar.value = "side dish"), userSearchAllRecipes("side dish");
+});
