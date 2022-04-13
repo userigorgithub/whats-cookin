@@ -111,15 +111,16 @@ describe("Pantry", () => {
     expect(pantry2.pantry).to.deep.equal(user2.singleUser.pantry);
   });
 
-  // it("should check whether a user's pantry has enough ingredients to cook a certain recipe", () => {
-  //   expect(pantry.checkUserStock(recipe)).to.equal(true);
-  // });
-  //
+  it("should check whether a user's pantry has enough ingredients to cook a certain recipe", () => {
+    expect(pantry.checkUserStock(recipe)).to.equal(true);
+  });
 
-  // it("should check whether a user's pantry has enough ingredients to cook a certain recipe", () => {
-  //   expect(pantry2.checkUserStock(recipe)).to.equal(false);
-  // });
-  //
+
+  it("should check whether a user's pantry has enough ingredients to cook a certain recipe", () => {
+    console.log(pantry2.checkUserStock(recipe));
+    expect(pantry2.checkUserStock(recipe)).to.equal(false);
+  });
+
   //should let a user know what ingredient they still need to cook that specific recipe.
 
   // it("should be able to remove stock from a User's pantry after cooking the recipe", () => {
