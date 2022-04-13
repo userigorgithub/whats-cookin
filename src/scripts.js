@@ -148,8 +148,6 @@ const shiftBackward = () => {
 };
 const goHome = () => {
   hideElement([homeButton, recipeView]);
-  // hideElement(homeButton);
-  // hideElement(recipeView);
   showElement([
     bottomSection,
     mainSection,
@@ -157,11 +155,6 @@ const goHome = () => {
     wantToCookButton,
     searchContainer,
   ]);
-  // showElement(bottomSection);
-  // showElement(mainSection);
-  // showElement(favoritesButton);
-  // showElement(wantToCookButton);
-  // showElement(searchContainer);
   pageTitle.innerText = "Let's Find a Recipe!";
   const restoreRecipes = new RecipeRepository(recipeData);
   allRecipes.repositoryData.map((recipe) => {
@@ -181,8 +174,6 @@ const goHome = () => {
 const goToFavorites = () => {
   goHome();
   hideElement([recipeView, favoritesButton]);
-  // hideElement(recipeView);
-  // hideElement(favoritesButton);
   showElement([
     bottomSection,
     homeButton,
@@ -190,11 +181,6 @@ const goToFavorites = () => {
     searchContainer,
     wantToCookButton,
   ]);
-  // showElement(bottomSection);
-  // showElement(homeButton);
-  // showElement(mainSection);
-  // showElement(searchContainer);
-  // showElement(wantToCookButton);
   searchBar.placeHolder = "Search Favorite Recipes";
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
     (recipe) => recipe.favorited
@@ -209,14 +195,7 @@ const goToFavorites = () => {
 const goToWantToCook = () => {
   goHome();
   hideElement([recipeView, wantToCookButton, searchContainer]);
-  // hideElement(recipeView);
-  // hideElement(wantToCookButton);
-  // hideElement(searchContainer);
   showElement([bottomSection, homeButton, mainSection, favoritesButton]);
-  // showElement(bottomSection);
-  // showElement(homeButton);
-  // showElement(mainSection);
-  // showElement(favoritesButton);
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
     (recipe) => recipe.addedToCook
   );
@@ -233,12 +212,7 @@ const selectRecipe = (selectedIndex) => {
     currentRecipes.repositoryData[selectedIndex]
   );
   hideElement([bottomSection, mainSection, searchContainer]);
-  // hideElement(bottomSection);
-  // hideElement(mainSection);
-  // hideElement(searchContainer);
   showElement([recipeView, homeButton]);
-  // showElement(recipeView);
-  // showElement(homeButton);
   pageTitle.innerText = "Is This Your Next Meal?";
   let heart = "hidden";
   let love = "";
@@ -282,9 +256,6 @@ const selectRecipe = (selectedIndex) => {
     handleBoxOfSelectedRecipeEvents(event.target.className);
   });
 };
-// const showElement = (element) => {
-//   element.classList.remove("hidden");
-// };
 
 const showElement = (domItems) => {
   domItems.forEach((domItem) => {
@@ -297,9 +268,6 @@ const hideElement = (domItems) => {
     domItem.classList.add("hidden");
   });
 };
-// const hideElement = (element) => {
-//   element.classList.add("hidden");
-// };
 
 const userSearchFavorites = (searchText) => {
   if (event.target.className.includes("search-input")) {
