@@ -116,18 +116,18 @@ describe("Pantry", () => {
   });
 
 
-  it("should check whether a user's pantry has enough ingredients to cook a certain recipe", () => {
+  it("should check whether a user's pantry does not have ingredients to cook a certain recipe and tell them what is missing", () => {
     console.log(pantry2.checkUserStock(recipe));
-    expect(pantry2.checkUserStock(recipe)).to.equal(false);
+    expect(pantry2.checkUserStock(recipe)).to.equal('You are missing the Following Ingredients to cook a meal: 1 - 1.5 c. ');
   });
 
   //should let a user know what ingredient they still need to cook that specific recipe.
 
   // it("should be able to remove stock from a User's pantry after cooking the recipe", () => {
-  //   expect(pantry.decrementStock(recipe)).to.equal.(>>>decrementedupdatedpantry)
+  //   expect(pantry.changeStock(recipe)).to.equal.(>>>decrementedupdatedpantry)
   // })
 
   // it("should be able to add a single ingredient to a User's pantry", () => {
-  //   expect(pantry.incrementStock(recipe)).to.equal.(>>>incrementedupdatedpantry)
+  //   expect(pantry.changeStock(recipe,1)).to.equal.(>>>incrementedupdatedpantry)
   // })
 });

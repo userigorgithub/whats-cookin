@@ -41,32 +41,28 @@ class Pantry {
           if((recipeIngredient.id === pantryIngredient.ingredient) && (pantryIngredient.amount >= recipeIngredient.quantity.amount)){
             // you have enough of THIS ingredient
             //you aren't missing any ingredients, set missing ingredients to 0
-
             console.log('matched and sufficient amount for', pantryIngredient.ingredient)
-            missingIngredients[index].quantity.amount =  0;
+            missingIngredients[index].quantity.amount = 0;
 
           } else if((recipeIngredient.id === pantryIngredient.ingredient) && (pantryIngredient.amount < recipeIngredient.quantity.amount)) {
             missingIngredients[index].quantity.amount =  recipeIngredient.quantity.amount - pantryIngredient.amount
             //set a key of the missing item and have the missing amount
-          }
-      })
-
-
-    })
+          };
+      });
+    });
 
 console.log(missingIngredients)
-
-    if(missingIngredients.every(ingredient => !ingredient.quantity.amount)){
-      return true
-      //this means we are missing nothing.....
-    } else {
-
-      return `You are missing the Following Ingredients to cook a meal: ${missingIngredients
-        .filter(ingredient => ingredient.quantity.amount)
-        .map(ingredient => `${ingredient.id} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}. `)
-        .join("\n")
-      }`;
-    }
+return this.finishStockCheck(missingIngredients)
+    // if(missingIngredients.every(ingredient => !ingredient.quantity.amount)){
+    //   return true
+    //   //this means we are missing nothing.....
+    // } else {
+    //   return `You are missing the Following Ingredients to cook a meal: ${missingIngredients
+    //     .filter(ingredient => ingredient.quantity.amount)
+    //     .map(ingredient => `${ingredient.id} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}. `)
+    //     .join("\n")
+    //   }`;
+    // }
 
 
     //do they have enough of each ingredient in array
@@ -74,6 +70,21 @@ console.log(missingIngredients)
     //if anything false, returns message of what ingredients are still needed- need to iterate through whole array and check EACH item
     //double data set- user stock and recipe indredients ///names and amount... logical operator needed...
   }
+
+finishStockCheck(missingIngredients) {
+  if(missingIngredients.every(ingredient => !ingredient.quantity.amount)){
+    return true
+    //this means we are missing nothing.....
+  } else {
+    return `You are missing the Following Ingredients to cook a meal: ${missingIngredients
+      .filter(ingredient => ingredient.quantity.amount)
+      .map(ingredient => `${ingredient.id} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}. `)
+      .join("\n")
+    }`;
+  }
+}
+
+
   changeStock(recipe, subtractStock = -1) {
       //subtractStock defaults to -1
       //if we feed the parameter of 1 then it adds stock of the entire recipe.
@@ -120,9 +131,9 @@ console.log(missingIngredients)
   //         console.log(`ran post function and decreased server pantry with the following data,${pantryIngredient.ingredient},${recipeIngredient.quantity.amount}`)
   //       };
   //     });
-  //   });
-
-  }
+  // //   });
+  //
+  // }
 }
 
 export default Pantry;
