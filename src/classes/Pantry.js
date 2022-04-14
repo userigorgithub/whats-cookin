@@ -36,21 +36,13 @@ finishStockCheck(missingIngredients, ingredientsData) {
   }
 }
 
-
-//data set of all ingredients
-//missing Ingredients array
-//map across the missing ingredients array
-  //foreach of the ingredients data
-  //if the Ids are the same then map the new name
-    // { id: # to a name, quanitity: { amt: 3, units: 'c'}}
 determineNames(missingIngredients, ingredientsData) {
   return missingIngredients.map(ingredient => {
-    // ingredientsData.filter(ingredientItemInRepository =>{
+
       ingredientsData.forEach(ingredientItemInRepository => {
         if(ingredient.id === ingredientItemInRepository.id) {
          ingredient.id = ingredientItemInRepository.name
          console.log('line 53',ingredientItemInRepository)
-        //  ingredient //{id: ingredientItemInRepository.name, quantity: { amount: ingredient.quantity.amount, unit: ingredient.quantity.unit }}
       }
       console.log('line 56',ingredient)
       })
@@ -59,14 +51,8 @@ determineNames(missingIngredients, ingredientsData) {
   })
 }
 
-//if we have a recipe
-//we need to access the array of ingredients
-//we need to run a forEach Loop
-//inside the forEach Loop we need to yse the Change Stock method for each ingredient
-
-
   changeStock(recipe, subtractStock = -1) {
-    if(checkUserStock(recipe)){ //check user stock returns true if we have all the supplies
+    if(checkUserStock(recipe)){
       recipe.singleRecipe.ingredients.forEach((recipeIngredient,index) => {
         this.pantry.forEach(pantryIngredient=>{
           if(recipeIngredient.id === pantryIngredient.ingredient){
