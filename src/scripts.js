@@ -52,10 +52,10 @@ let recipeData,
 //----------Functions----------//
 const loadPage = () => {
   fetchAll();
-  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData]).then((data) =>
-    setGlobalVariablesAndDisplay(data)
-  );
+  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
+    .then((data) => setGlobalVariablesAndDisplay(data))
 };
+
 const setGlobalVariablesAndDisplay = (data) => {
   console.log("data", data);
   usersData = data[0];
