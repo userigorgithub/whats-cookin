@@ -1,13 +1,17 @@
-// 1. put in HTML <p class="js-error"></p> above script files at the bottom
-// 2. make QS for js-error - DONE
-// 3. create .catch for GET requests
-// 4. create function for it: displayError
+// 1. put in HTML <p class="js-error"></p> above script files at the bottom -DONE
+// 2. make QS for js-error -DONE
+// 3. create .catch for GET requests -DONE
+// 4. create function for it: displayError -DONE
+// REcreate error? -???
+// 5.
 
-
+//----------Query Selectors----------//
 const errorMsg = document.querySelector('.js-error');
 
+//---------Global Variables----------//
 let apiUsersData, apiIngredientsData, apiRecipeData;
 
+//----------Functions----------//
 const fetchData = (param) => {
   return fetch(`http://localhost:3001/api/v1/${param}`)
     .then((response) => response.json())
@@ -28,6 +32,8 @@ const displayError = (error) => {
   }
 };
 
+//----------Event Listeners----------//
 
 
+//----------Exports----------//
 export { fetchAll, apiUsersData, apiIngredientsData, apiRecipeData };
