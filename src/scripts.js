@@ -57,9 +57,10 @@ const loadPage = () => {
   );
 };
 const setGlobalVariablesAndDisplay = (data) => {
-  usersData = data[0].usersData;
-  ingredientsData = data[1].ingredientsData;
-  recipeData = data[2].recipeData;
+  console.log("data", data);
+  usersData = data[0];
+  ingredientsData = data[1];
+  recipeData = data[2];
   allRecipes = new RecipeRepository(recipeData);
   allRecipes.addDefaultPreferences();
   allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
