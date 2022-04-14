@@ -54,9 +54,56 @@
     </section>
     <section class="recipe-view hidden"></section>
     <section class="pantry-view">
-      <section class =""></section>
-      <section class =""></section>
-      <section class =""></section>
+      <section class ="current-ingredients">
+        <h3>Here are your currently Stocked Ingredients</h3>
+        <section class="ingredients-list">
+          <select name="ingredientsList">
+            <ul> 1 cup flour</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+          </select>
+        </section>
+      </section>
+      <section class ="add-ingredients">
+        <form>
+          <label for="ingredientName">Ingredient Name</label><br>
+          <input type="text" pattern="[a-z]"><br>
+          <label for="ingredientQuantity">Ingredient Quantity</label><br>
+          <input type="number"><br>
+          <label for="ingredientUnits">Ingredient Units</label><br>
+          <input type="text" pattern="[a-z]"><br>
+          <input type="submit">
+        </form>
+      </section>
+      <section class ="upcoming-recipes">
+        <h3> Your Upcoming Recipes</h3>
+        <select name ="recipesToCook">
+          <option value="">Select a Recipe</option>
+          <option value="Pulled Pork">Pulled Pork</option>
+          <option value="Pudding Cups">PuddingCups</option>
+        </select>
+        <section class="ingredients-list">
+          <select name="ingredientsList">
+            <ul> 1 cup flour</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+            <ul> 3 pounds water</ul>
+          </select>
+        </section>
+      </section>
     </section>
     <section class ="pantry-view">
       <button class="filter-buttons" id="mains">Search Mains</button>
