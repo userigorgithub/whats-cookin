@@ -1,4 +1,7 @@
 /*  Global */
+* {
+  border: 1px solid red;
+}
 
 body {
   background-color: #f7f5f6;
@@ -210,6 +213,25 @@ body {
   display: flex;
   height: 13%;
   justify-content: space-around;
+}
+
+/*  Pantry View  */
+.pantry-view {
+  display: flex;
+  height: 50%;
+  width: 100%;
+}
+
+.current-ingredients, .add-ingredients, .upcoming-recipes  {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 33%;
+}
+
+h3 {
+  font-size: 100%;
 }
 
 /*  Bottom Section */
