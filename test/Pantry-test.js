@@ -4,7 +4,17 @@ import Recipe from "../src/classes/Recipe";
 import Pantry from "../src/classes/Pantry";
 
 describe("Pantry", () => {
-  let recipeData, recipe, usersData, usersData2, pantry, pantry2, user, user2, missingIngredients, missingIngredientsNames, ingredientsData;
+  let recipeData,
+    recipe,
+    usersData,
+    usersData2,
+    pantry,
+    pantry2,
+    user,
+    user2,
+    missingIngredients,
+    missingIngredientsNames,
+    ingredientsData;
 
   beforeEach(() => {
     usersData = [
@@ -92,34 +102,34 @@ describe("Pantry", () => {
     ];
 
     missingIngredients = [
-      { id: 1, quantity: { amount: 0, unit: 'c' } },
-      { id: 2, quantity: { amount: 0, unit: 'tsp' } },
-      { id: 3, quantity: { amount: 0, unit: 'large' } }
+      { id: 1, quantity: { amount: 0, unit: "c" } },
+      { id: 2, quantity: { amount: 0, unit: "tsp" } },
+      { id: 3, quantity: { amount: 0, unit: "large" } },
     ];
 
     missingIngredientsNames = [
-      { id: 'wheat flour', quantity: { amount: 0, unit: 'c' } },
-      { id: 'bicarbonate of soda', quantity: { amount: 0, unit: 'tsp' } },
-      { id: 'eggs', quantity: { amount: 0, unit: 'large' } }
+      { id: "wheat flour", quantity: { amount: 0, unit: "c" } },
+      { id: "bicarbonate of soda", quantity: { amount: 0, unit: "tsp" } },
+      { id: "eggs", quantity: { amount: 0, unit: "large" } },
     ];
 
     ingredientsData = [
       {
-        'id': 1,
-        'name': 'wheat flour',
-        'estimatedCostInCents': 142,
+        id: 1,
+        name: "wheat flour",
+        estimatedCostInCents: 142,
       },
       {
-        'id': 2,
-        'name': 'bicarbonate of soda',
-        'estimatedCostInCents': 582,
+        id: 2,
+        name: "bicarbonate of soda",
+        estimatedCostInCents: 582,
       },
       {
-        'id': 3,
-        'name': 'eggs',
-        'estimatedCostInCents': 472,
+        id: 3,
+        name: "eggs",
+        estimatedCostInCents: 472,
       },
-    ]
+    ];
 
     user = new User(usersData[0]);
     user2 = new User(usersData2[0]);
@@ -142,26 +152,44 @@ describe("Pantry", () => {
   });
 
   it("should check whether a user's pantry has enough ingredients to cook a certain recipe", () => {
-    expect(pantry.checkUserStock(recipe, ingredientsData)).to.equal('You can cook this meal now!');
+    expect(pantry.checkUserStock(recipe, ingredientsData)).to.equal(
+      "You can cook this meal now!"
+    );
   });
-
 
   it("should check whether a user's pantry does not have ingredients to cook a certain recipe and tell them what is missing", () => {
-    console.log(pantry2.checkUserStock(recipe,ingredientsData));
-    expect(pantry2.checkUserStock(recipe,ingredientsData)).to.equal('You are missing the Following Ingredients to cook a meal: wheat flour - 1.5 c. ');
+    //console.log(pantry2.checkUserStock(recipe,ingredientsData));
+    expect(pantry2.checkUserStock(recipe, ingredientsData)).to.equal(
+      "You are missing the Following Ingredients to cook a meal: wheat flour - 1.5 c. "
+    );
+  });
+  //NEED: finishStockCheck() Happy & Sad (( ))
+  it("should not be able to cook a recipe if the user does not have the required ingredients", () => {
+    expect(
+      pantry.finishStockCheck(missingIngredients, ingredientsData)
+    ).to.equal(
+      "You are missing the Following Ingredients to cook a meal: wheat flour - 1.5 c. "
+    );
   });
 
-  //should let a user know what ingredient they still need to cook that specific recipe.
+  //NEED: determineNames() Sad
+  it("should be able to determine names of the ingredients by ID", () => {
+    expect(
+      pantry.determineNames(missingIngredients, ingredientsData)
+    ).to.deep.equal(missingIngredientsNames);
+  });
+
+  //NEED: changeStock() Happy & Sad
 
   // it("should be able to remove stock from a User's pantry after cooking the recipe", () => {
-  //   expect(pantry.changeStock(recipe)).to.equal.(>>>decrementedupdatedpantry)
+  // expect(pantry.changeStock(recipe)).to.equal.(>>>decrementedupdatedpantry)
   // })
 
+  //As a user, I should .
   // it("should be able to add a single ingredient to a User's pantry", () => {
   //   expect(pantry.changeStock(recipe,1)).to.equal.(>>>incrementedupdatedpantry)
   // })
 
-  it("should be able to determine names of the ingredients by ID", () => {
-    expect(pantry.determineNames(missingIngredients, ingredientsData)).to.deep.equal(missingIngredientsNames)
-  });
+  //MAYBE WILL NEED: decrementStock() Happy & Sad IF KEEPING IN PANTRY CLASS
+  //MAYBE WILL NEED: addStock() Happy & Sad IF KEEPING IN PANTRY CLASS
 });
