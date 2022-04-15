@@ -22,6 +22,8 @@ import Pantry from "../src/classes/Pantry";
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
 const pantryView = document.querySelector(".pantry-view");
+const pantryIngredientsList = document.querySelector(".pantry-view");
+const recipeIngredientsList = document.querySelector(".pantry-view");
 const pageTitle = document.querySelector(".page-title-section");
 const welcomeUser = document.querySelector(".user-welcome");
 const forwardButton = document.getElementById("goForward");
@@ -208,6 +210,8 @@ const goToPantry = () => {
     wantToCookButton
   ]);
     pageTitle.innerText = "My Pantry!";
+    // pantryIngredientsList.innerHTML = someMethod(pantryItems);
+    // recipeIngredientsList.innerHTML = someMethod(recipeItems);
   };
 
 const goToWantToCook = () => {

@@ -239,7 +239,7 @@ body {
   width: 50%;
 }
 
-.ingredients-list {
+.pantry-ingredients-list, .recipe-ingredients-list {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   height:70%;
   width: 80%;
