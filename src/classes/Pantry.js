@@ -56,34 +56,6 @@ class Pantry {
     });
   }
 
-  //-------------------------move to scripts.
-  changeStock(recipe, subtractStock = -1) {
-    if (checkUserStock(recipe)) {
-      recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
-        this.pantry.forEach((pantryIngredient) => {
-          if (recipeIngredient.id === pantryIngredient.ingredient) {
-            postIngredients(
-              pantryIngredient.ingredient,
-              recipeIngredient.quantity.amount * subtract
-            ); // send decreased amounts to server
-            getIngredients(
-              pantryIngredient.ingredient,
-              recipeIngredient.quantity.amount
-            ); //get decreased amounts from server and update user Pantry global variables
-            console.log(
-              `ran post function and changed server pantry with the following data,${
-                pantryIngredient.ingredient
-              } changed by ${recipeIngredient.quantity.amount * subtract}`
-            );
-          }
-        });
-      });
-    } else {
-      return "You don't have enough ingredients to cook this, how did you make it this far?";
-    }
-  }
-
-  //--------------------------
 }
 
 export default Pantry;
