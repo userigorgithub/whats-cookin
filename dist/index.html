@@ -42,7 +42,7 @@
         </section>
       </section>
     </section>
-    <h2 class="page-title-section">Let's Find a Recipe!</h2>
+    <h2 class="page-title-section">My Pantry!</h2>
     <section class="main-section hidden">
       <section class="go-back">
         <button class="shift-view" id="goBackward">Back</button>
@@ -57,7 +57,7 @@
       <section class ="current-ingredients">
         <h3>Here are your currently Stocked Ingredients</h3>
         <section class="ingredients-list">
-          <select name="ingredientsList">
+          <section name="ingredientsList">
             <ul> 1 cup flour</ul>
             <ul> 3 pounds water</ul>
             <ul> 3 pounds water</ul>
@@ -68,18 +68,18 @@
             <ul> 3 pounds water</ul>
             <ul> 3 pounds water</ul>
             <ul> 3 pounds water</ul>
-          </select>
+          </section>
         </section>
       </section>
       <section class ="add-ingredients">
         <h3>Add Ingredients to Your Pantry:</h3>
-        <form>
-          <label for="ingredientName">Ingredient Name (lowercase)</label><br>
-          <input type="text" pattern="[a-z]"><br>
-          <label for="ingredientQuantity">Ingredient Quantity</label><br>
-          <input type="number"><br>
-          <label for="ingredientUnits">Ingredient Units</label><br>
-          <input type="text" pattern="[a-z]"><br>
+        <form class ="add-ingredients-form">
+          <label for="ingredientName">Ingredient Name (lowercase)</label>
+          <input type="text" pattern="[a-z]{*}" required><br>
+          <label for="ingredientQuantity">Ingredient Quantity</label>
+          <input type="number" placeholder="0" min="0" required><br>
+          <label for="ingredientUnits">Ingredient Units</label>
+          <input type="text" pattern="[a-z]{*}" required><br>
           <input type="submit">
         </form>
       </section>
@@ -91,7 +91,7 @@
           <option value="Pudding Cups">PuddingCups</option>
         </select>
         <section class="ingredients-list">
-          <select name="ingredientsList">
+          <section name="ingredientsList">
             <ul> 1 cup flour</ul>
             <ul> 3 pounds water</ul>
             <ul> 3 pounds water</ul>
@@ -102,7 +102,7 @@
             <ul> 3 pounds water</ul>
             <ul> 3 pounds water</ul>
             <ul> 3 pounds water</ul>
-          </select>
+          </section>
         </section>
       </section>
     </section>
