@@ -2,11 +2,24 @@
 // 2. make QS for js-error -DONE
 // 3. create .catch for GET requests -DONE
 // 4. create function for it: displayError -DONE
-// REcreate error? -???
-// 5.
+//note: recreate error - don't run whats-cookin-api (do run main app) -message at the bottom
+
+// 5. create POST request function changePantryStock/addPantryStock for pantry -PARTIAL
+//note: adding ings only?
+//note: subtracting upon other button (To Cook!) click? therefore...
+//note: will it create or is it separate POST request from adding?
+// 6. create .catch for POST requests -DONE
+// 7. create function to checkErrors for POST responses when user enters data -NOT DONE
+
+// -TO DO-
+// 8. create QS for submit button QS: submitIngredient (id)
+// 9. create EL for submit's querySelector
+// 10. create function for POST req using form
+
 
 //----------Query Selectors----------//
 const errorMsg = document.querySelector('.js-error');
+
 
 //---------Global Variables----------//
 let apiUsersData, apiIngredientsData, apiRecipeData;
@@ -24,13 +37,27 @@ const fetchAll = () => {
   apiRecipeData = fetchData("recipes");
 };
 
+const changePantryStock = (pantryStock) => {
+  fetch(apiUsersData, { // only apiUsersData here since we alter that user's pantry?
+    method: 'POST',
+    body: JSON.stringify(pantryStock), // remember how HTTP can only send and receive strings, just like localStorage?
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => checkErrors(response)) //checkErrors function
+  .catch((error) => displayError(error))
+};
+
+
 const displayError = (error) => {
-  if (error.message === "Failed to Fetch!") {
+  if (error.message === "Failed to fetch") {
     errorMsg.innerText = "Ops, sorry! Something went wrong! Try again!";
   } else {
     errorMsg.innerText = error.message;
   }
 };
+
+
+
 
 //----------Event Listeners----------//
 
