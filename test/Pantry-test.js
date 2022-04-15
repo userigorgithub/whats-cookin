@@ -99,7 +99,6 @@ describe("Pantry", () => {
           "hor d'oeuvre",
         ],
       },
-      //update a decremented stock pantry
     ];
 
     missingIngredients = [
@@ -170,14 +169,12 @@ describe("Pantry", () => {
     );
   });
 
-  //ADDED: finishStockCheck() Happy
   it("should be able to cook a recipe if the user has the required ingredients", () => {
     expect(
       pantry.finishStockCheck(missingIngredients, ingredientsData)
     ).to.equal("You can cook this meal now!");
   });
 
-  //ADDED: finishStockCheck() Sad (( ))
   it("should not be able to cook a meal if the user does not have the proper ingredients", () => {
     expect(
       pantry2.finishStockCheck(missingIngredients2, ingredientsData)
@@ -186,22 +183,9 @@ describe("Pantry", () => {
     );
   });
 
-  //NEED: determineNames() Sad
   it("should be able to determine names of the ingredients by ID", () => {
     expect(
       pantry.determineNames(missingIngredients, ingredientsData)
     ).to.deep.equal(missingIngredientsNames);
   });
-
-  // it("should be able to remove stock from a User's pantry after cooking the recipe", () => {
-  // expect(pantry.changeStock(recipe)).to.equal.(>>>decrementedupdatedpantry)
-  // })
-
-  //As a user, I should .
-  // it("should be able to add a single ingredient to a User's pantry", () => {
-  //   expect(pantry.changeStock(recipe,1)).to.equal.(>>>incrementedupdatedpantry)
-  // })
-
-  //MAYBE WILL NEED: decrementStock() Happy & Sad IF KEEPING IN PANTRY CLASS
-  //MAYBE WILL NEED: addStock() Happy & Sad IF KEEPING IN PANTRY CLASS
 });

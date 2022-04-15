@@ -14,7 +14,6 @@ class Pantry {
           recipeIngredient.id === pantryIngredient.ingredient &&
           pantryIngredient.amount >= recipeIngredient.quantity.amount
         ) {
-          // console.log('matched and sufficient amount for', pantryIngredient.ingredient)
           missingIngredients[index].quantity.amount = 0;
         } else if (
           recipeIngredient.id === pantryIngredient.ingredient &&
@@ -37,7 +36,6 @@ class Pantry {
     if (
       missingIngredientsNames.every((ingredient) => !ingredient.quantity.amount)
     ) {
-      console.log("you have enough ingredients to cook");
       return "You can cook this meal now!";
     } else {
       return `You are missing the Following Ingredients to cook a meal: ${missingIngredientsNames
@@ -55,11 +53,8 @@ class Pantry {
       ingredientsData.forEach((ingredientItemInRepository) => {
         if (ingredient.id === ingredientItemInRepository.id) {
           ingredient.id = ingredientItemInRepository.name;
-          console.log("line 53", ingredientItemInRepository);
         }
-        console.log("line 56", ingredient);
       });
-      console.log("line 58", ingredient);
       return ingredient;
     });
   }
