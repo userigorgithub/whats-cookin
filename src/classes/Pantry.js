@@ -1,6 +1,3 @@
-import Ingredient from "../classes/Ingredient";
-// import ingredientsData from "../src/data/ingredients";
-
 class Pantry {
   constructor(pantry) {
     this.pantry = pantry;
