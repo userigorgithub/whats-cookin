@@ -64,6 +64,7 @@ class Pantry {
     });
   }
 
+  //-------------------------move to scripts.
   changeStock(recipe, subtractStock = -1) {
     if (checkUserStock(recipe)) {
       recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
@@ -89,6 +90,8 @@ class Pantry {
       return "You don't have enough ingredients to cook this, how did you make it this far?";
     }
   }
+
+  //--------------------------
 }
 
 export default Pantry;

@@ -13,6 +13,7 @@ describe("Pantry", () => {
     user,
     user2,
     missingIngredients,
+    missingIngredients2,
     missingIngredientsNames,
     ingredientsData;
 
@@ -107,6 +108,12 @@ describe("Pantry", () => {
       { id: 3, quantity: { amount: 0, unit: "large" } },
     ];
 
+    missingIngredients2 = [
+      { id: 1, quantity: { amount: 1.5, unit: "c" } },
+      { id: 2, quantity: { amount: 0, unit: "tsp" } },
+      { id: 3, quantity: { amount: 0, unit: "large" } },
+    ];
+
     missingIngredientsNames = [
       { id: "wheat flour", quantity: { amount: 0, unit: "c" } },
       { id: "bicarbonate of soda", quantity: { amount: 0, unit: "tsp" } },
@@ -158,15 +165,22 @@ describe("Pantry", () => {
   });
 
   it("should check whether a user's pantry does not have ingredients to cook a certain recipe and tell them what is missing", () => {
-    //console.log(pantry2.checkUserStock(recipe,ingredientsData));
     expect(pantry2.checkUserStock(recipe, ingredientsData)).to.equal(
       "You are missing the Following Ingredients to cook a meal: wheat flour - 1.5 c. "
     );
   });
-  //NEED: finishStockCheck() Happy & Sad (( ))
-  it("should not be able to cook a recipe if the user does not have the required ingredients", () => {
+
+  //ADDED: finishStockCheck() Happy
+  it("should be able to cook a recipe if the user has the required ingredients", () => {
     expect(
       pantry.finishStockCheck(missingIngredients, ingredientsData)
+    ).to.equal("You can cook this meal now!");
+  });
+
+  //ADDED: finishStockCheck() Sad (( ))
+  it("should not be able to cook a meal if the user does not have the proper ingredients", () => {
+    expect(
+      pantry2.finishStockCheck(missingIngredients2, ingredientsData)
     ).to.equal(
       "You are missing the Following Ingredients to cook a meal: wheat flour - 1.5 c. "
     );
@@ -178,8 +192,6 @@ describe("Pantry", () => {
       pantry.determineNames(missingIngredients, ingredientsData)
     ).to.deep.equal(missingIngredientsNames);
   });
-
-  //NEED: changeStock() Happy & Sad
 
   // it("should be able to remove stock from a User's pantry after cooking the recipe", () => {
   // expect(pantry.changeStock(recipe)).to.equal.(>>>decrementedupdatedpantry)
