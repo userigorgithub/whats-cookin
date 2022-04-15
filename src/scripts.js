@@ -21,6 +21,7 @@ import Pantry from "../src/classes/Pantry";
 //----------Query Selectors----------//
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
+const pantryView = document.querySelector(".pantry-view");
 const pageTitle = document.querySelector(".page-title-section");
 const welcomeUser = document.querySelector(".user-welcome");
 const forwardButton = document.getElementById("goForward");
@@ -30,6 +31,7 @@ const favoriteButton = document.getElementById("addFavorite");
 const addToCookButton = document.getElementById("addToCook");
 const homeButton = document.getElementById("homeButton");
 const favoritesButton = document.getElementById("favoritesButton");
+const pantryButton = document.getElementById("pantryButton");
 const wantToCookButton = document.getElementById("wantToCookButton");
 const instructions = document.querySelector(".instructions");
 const ingredients = document.querySelector(".ingredients");
@@ -148,13 +150,14 @@ const shiftBackward = () => {
   displayAllRecipes(currentRecipes);
 };
 const goHome = () => {
-  hideElement([homeButton, recipeView]);
+  hideElement([homeButton, recipeView,pantryView]);
   showElement([
     bottomSection,
     mainSection,
     favoritesButton,
     wantToCookButton,
     searchContainer,
+    pantryButton,
   ]);
   pageTitle.innerText = "Let's Find a Recipe!";
   const restoreRecipes = new RecipeRepository(recipeData);
@@ -174,13 +177,14 @@ const goHome = () => {
 };
 const goToFavorites = () => {
   goHome();
-  hideElement([recipeView, favoritesButton]);
+  hideElement([recipeView, favoritesButton,pantryView]);
   showElement([
     bottomSection,
     homeButton,
     mainSection,
     searchContainer,
     wantToCookButton,
+    pantryButton
   ]);
   searchBar.placeHolder = "Search Favorite Recipes";
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
@@ -193,10 +197,23 @@ const goToFavorites = () => {
   }
   displayAllRecipes(currentRecipes);
 };
+
+const goToPantry = () => {
+  goHome();
+  hideElement([recipeView, pantryButton,bottomSection,mainSection,searchContainer]);
+  showElement([
+    homeButton,
+    pantryView,
+    favoritesButton,
+    wantToCookButton
+  ]);
+    pageTitle.innerText = "My Pantry!";
+  };
+
 const goToWantToCook = () => {
   goHome();
-  hideElement([recipeView, wantToCookButton, searchContainer]);
-  showElement([bottomSection, homeButton, mainSection, favoritesButton]);
+  hideElement([recipeView, wantToCookButton, searchContainer,pantryView]);
+  showElement([bottomSection, homeButton, mainSection, favoritesButton,pantryButton]);
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
     (recipe) => recipe.addedToCook
   );
@@ -212,8 +229,8 @@ const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
-  hideElement([bottomSection, mainSection, searchContainer]);
-  showElement([recipeView, homeButton]);
+  hideElement([bottomSection, mainSection, searchContainer,pantryView]);
+  showElement([recipeView, homeButton,pantryButton]);
   pageTitle.innerText = "Is This Your Next Meal?";
   let heart = "hidden";
   let love = "";
@@ -333,6 +350,7 @@ boxOfRecipes.addEventListener("click", (e) =>
 );
 homeButton.addEventListener("click", (e) => goHome());
 favoritesButton.addEventListener("click", (e) => goToFavorites());
+pantryButton.addEventListener("click", (e) => goToPantry());
 wantToCookButton.addEventListener("click", (e) => goToWantToCook());
 searchBar.addEventListener("keyup", (e) => searchItems(event.target.value));
 snacks.addEventListener("click", (e) => {
