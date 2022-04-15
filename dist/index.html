@@ -80,11 +80,11 @@
           <input type="number" placeholder="0" min="0" required><br>
           <label for="ingredientUnits">Ingredient Units</label>
           <input type="text" pattern="[a-z]{*}" required><br>
-          <input type="submit">
+          <input type="submit" id="submitIngredient">
         </form>
       </section>
       <section class ="upcoming-recipes">
-        <h3> Your Upcoming Recipes</h3>
+        <h3> Recipes You Want To Cook</h3>
         <select name ="recipesToCook">
           <option value="">Select a Recipe</option>
           <option value="Pulled Pork">Pulled Pork</option>
@@ -106,7 +106,7 @@
         </section>
       </section>
     </section>
-    <section class ="bottom-section">
+    <section class ="bottom-section hidden">
       <button class="filter-buttons" id="mains">Search Mains</button>
       <button class="filter-buttons" id="snacks">Search Snacks</button>
       <button class="filter-buttons" id="sides">Search Sides</button>
