@@ -212,6 +212,45 @@ body {
   justify-content: space-around;
 }
 
+/*  Pantry View  */
+.pantry-view {
+  display: flex;
+  height: 50%;
+  width: 100%;
+}
+
+.current-ingredients, .add-ingredients, .upcoming-recipes  {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+  width: 33%;
+}
+
+.add-ingredients-form {
+  align-items: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
+  height: 70%;
+  justify-content: space-evenly;
+  padding: 2%;
+  width: 50%;
+}
+
+.ingredients-list {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  height:70%;
+  width: 80%;
+  overflow-y: scroll;
+
+}
+
+h3 {
+  font-size: 100%;
+}
+
 /*  Bottom Section */
 .bottom-section {
   align-items: center;
