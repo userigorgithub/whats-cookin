@@ -390,19 +390,26 @@ const changeStock = (recipe, subtractStock = -1) => {
   }
 };
 
-//randomUser.singleUser.pantry[array of ings...]
-//access the array ID to match to ing id and QTY and produce ings NAME
 const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
-  return pantryIngredients.map((ingredient) => {
-    ingredientsData.forEach((ingredientItemInRepository) => {
-      if (ingredient.ingredient === ingredientItemInRepository.id) {
-        ingredient.ingredient = ingredientItemInRepository.name;
-      }
-    });
-    return ingredient;
-  });
+  pantryIngredientsList.innerHTML = "";
+  return pantryIngredients
+    .map((ingredient) => {
+      ingredientsData.forEach((ingredientItemInRepository) => {
+        if (ingredient.ingredient === ingredientItemInRepository.id) {
+          ingredient.ingredient = ingredientItemInRepository.name;
+        }
+      });
+      return ingredient;
+    })
+    .map(
+      (e) => (pantryIngredientsList.innerHTML += `<ul>${e.ingredient}</ul>`)
+    );
 };
+
+const displayPantryNames = () => {};
+console.log(displayPantryNames());
 //map to string of innerHTML
+
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
