@@ -76,16 +76,11 @@ const setGlobalVariablesAndDisplay = (data) => {
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
   );
+  //////////////////
+
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   displayAllRecipes(allRecipes);
-  //////////////////
-  console.log(
-    determinePantryIngredientNames(
-      randomUser.singleUser.pantry,
-      ingredientsData
-    )
-  );
 };
 const displayAllRecipes = (currentRecipes = allRecipes) => {
   boxOfRecipes.innerHTML = "";
@@ -222,6 +217,8 @@ const goToPantry = () => {
     searchContainer,
   ]);
   showElement([homeButton, pantryView, favoritesButton, wantToCookButton]);
+  determinePantryIngredientNames(randomUser.singleUser.pantry, ingredientsData);
+  displayToCookRecipesInPantry();
   pageTitle.innerText = "My Pantry!";
   // pantryIngredientsList.innerHTML = someMethod(pantryItems);
   // recipeIngredientsList.innerHTML = someMethod(recipeItems);
@@ -407,8 +404,22 @@ const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
     );
 };
 
-const displayPantryNames = () => {};
-console.log(displayPantryNames());
+const displayToCookRecipesInPantry = () => {
+  //  currentRecipes.repositoryData
+  const recipesToCookInPantry = allRecipes.repositoryData
+    .filter((recipe) => recipe.addedToCook)
+    .map((recipe) => {
+      return recipe.name;
+    });
+  console.log(recipesToCookInPantry);
+  return recipesToCookInPantry;
+};
+
+//update dropdown with those names
+//connect want-to-cook "currentRecipes" array to the drop down
+//go to cook function to display names
+// //ru.su.wtc
+//update that recipes' ingredients and amount
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => loadPage());
