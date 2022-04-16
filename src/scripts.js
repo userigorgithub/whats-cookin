@@ -44,6 +44,7 @@ const mains = document.getElementById("mains");
 const snacks = document.getElementById("snacks");
 const sides = document.getElementById("sides");
 const bottomSection = document.querySelector(".bottom-section");
+const userID = document.getElementById("userID");
 
 //---------Global Variables----------//
 let recipeData,
@@ -72,6 +73,7 @@ const setGlobalVariablesAndDisplay = (data) => {
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
   );
+  userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   displayAllRecipes(allRecipes);
 };
