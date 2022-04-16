@@ -22,8 +22,10 @@ import Pantry from "../src/classes/Pantry";
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
 const pantryView = document.querySelector(".pantry-view");
-const pantryIngredientsList = document.querySelector(".pantry-view");
-const recipeIngredientsList = document.querySelector(".pantry-view");
+const pantryIngredientsList = document.querySelector(
+  ".pantry-ingredients-list"
+);
+const recipeIngredientsList = document.querySelector(".pantry-recipe-list");
 const pageTitle = document.querySelector(".page-title-section");
 const welcomeUser = document.querySelector(".user-welcome");
 const forwardButton = document.getElementById("goForward");
@@ -57,8 +59,9 @@ let recipeData,
 //----------Functions----------//
 const loadPage = () => {
   fetchAll();
-  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
-    .then((data) => setGlobalVariablesAndDisplay(data))
+  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData]).then((data) =>
+    setGlobalVariablesAndDisplay(data)
+  );
 };
 
 const setGlobalVariablesAndDisplay = (data) => {
@@ -76,6 +79,13 @@ const setGlobalVariablesAndDisplay = (data) => {
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   displayAllRecipes(allRecipes);
+  //////////////////
+  console.log(
+    determinePantryIngredientNames(
+      randomUser.singleUser.pantry,
+      ingredientsData
+    )
+  );
 };
 const displayAllRecipes = (currentRecipes = allRecipes) => {
   boxOfRecipes.innerHTML = "";
@@ -154,7 +164,7 @@ const shiftBackward = () => {
   displayAllRecipes(currentRecipes);
 };
 const goHome = () => {
-  hideElement([homeButton, recipeView,pantryView]);
+  hideElement([homeButton, recipeView, pantryView]);
   showElement([
     bottomSection,
     mainSection,
@@ -181,14 +191,14 @@ const goHome = () => {
 };
 const goToFavorites = () => {
   goHome();
-  hideElement([recipeView, favoritesButton,pantryView]);
+  hideElement([recipeView, favoritesButton, pantryView]);
   showElement([
     bottomSection,
     homeButton,
     mainSection,
     searchContainer,
     wantToCookButton,
-    pantryButton
+    pantryButton,
   ]);
   searchBar.placeHolder = "Search Favorite Recipes";
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
@@ -204,22 +214,29 @@ const goToFavorites = () => {
 
 const goToPantry = () => {
   goHome();
-  hideElement([recipeView, pantryButton,bottomSection,mainSection,searchContainer]);
-  showElement([
-    homeButton,
-    pantryView,
-    favoritesButton,
-    wantToCookButton
+  hideElement([
+    recipeView,
+    pantryButton,
+    bottomSection,
+    mainSection,
+    searchContainer,
   ]);
-    pageTitle.innerText = "My Pantry!";
-    // pantryIngredientsList.innerHTML = someMethod(pantryItems);
-    // recipeIngredientsList.innerHTML = someMethod(recipeItems);
-  };
+  showElement([homeButton, pantryView, favoritesButton, wantToCookButton]);
+  pageTitle.innerText = "My Pantry!";
+  // pantryIngredientsList.innerHTML = someMethod(pantryItems);
+  // recipeIngredientsList.innerHTML = someMethod(recipeItems);
+};
 
 const goToWantToCook = () => {
   goHome();
-  hideElement([recipeView, wantToCookButton, searchContainer,pantryView]);
-  showElement([bottomSection, homeButton, mainSection, favoritesButton,pantryButton]);
+  hideElement([recipeView, wantToCookButton, searchContainer, pantryView]);
+  showElement([
+    bottomSection,
+    homeButton,
+    mainSection,
+    favoritesButton,
+    pantryButton,
+  ]);
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
     (recipe) => recipe.addedToCook
   );
@@ -235,8 +252,8 @@ const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
-  hideElement([bottomSection, mainSection, searchContainer,pantryView]);
-  showElement([recipeView, homeButton,pantryButton]);
+  hideElement([bottomSection, mainSection, searchContainer, pantryView]);
+  showElement([recipeView, homeButton, pantryButton]);
   pageTitle.innerText = "Is This Your Next Meal?";
   let heart = "hidden";
   let love = "";
@@ -371,8 +388,21 @@ const changeStock = (recipe, subtractStock = -1) => {
   } else {
     return "You don't have enough ingredients to cook this, how did you make it this far?";
   }
-}
+};
 
+//randomUser.singleUser.pantry[array of ings...]
+//access the array ID to match to ing id and QTY and produce ings NAME
+const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
+  return pantryIngredients.map((ingredient) => {
+    ingredientsData.forEach((ingredientItemInRepository) => {
+      if (ingredient.ingredient === ingredientItemInRepository.id) {
+        ingredient.ingredient = ingredientItemInRepository.name;
+      }
+    });
+    return ingredient;
+  });
+};
+//map to string of innerHTML
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());

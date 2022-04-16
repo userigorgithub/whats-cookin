@@ -54,58 +54,103 @@
     </section>
     <section class="recipe-view hidden"></section>
     <section class="pantry-view hidden">
-      <section class ="current-ingredients">
+      <section class="current-ingredients">
         <h3>Here are your currently Stocked Ingredients</h3>
-        <section class="pantry-ingredients-list">
-          <section name="ingredientsList">
-            <ul> 1 cup flour</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
+        <section class="pantry-ingredients-scroll">
+          <section class="pantry-ingredients-list" name="pantryIngredientsList">
+            <ul>
+              1 cup flour
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
           </section>
         </section>
       </section>
-      <section class ="add-ingredients">
+      <section class="add-ingredients">
         <h3>Add Ingredients to Your Pantry:</h3>
-        <form class ="add-ingredients-form" onsubmit='return false'>
-          <input type="hidden" name="user-id" id="userID" value="" ><br>
+        <form class="add-ingredients-form" onsubmit="return false">
+          <input type="hidden" name="user-id" id="userID" value="" /><br />
           <label for="ingredientID">Ingredient ID</label>
-          <input type="number" name="ingredient-id" required><br>
+          <input type="number" name="ingredient-id" required /><br />
           <label for="ingredientModification">Quantity to Add</label>
-          <input type="number" name="ingredient-modification" min="0" required><br>
-          <input type="submit" id="submitIngredient">
+          <input
+            type="number"
+            name="ingredient-modification"
+            min="0"
+            required
+          /><br />
+          <input type="submit" id="submitIngredient" />
         </form>
       </section>
-      <section class ="upcoming-recipes">
-        <h3> Recipes You Want To Cook</h3>
-        <select name ="recipesToCook">
+      <section class="upcoming-recipes">
+        <h3>Recipes You Want To Cook</h3>
+        <select name="recipesToCook">
           <option value="">Select a Recipe</option>
           <option value="Pulled Pork">Pulled Pork</option>
           <option value="Pudding Cups">PuddingCups</option>
         </select>
-        <section class="recipe-ingredients-list">
-          <section name="ingredientsList">
-            <ul> 1 cup flour</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
-            <ul> 3 pounds water</ul>
+        <section class="pantry-recipe-scroll">
+          <section class="pantry-recipe-list" name="pantryRecipeList">
+            <ul>
+              1 cup flour
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
+            <ul>
+              3 pounds water
+            </ul>
           </section>
         </section>
       </section>
     </section>
-    <section class ="bottom-section">
+    <section class="bottom-section">
       <button class="filter-buttons" id="mains">Search Mains</button>
       <button class="filter-buttons" id="snacks">Search Snacks</button>
       <button class="filter-buttons" id="sides">Search Sides</button>
