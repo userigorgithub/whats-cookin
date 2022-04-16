@@ -74,12 +74,18 @@
       <section class ="add-ingredients">
         <h3>Add Ingredients to Your Pantry:</h3>
         <form class ="add-ingredients-form" onsubmit='return false'>
-          <label for="ingredientName">Ingredient Name (lowercase)</label>
+          <label for="userID">User ID</label>
+          <input type="number" name="user-id" required><br>
+          <label for="ingredientID">Ingredient ID</label>
+          <input type="number" name="ingredient-id" required><br>
+          <label for="ingredientUnits">Ingredient Units</label>
+          <input type="number" name="ingredient-units" required><br>
+          <!-- <label for="ingredientName">Ingredient Name (lowercase)</label>
           <input type="text" name="ingredientName" pattern="[a-z]{*}" required><br>
           <label for="ingredientQuantity">Ingredient Quantity</label>
           <input type="number" name="ingredientQuantity" placeholder="0" min="0" required><br>
           <label for="ingredientUnits">Ingredient Units</label>
-          <input type="text" name="ingredientUnits" pattern="[a-z]{*}" required><br>
+          <input type="text" name="ingredientUnits" pattern="[a-z]{*}" required><br> -->
           <input type="submit" id="submitIngredient">
         </form>
       </section>
