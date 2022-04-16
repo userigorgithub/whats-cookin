@@ -1,17 +1,3 @@
-
-// 5. create POST request function changePantryStock/addPantryStock for pantry -PARTIAL
-//note: adding ings only?
-//note: subtracting upon other button (To Cook!) click? therefore...
-//note: will it create or is it separate POST request from adding?
-// 6. create .catch for POST requests -DONE
-// 7. create function to checkErrors for POST responses when user enters data -DONE
-
-// -TO DO-
-// 8. create QS for form button? submitIngredientForm- id -DONE
-// 9. create EL for submit's querySelector - DONE
-// 10. create function for POST req using form -IN PROG
-
-
 //----------Query Selectors----------//
 const errorMsg = document.querySelector('.page-title-section');
 const pantryForm = document.querySelector('.add-ingredients-form');
@@ -33,9 +19,9 @@ const fetchAll = () => {
 };
 
 const postPantryStock = (pantryStock) => {
-  fetch('http://localhost:3001/api/v1/users', { // only apiUsersData here since we alter that user's pantry?
+  fetch('http://localhost:3001/api/v1/users', {
     method: 'POST',
-    body: JSON.stringify(pantryStock), // remember how HTTP can only send and receive strings, just like localStorage?
+    body: JSON.stringify(pantryStock),
     headers: { 'Content-Type': 'application/json' }
   })
   .then(response => checkError(response))
@@ -45,18 +31,11 @@ const postPantryStock = (pantryStock) => {
 const submitPantryForm = (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  // console.log(randomUser)
-  // console.log(formData.values())
   const pantryStock = {
     userID: parseInt(formData.get('user-id')),
     ingredientID: parseInt(formData.get('ingredient-id')),
-    ingredientModification: parseInt(formData.get('ingredient-units'))
+    ingredientModification: parseInt(formData.get('ingredient-modification'))
   };
-  // const pantryStock = {
-  //   userID: 1,
-  //   ingredientID: 11297,
-  //   ingredientModification: 1000
-  // };
   postPantryStock(pantryStock);
   e.target.reset();
 };
