@@ -417,8 +417,7 @@ const displayToCookRecipesInPantry = () => {
 
 //update dropdown with those names
 //connect want-to-cook "currentRecipes" array to the drop down
-//go to cook function to display names
-// //ru.su.wtc
+//go to cook function to display name
 //update that recipes' ingredients and amount
 
 //----------Event Listeners----------//
