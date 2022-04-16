@@ -26,6 +26,7 @@ const pantryIngredientsList = document.querySelector(
   ".pantry-ingredients-list"
 );
 const recipeIngredientsList = document.querySelector(".pantry-recipe-list");
+const recipesDropDown = document.getElementById("recipesDropDown");
 const pageTitle = document.querySelector(".page-title-section");
 const welcomeUser = document.querySelector(".user-welcome");
 const forwardButton = document.getElementById("goForward");
@@ -405,6 +406,7 @@ const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
 };
 
 const displayToCookRecipesInPantry = () => {
+  recipesDropDown.innerHTML = `<option value="">Select a Recipe</option>`;
   //  currentRecipes.repositoryData
   const recipesToCookInPantry = allRecipes.repositoryData
     .filter((recipe) => recipe.addedToCook)
@@ -412,7 +414,9 @@ const displayToCookRecipesInPantry = () => {
       return recipe.name;
     });
   console.log(recipesToCookInPantry);
-  return recipesToCookInPantry;
+  return recipesToCookInPantry.map(
+    (e) => (recipesDropDown.innerHTML += `<option value="${e}">${e}</option>`)
+  );
 };
 
 //update dropdown with those names
@@ -421,6 +425,9 @@ const displayToCookRecipesInPantry = () => {
 //update that recipes' ingredients and amount
 
 //----------Event Listeners----------//
+recipesDropDown.addEventListener("change", (e) => {
+  console.log(e.target.value);
+});
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
