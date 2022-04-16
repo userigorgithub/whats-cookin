@@ -72,7 +72,7 @@ const displayError = (error) => {
 
 const checkError = (response) => {
   if (!response.ok) {
-    throw new Error(response.statusText)
+    throw new Error("Please enter correct information!")
   } else {
     response.json()
   }
