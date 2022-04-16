@@ -1,8 +1,3 @@
-// 1. put in HTML <p class="js-error"></p> above script files at the bottom -DONE
-// 2. make QS for js-error -DONE
-// 3. create .catch for GET requests -DONE
-// 4. create function for it: displayError -DONE
-//note: recreate error - don't run whats-cookin-api (do run main app) -message at the bottom
 
 // 5. create POST request function changePantryStock/addPantryStock for pantry -PARTIAL
 //note: adding ings only?
@@ -12,14 +7,14 @@
 // 7. create function to checkErrors for POST responses when user enters data -DONE
 
 // -TO DO-
-// 8. create QS for form button? submitIngredientForm- id
-// 9. create EL for submit's querySelector
-// 10. create function for POST req using form
+// 8. create QS for form button? submitIngredientForm- id -DONE
+// 9. create EL for submit's querySelector - DONE
+// 10. create function for POST req using form -IN PROG
 
 
 //----------Query Selectors----------//
 const errorMsg = document.querySelector('.page-title-section');
-// #8
+const pantryForm = document.querySelector('.add-ingredients-form');
 
 //---------Global Variables----------//
 let apiUsersData, apiIngredientsData, apiRecipeData;
@@ -37,17 +32,38 @@ const fetchAll = () => {
   apiRecipeData = fetchData("recipes");
 };
 
-const changePantryStock = (pantryStock) => {
-  fetch(apiUsersData, { // only apiUsersData here since we alter that user's pantry?
+const postPantryStock = (pantryStock) => {
+  fetch('http://localhost:3001/api/v1/users', { // only apiUsersData here since we alter that user's pantry?
     method: 'POST',
     body: JSON.stringify(pantryStock), // remember how HTTP can only send and receive strings, just like localStorage?
     headers: { 'Content-Type': 'application/json' }
   })
-  .then(response => checkError(response)) //checkError function
+  .then(response => checkError(response))
+  
+  .then(response => {
+    return console.log(response)
+  })
+   //checkError function
   .catch((error) => displayError(error))
 };
 
-// #10 FUNCTION
+const submitPantryForm = (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  console.log(formData.values())
+  // const pantryStock = {
+  //   userID: formData.get('ingredientName'),
+  //   ingredientID: parseInt(formData.get()),
+  //   ingredientModification: parseInt(formData.get())
+  // };
+  const pantryStock = {
+    userID: 1,
+    ingredientID: 11297,
+    ingredientModification: 1000
+  };
+  postPantryStock(pantryStock);
+  e.target.reset();
+};
 
 
 const displayError = (error) => {
@@ -66,9 +82,8 @@ const checkError = (response) => {
   }
 };
 
-
 //----------Event Listeners----------//
-// #9
+pantryForm.addEventListener('submit', submitPantryForm);
 
 //----------Exports----------//
 export { fetchAll, apiUsersData, apiIngredientsData, apiRecipeData };
