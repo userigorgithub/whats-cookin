@@ -44,6 +44,7 @@ const mains = document.getElementById("mains");
 const snacks = document.getElementById("snacks");
 const sides = document.getElementById("sides");
 const bottomSection = document.querySelector(".bottom-section");
+const userID = document.getElementById("userID");
 
 //---------Global Variables----------//
 let recipeData,
@@ -56,10 +57,10 @@ let recipeData,
 //----------Functions----------//
 const loadPage = () => {
   fetchAll();
-  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData]).then((data) =>
-    setGlobalVariablesAndDisplay(data)
-  );
+  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
+    .then((data) => setGlobalVariablesAndDisplay(data))
 };
+
 const setGlobalVariablesAndDisplay = (data) => {
   console.log("data", data);
   usersData = data[0];
@@ -72,6 +73,7 @@ const setGlobalVariablesAndDisplay = (data) => {
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
   );
+  userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   displayAllRecipes(allRecipes);
 };
