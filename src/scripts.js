@@ -402,13 +402,13 @@ const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
       return ingredient;
     })
     .map(
-      (e) => (pantryIngredientsList.innerHTML += `<ul>${e.ingredient}</ul>`)
+      (e) =>
+        (pantryIngredientsList.innerHTML += `<ul>${e.ingredient} 🍽 ${e.amount}</ul>`)
     );
 };
 
 const displayPantryNames = () => {};
 console.log(displayPantryNames());
-//map to string of innerHTML
 
 //----------Event Listeners----------//
 window.addEventListener("load", (e) => loadPage());
