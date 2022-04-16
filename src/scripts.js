@@ -77,8 +77,6 @@ const setGlobalVariablesAndDisplay = (data) => {
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
   );
-  //////////////////
-
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   displayAllRecipes(allRecipes);
@@ -221,6 +219,7 @@ const goToPantry = () => {
   determinePantryIngredientNames(randomUser.singleUser.pantry, ingredientsData);
   displayToCookRecipesInPantry();
   pageTitle.innerText = "My Pantry!";
+  console.log();
   // pantryIngredientsList.innerHTML = someMethod(pantryItems);
   // recipeIngredientsList.innerHTML = someMethod(recipeItems);
 };
@@ -407,7 +406,6 @@ const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
 
 const displayToCookRecipesInPantry = () => {
   recipesDropDown.innerHTML = `<option value="">Select a Recipe</option>`;
-  //  currentRecipes.repositoryData
   const recipesToCookInPantry = allRecipes.repositoryData
     .filter((recipe) => recipe.addedToCook)
     .map((recipe) => {
@@ -419,14 +417,31 @@ const displayToCookRecipesInPantry = () => {
   );
 };
 
-//update dropdown with those names
-//connect want-to-cook "currentRecipes" array to the drop down
-//go to cook function to display name
-//update that recipes' ingredients and amount
+const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
+  recipeIngredientsList.innerHTML = "";
+  console.log("amazing console log", randomUser.recipesToCook);
+  // return recipeIngredients
+  //   .map((ingredient) => {
+  //     ingredientsData.forEach((ingredientItemInRepository) => {
+  //       if (ingredient.ingredient === ingredientItemInRepository.id) {
+  //         //selected recipe, match to those ings of Current recipe
+  //         ingredient.ingredient = ingredientItemInRepository.name;
+  //       }
+  //     });
+  //     return ingredient;
+  //   })
+  //   .map(
+  //     (e) =>
+  //       (recipeIngredientsList.innerHTML += `<ul>${e.ingredient} 🍽 ${e.amount}</ul>`)
+  //   );
+};
+//if line 420 = to array, return ings
+//filter rec to cook for the same title
 
 //----------Event Listeners----------//
 recipesDropDown.addEventListener("change", (e) => {
-  console.log(e.target.value);
+  getWTCPantryIngredients(ingredientsData, e.target.value);
+  console.log("EtargetVal", e.target.value);
 });
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
