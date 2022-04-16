@@ -39,28 +39,24 @@ const postPantryStock = (pantryStock) => {
     headers: { 'Content-Type': 'application/json' }
   })
   .then(response => checkError(response))
-  
-  .then(response => {
-    return console.log(response)
-  })
-   //checkError function
   .catch((error) => displayError(error))
 };
 
 const submitPantryForm = (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
-  console.log(formData.values())
-  // const pantryStock = {
-  //   userID: formData.get('ingredientName'),
-  //   ingredientID: parseInt(formData.get()),
-  //   ingredientModification: parseInt(formData.get())
-  // };
+  // console.log(randomUser)
+  // console.log(formData.values())
   const pantryStock = {
-    userID: 1,
-    ingredientID: 11297,
-    ingredientModification: 1000
+    userID: parseInt(formData.get('user-id')),
+    ingredientID: parseInt(formData.get('ingredient-id')),
+    ingredientModification: parseInt(formData.get('ingredient-units'))
   };
+  // const pantryStock = {
+  //   userID: 1,
+  //   ingredientID: 11297,
+  //   ingredientModification: 1000
+  // };
   postPantryStock(pantryStock);
   e.target.reset();
 };
