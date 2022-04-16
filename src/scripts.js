@@ -419,21 +419,33 @@ const displayToCookRecipesInPantry = () => {
 
 const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
   recipeIngredientsList.innerHTML = "";
-  console.log("amazing console log", randomUser.recipesToCook);
-  // return recipeIngredients
-  //   .map((ingredient) => {
-  //     ingredientsData.forEach((ingredientItemInRepository) => {
-  //       if (ingredient.ingredient === ingredientItemInRepository.id) {
-  //         //selected recipe, match to those ings of Current recipe
-  //         ingredient.ingredient = ingredientItemInRepository.name;
-  //       }
-  //     });
-  //     return ingredient;
-  //   })
-  //   .map(
-  //     (e) =>
-  //       (recipeIngredientsList.innerHTML += `<ul>${e.ingredient} 🍽 ${e.amount}</ul>`)
-  //   );
+  console.log("rec to cook", randomUser.recipesToCook);
+  console.log("title", recipeTitle);
+  const recipeIngredients = randomUser.recipesToCook
+    .filter((recipe) => {
+      return recipe.name === recipeTitle;
+    })
+    .map((recipe) => {
+      return recipe.ingredients;
+    });
+  return recipeIngredients
+    .flat()
+    .map((ingredient) => {
+      ingredientsData.forEach((ingredientItemInRepository) => {
+        console.log("436", ingredient);
+        console.log("437", ingredientItemInRepository);
+        if (ingredient.id === ingredientItemInRepository.id) {
+          console.log("438 cond working!!");
+          ingredient.id = ingredientItemInRepository.name;
+        }
+      });
+      console.log("441", recipeIngredients.flat());
+      return ingredient;
+    })
+    .map(
+      (e) =>
+        (recipeIngredientsList.innerHTML += `<ul>${e.id} 🍽 ${e.quantity.amount} ${e.quantity.unit}</ul>`)
+    );
 };
 //if line 420 = to array, return ings
 //filter rec to cook for the same title
