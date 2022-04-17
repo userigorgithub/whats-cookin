@@ -219,6 +219,7 @@ const goToPantry = () => {
   determinePantryIngredientNames(randomUser.singleUser.pantry, ingredientsData);
   displayToCookRecipesInPantry();
   pageTitle.innerText = "My Pantry!";
+  recipeIngredientsList.innerText = "Please select a recipe.";
   console.log();
   // pantryIngredientsList.innerHTML = someMethod(pantryItems);
   // recipeIngredientsList.innerHTML = someMethod(recipeItems);
