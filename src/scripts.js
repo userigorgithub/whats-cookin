@@ -12,6 +12,7 @@ import "./images/add.png";
 import "./images/minus.png";
 import "./images/love.png";
 import "./images/heart.png";
+import "./images/cooking.png";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
@@ -278,6 +279,7 @@ const selectRecipe = (selectedIndex) => {
       <img class="to-cook-buttons ${add}" id=${selectedIndex} src="./images/add.png" alt="plus-icon" />
       <img class="to-cook-buttons ${minus}" id=${selectedIndex} src="./images/minus.png" alt="minus-icon" />
     </section>
+
     </section>
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
@@ -288,12 +290,27 @@ const selectRecipe = (selectedIndex) => {
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(
           ingredientsData
         )}</article>
+        <label for="cooking-pan-image">cook now button</label>
+          <img
+            label="button"
+            class="cooking-image"
+            src="./images/cooking.png"
+            alt="cooking pan icon"
+            />
       </section>
     </section>`;
   var boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions");
   boxOfSelectedRecipe.addEventListener("click", (e) => {
     handleBoxOfSelectedRecipeEvents(event.target.className);
   });
+  const cookingImage = document.querySelector(".cooking-image");
+  cookingImage.addEventListener("click", (e) => {
+    cookNow();
+  });
+};
+
+const cookNow = () => {
+  console.log("Josh!! Cook now WORKS!");
 };
 
 const showElement = (domItems) => {
@@ -456,6 +473,7 @@ recipesDropDown.addEventListener("change", (e) => {
   getWTCPantryIngredients(ingredientsData, e.target.value);
   console.log("EtargetVal", e.target.value);
 });
+
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
