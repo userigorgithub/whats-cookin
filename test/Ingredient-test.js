@@ -41,8 +41,8 @@ describe('Ingredient', () => {
   });
 
   it('should be able to search by ingredient id', () => {
-    expect(ingredient.addNameOfIngredient(1)).to.equal('wheat flour');
-    expect(ingredient.addNameOfIngredient(3)).to.equal('eggs');
+    expect(ingredient.addNameOfIngredient(1)).to.equal(' wheat flour');
+    expect(ingredient.addNameOfIngredient(3)).to.equal(' eggs');
   });
 
   it('should be able to provide the Ingredient cost per unit', () => {

@@ -258,9 +258,12 @@ const goToWantToCook = () => {
 };
 
 const selectRecipe = (selectedIndex) => {
+  goHome();
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
+  console.log("recipe check",selectedRecipe)
+  console.log("ingredients check", ingredientsData)
   hideElement([bottomSection, mainSection, searchContainer, pantryView]);
   showElement([recipeView, homeButton, pantryButton]);
   pageTitle.innerText = "Is This Your Next Meal?";
@@ -338,8 +341,11 @@ const cookNow = (identification) => {
   }
   console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
   console.log(identification.dataset.indexNumber);
-  console.log(
+  console.log("currentRecipes check",
     currentRecipes.repositoryData[identification.dataset.indexNumber]
+  );
+  console.log("all recipes check",
+    allRecipes.repositoryData[identification.dataset.indexNumber]
   );
   //either returns what you need still or ok (YAY, WORKING)
   //interpolate ingredients section to you still need.... to cook this
