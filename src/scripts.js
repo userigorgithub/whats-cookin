@@ -281,7 +281,15 @@ const selectRecipe = (selectedIndex) => {
       <img class="to-cook-buttons ${add}" id=${selectedIndex} src="./images/add.png" alt="plus-icon" />
       <img class="to-cook-buttons ${minus}" id=${selectedIndex} src="./images/minus.png" alt="minus-icon" />
     </section>
-
+    <img
+      label="button"
+      class="cooking-image"
+      src="./images/cooking.png"
+      alt="cooking pan icon"
+      data-index-number="${selectedIndex}"
+      />
+      <label for="cooking-pan-image"></label>
+      <h4>Click to Cook This Recipe Now!</>
     </section>
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
@@ -292,14 +300,7 @@ const selectRecipe = (selectedIndex) => {
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(
           ingredientsData
         )}</article>
-        <label for="cooking-pan-image">cook now button</label>
-          <img
-            label="button"
-            class="cooking-image"
-            src="./images/cooking.png"
-            alt="cooking pan icon"
-            data-index-number="${selectedIndex}"
-            />
+
       </section>
     </section>`;
   var boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions");

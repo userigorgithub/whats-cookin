@@ -222,6 +222,13 @@ body {
 }
 
 .cooking-image {
+  cursor: pointer;
+  height: 45%;
+  width: 25%;
+}
+
+.cooking-image:hover {
+  transform: scale(1.2);
 }
 
 /*  Pantry View  */
