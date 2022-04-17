@@ -115,6 +115,7 @@ const displayAllRecipes = (currentRecipes = allRecipes) => {
       return boxOfRecipes;
     });
 };
+
 const handleBoxOfRecipeEvents = () => {
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
@@ -129,6 +130,7 @@ const handleBoxOfRecipeEvents = () => {
     );
   }
 };
+
 const handleBoxOfSelectedRecipeEvents = () => {
   if (event.target.className.includes("to-cook-buttons")) {
     toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
@@ -141,6 +143,7 @@ const handleBoxOfSelectedRecipeEvents = () => {
   }
   selectRecipe(event.target.id);
 };
+
 const searchItems = () => {
   if (favoritesButton.classList.contains("hidden")) {
     userSearchFavorites(event.target.value);
@@ -148,11 +151,13 @@ const searchItems = () => {
     userSearchAllRecipes(event.target.value);
   }
 };
+
 const shiftForward = () => {
   currentRecipes.repositoryData.push(currentRecipes.repositoryData[0]);
   currentRecipes.repositoryData.shift();
   displayAllRecipes(currentRecipes);
 };
+
 const shiftBackward = () => {
   currentRecipes.repositoryData.unshift(
     currentRecipes.repositoryData[currentRecipes.repositoryData.length - 1]
@@ -160,6 +165,7 @@ const shiftBackward = () => {
   currentRecipes.repositoryData.pop();
   displayAllRecipes(currentRecipes);
 };
+
 const goHome = () => {
   hideElement([homeButton, recipeView, pantryView]);
   showElement([
@@ -186,6 +192,7 @@ const goHome = () => {
   displayAllRecipes(restoreRecipes);
   searchBar.value = "";
 };
+
 const goToFavorites = () => {
   goHome();
   hideElement([recipeView, favoritesButton, pantryView]);
@@ -292,7 +299,7 @@ const selectRecipe = (selectedIndex) => {
       <h4>Click to Cook This Recipe Now!</>
     </section>
     <section class="recipe-details-section">
-      <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
+      <article class="instructions">Instructions:<br> ${selectedRecipe.getInstructions()}</article>
       <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(
         ingredientsData
       )}</article>
@@ -300,7 +307,6 @@ const selectRecipe = (selectedIndex) => {
         <article class="cost-recipe">Recipe Cost: ${selectedRecipe.calculateRecipeCost(
           ingredientsData
         )}</article>
-
       </section>
     </section>`;
   var boxOfSelectedRecipe = document.querySelector(".selected-recipe-actions");
@@ -357,6 +363,7 @@ const userSearchFavorites = (searchText) => {
   }
   displayAllRecipes(currentRecipes);
 };
+
 const userSearchAllRecipes = (searchText) => {
   allRecipes = new RecipeRepository(recipeData);
   allRecipes.addDefaultPreferences();
@@ -373,6 +380,7 @@ const userSearchAllRecipes = (searchText) => {
   }
   displayAllRecipes(currentRecipes);
 };
+
 const toggleToCook = (recipe, id) => {
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
@@ -383,6 +391,7 @@ const toggleToCook = (recipe, id) => {
   }
   displayAllRecipes(currentRecipes);
 };
+
 const toggleFavorites = (recipe, id) => {
   if (randomUser.favoriteRecipes.includes(recipe)) {
     allRecipes.repositoryData[id].favorited = false;
