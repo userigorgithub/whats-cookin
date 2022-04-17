@@ -5,6 +5,7 @@ import {
   apiUsersData,
   apiIngredientsData,
   apiRecipeData,
+  postPantryStock,
 } from "./apiCalls.js";
 import "./images/logo.png";
 import "./images/search.png";
@@ -296,7 +297,7 @@ const selectRecipe = (selectedIndex) => {
       data-index-number="${selectedIndex}"
       />
       <label for="cooking-pan-image"></label>
-      <h4>Click to Cook This Recipe Now!</>
+      <h4 class="cook-now-prompt">Click to Cook This Recipe Now!</h4>
     </section>
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br> ${selectedRecipe.getInstructions()}</article>
@@ -320,9 +321,21 @@ const selectRecipe = (selectedIndex) => {
 };
 
 const cookNow = (identification) => {
+  const stillNeeded = document.querySelector(".ingredients");
+  const cookNowPrompt = document.querySelector(".cook-now-prompt");
   const cookNowRecipe = new Recipe(
     currentRecipes.repositoryData[identification.dataset.indexNumber]
   );
+  if (userPantry.checkUserStock(cookNowRecipe, ingredientsData) !== true) {
+    stillNeeded.innerHTML = `${userPantry.checkUserStock(
+      cookNowRecipe,
+      ingredientsData
+    )}`;
+    console.log("Josh, 330 working~");
+  } else {
+    cookNowPrompt.innerText =
+      "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
+  }
   console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
   console.log(identification.dataset.indexNumber);
   console.log(
@@ -404,29 +417,28 @@ const toggleFavorites = (recipe, id) => {
 };
 
 const changeStock = (recipe, subtractStock = -1) => {
-  if (checkUserStock(recipe)) {
-    recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
-      this.pantry.forEach((pantryIngredient) => {
-        if (recipeIngredient.id === pantryIngredient.ingredient) {
-          postIngredients(
-            pantryIngredient.ingredient,
-            recipeIngredient.quantity.amount * subtract
-          ); // send decreased amounts to server
-          getIngredients(
-            pantryIngredient.ingredient,
-            recipeIngredient.quantity.amount
-          ); //get decreased amounts from server and update user Pantry global variables
-          console.log(
-            `ran post function and changed server pantry with the following data,${
-              pantryIngredient.ingredient
-            } changed by ${recipeIngredient.quantity.amount * subtract}`
-          );
-        }
-      });
+  recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
+    randomUser.singleUser.pantry.forEach((pantryIngredient) => {
+      if (recipeIngredient.id === pantryIngredient.ingredient) {
+        postPantryStock({
+          userID: parseInt(randomUser.singleUser.id),
+          ingredientID: parseInt(pantryIngredient.ingredient),
+          ingredientModification: parseInt(
+            recipeIngredient.quantity.amount * -1
+          ),
+        }); // send decreased amounts to server
+        // getIngredients(
+        //   pantryIngredient.ingredient,
+        //   recipeIngredient.quantity.amount
+        // ); //get decreased amounts from server and update user Pantry global variables
+        console.log(
+          `ran post function and changed server pantry with the following data,${
+            pantryIngredient.ingredient
+          } changed by ${recipeIngredient.quantity.amount * subtract}`
+        );
+      }
     });
-  } else {
-    return "You don't have enough ingredients to cook this, how did you make it this far?";
-  }
+  });
 };
 
 const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {

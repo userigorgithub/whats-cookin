@@ -1,6 +1,6 @@
 //----------Query Selectors----------//
-const errorMsg = document.querySelector('.page-title-section');
-const pantryForm = document.querySelector('.add-ingredients-form');
+const errorMsg = document.querySelector(".page-title-section");
+const pantryForm = document.querySelector(".add-ingredients-form");
 
 //---------Global Variables----------//
 let apiUsersData, apiIngredientsData, apiRecipeData;
@@ -9,7 +9,7 @@ let apiUsersData, apiIngredientsData, apiRecipeData;
 const fetchData = (param) => {
   return fetch(`http://localhost:3001/api/v1/${param}`)
     .then((response) => response.json())
-    .catch((error) => displayError(error))
+    .catch((error) => displayError(error));
 };
 
 const fetchAll = () => {
@@ -19,27 +19,26 @@ const fetchAll = () => {
 };
 
 const postPantryStock = (pantryStock) => {
-  fetch('http://localhost:3001/api/v1/users', {
-    method: 'POST',
+  fetch("http://localhost:3001/api/v1/users", {
+    method: "POST",
     body: JSON.stringify(pantryStock),
-    headers: { 'Content-Type': 'application/json' }
+    headers: { "Content-Type": "application/json" },
   })
-  .then(response => checkError(response))
-  .catch((error) => displayError(error))
+    .then((response) => checkError(response))
+    .catch((error) => displayError(error));
 };
 
 const submitPantryForm = (e) => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const pantryStock = {
-    userID: parseInt(formData.get('user-id')),
-    ingredientID: parseInt(formData.get('ingredient-id')),
-    ingredientModification: parseInt(formData.get('ingredient-modification'))
+    userID: parseInt(formData.get("user-id")),
+    ingredientID: parseInt(formData.get("ingredient-id")),
+    ingredientModification: parseInt(formData.get("ingredient-modification")),
   };
   postPantryStock(pantryStock);
   e.target.reset();
 };
-
 
 const displayError = (error) => {
   if (error.message === "Failed to fetch") {
@@ -51,14 +50,20 @@ const displayError = (error) => {
 
 const checkError = (response) => {
   if (!response.ok) {
-    throw new Error("Please enter correct information!")
+    throw new Error("Please enter correct information!");
   } else {
-    response.json()
+    response.json();
   }
 };
 
 //----------Event Listeners----------//
-pantryForm.addEventListener('submit', submitPantryForm);
+pantryForm.addEventListener("submit", submitPantryForm);
 
 //----------Exports----------//
-export { fetchAll, apiUsersData, apiIngredientsData, apiRecipeData };
+export {
+  fetchAll,
+  apiUsersData,
+  apiIngredientsData,
+  apiRecipeData,
+  postPantryStock,
+};
