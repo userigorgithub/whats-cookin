@@ -300,7 +300,7 @@ const selectRecipe = (selectedIndex) => {
     </section>
     <section class="recipe-details-section">
       <article class="instructions">Instructions:<br> ${selectedRecipe.getInstructions()}</article>
-      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(
+      <article class="ingredients">Ingredients:<br><br>${selectedRecipe.storeIngredientNames(
         ingredientsData
       )}</article>
       <section class="other-recipe-info">

@@ -26,7 +26,7 @@ class Recipe {
 
   getInstructions() {
     const instructions = this.singleRecipe.instructions.reduce((acc, cur) => {
-      acc += `${cur.number}. ${cur.instruction} \n`;
+      acc += `<br>${cur.number}. ${cur.instruction} <br><br>`;
       return acc;
     }, "");
     return instructions;
