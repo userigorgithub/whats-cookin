@@ -80,6 +80,7 @@ const setGlobalVariablesAndDisplay = (data) => {
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
   );
+  console.log(randomUser)
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
   userPantry = new Pantry(randomUser.singleUser.pantry);
