@@ -194,6 +194,14 @@ body {
 #boxFour {
   height: 80%;
   width: 40%;
+  .to-cook-buttons,
+  .favorites-buttons {
+    color: #344443;
+    cursor: pointer;
+    height: 55%;
+    padding: 5%;
+    width: 5%;
+  }
 }
 .instructions {
   height: 40%;
@@ -211,6 +219,9 @@ body {
   display: flex;
   height: 13%;
   justify-content: space-around;
+}
+
+.cooking-image {
 }
 
 /*  Pantry View  */
