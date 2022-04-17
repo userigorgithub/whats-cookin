@@ -56,7 +56,8 @@ let recipeData,
   ingredientsData,
   currentRecipes,
   randomUser,
-  allRecipes;
+  allRecipes,
+  userPantry;
 
 //----------Functions----------//
 const loadPage = () => {
@@ -80,6 +81,7 @@ const setGlobalVariablesAndDisplay = (data) => {
   );
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  userPantry = new Pantry(randomUser.singleUser.pantry);
   displayAllRecipes(allRecipes);
 };
 const displayAllRecipes = (currentRecipes = allRecipes) => {
@@ -296,6 +298,7 @@ const selectRecipe = (selectedIndex) => {
             class="cooking-image"
             src="./images/cooking.png"
             alt="cooking pan icon"
+            data-index-number="${selectedIndex}"
             />
       </section>
     </section>`;
@@ -305,12 +308,23 @@ const selectRecipe = (selectedIndex) => {
   });
   const cookingImage = document.querySelector(".cooking-image");
   cookingImage.addEventListener("click", (e) => {
-    cookNow();
+    cookNow(e.target);
   });
 };
 
-const cookNow = () => {
-  console.log("Josh!! Cook now WORKS!");
+const cookNow = (identification) => {
+  const cookNowRecipe = new Recipe(
+    currentRecipes.repositoryData[identification.dataset.indexNumber]
+  );
+  console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
+  console.log(identification.dataset.indexNumber);
+  console.log(
+    currentRecipes.repositoryData[identification.dataset.indexNumber]
+  );
+  //either returns what you need still or ok (YAY, WORKING)
+  //interpolate ingredients section to you still need.... to cook this
+  //POST subtracted ingredients with -neg#
+  //update or refresh user's pantry to display correct stock
 };
 
 const showElement = (domItems) => {
@@ -469,10 +483,6 @@ const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
 //filter rec to cook for the same title
 
 //----------Event Listeners----------//
-recipesDropDown.addEventListener("change", (e) => {
-  getWTCPantryIngredients(ingredientsData, e.target.value);
-  console.log("EtargetVal", e.target.value);
-});
 
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
@@ -493,4 +503,8 @@ mains.addEventListener("click", (e) => {
 });
 sides.addEventListener("click", (e) => {
   (searchBar.value = "side dish"), userSearchAllRecipes("side dish");
+});
+recipesDropDown.addEventListener("change", (e) => {
+  getWTCPantryIngredients(ingredientsData, e.target.value);
+  console.log("EtargetVal", e.target.value);
 });
