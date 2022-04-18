@@ -6,6 +6,7 @@ import {
   apiIngredientsData,
   apiRecipeData,
   postPantryStock,
+  updateUserPantryStock
 } from "./apiCalls.js";
 import "./images/logo.png";
 import "./images/search.png";
@@ -73,19 +74,28 @@ const setGlobalVariablesAndDisplay = (data) => {
   usersData = data[0];
   ingredientsData = data[1];
   recipeData = data[2];
-  allRecipes = new RecipeRepository(recipeData);
-  allRecipes.addDefaultPreferences();
-  allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
-  currentRecipes = allRecipes;
-  randomUser = new User(
-    usersData[Math.floor(Math.random() * usersData.length)]
-  );
-  console.log(randomUser)
+  // allRecipes = new RecipeRepository(recipeData);
+  // allRecipes.addDefaultPreferences();
+  // allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+  // currentRecipes = allRecipes;
+  console.log("usersData", usersData);
+  console.log("80 before", randomUser);
+  if (!randomUser) {
+    allRecipes = new RecipeRepository(recipeData);
+    allRecipes.addDefaultPreferences();
+    allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
+    currentRecipes = allRecipes;
+    randomUser = new User(
+    usersData[Math.floor(Math.random() * usersData.length)])
+    displayAllRecipes(allRecipes);
+  };
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
   userPantry = new Pantry(randomUser.singleUser.pantry);
-  displayAllRecipes(allRecipes);
+  console.log("after", randomUser)
 };
+
 const displayAllRecipes = (currentRecipes = allRecipes) => {
   boxOfRecipes.innerHTML = "";
   let showInDom = currentRecipes.repositoryData
@@ -337,6 +347,7 @@ const cookNow = (identification) => {
     )}`;
     console.log("Josh, 330 working~");
   } else {
+    changeStock(cookNowRecipe)
     cookNowPrompt.innerText =
       "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
   }
@@ -446,6 +457,8 @@ const changeStock = (recipe, subtractStock = -1) => {
       }
     });
   });
+  loadPage();
+  // console.log("452", updateUserPantryStock(randomUser.singleUser.id))
 };
 
 const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
@@ -537,3 +550,5 @@ recipesDropDown.addEventListener("change", (e) => {
   getWTCPantryIngredients(ingredientsData, e.target.value);
   console.log("EtargetVal", e.target.value);
 });
+
+export { loadPage };
