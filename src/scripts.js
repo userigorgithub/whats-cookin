@@ -88,12 +88,27 @@ const setGlobalVariablesAndDisplay = (data) => {
     randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)])
     displayAllRecipes(allRecipes);
+
+    userID.value = randomUser.singleUser.id;
+    welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+    // randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
+    userPantry = new Pantry(randomUser.singleUser.pantry);
+    console.log("after", randomUser)
+  } else {
+
+    // userID.value = randomUser.singleUser.id;
+    // welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+    randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
+    userPantry = new Pantry(randomUser.singleUser.pantry);
+    console.log("after", randomUser)
+    // goHome();
+    goToPantry();
   };
-  userID.value = randomUser.singleUser.id;
-  welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-  randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
-  userPantry = new Pantry(randomUser.singleUser.pantry);
-  console.log("after", randomUser)
+  // userID.value = randomUser.singleUser.id;
+  // welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  // randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
+  // userPantry = new Pantry(randomUser.singleUser.pantry);
+  // console.log("after", randomUser)
 };
 
 const displayAllRecipes = (currentRecipes = allRecipes) => {
@@ -551,4 +566,4 @@ recipesDropDown.addEventListener("change", (e) => {
   console.log("EtargetVal", e.target.value);
 });
 
-export { loadPage };
+export { loadPage, goToPantry, goHome };
