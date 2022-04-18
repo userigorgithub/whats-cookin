@@ -121,13 +121,13 @@ describe('Recipe', () => {
 
   it('should determine the names of ingredients needed in a recipe', () => {
     expect(recipe.storeIngredientNames(ingredientsData)).to.deep.equal([
-      'wheat flour',
-      'bicarbonate of soda',
-      'eggs',
+      ' wheat flour',
+      ' bicarbonate of soda',
+      ' eggs',
     ]);
     expect(recipe2.storeIngredientNames(ingredientsData)).to.deep.equal([
-      'bicarbonate of soda',
-      'eggs',
+      ' bicarbonate of soda',
+      ' eggs',
     ]);
   });
 
@@ -137,7 +137,7 @@ describe('Recipe', () => {
   });
 
   it('should return recipe\'s directions/instructions', () => {
-    expect(recipe.getInstructions()).to.equal('1. Cook something. \n');
-    expect(recipe2.getInstructions()).to.equal('1. Mix and make things happen. \n');
+    expect(recipe.getInstructions()).to.equal('<br>1. Cook something. <br><br>');
+    expect(recipe2.getInstructions()).to.equal('<br>1. Mix and make things happen. <br><br>');
   });
 });

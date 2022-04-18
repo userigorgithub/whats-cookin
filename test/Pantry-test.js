@@ -114,9 +114,9 @@ describe("Pantry", () => {
     ];
 
     missingIngredientsNames = [
-      { id: "wheat flour", quantity: { amount: 0, unit: "c" } },
-      { id: "bicarbonate of soda", quantity: { amount: 0, unit: "tsp" } },
-      { id: "eggs", quantity: { amount: 0, unit: "large" } },
+      { id: 1, name:"wheat flour", quantity: { amount: 0, unit: "c" } },
+      { id: 2, name:"bicarbonate of soda", quantity: { amount: 0, unit: "tsp" } },
+      { id: 3, name: "eggs", quantity: { amount: 0, unit: "large" } },
     ];
 
     ingredientsData = [

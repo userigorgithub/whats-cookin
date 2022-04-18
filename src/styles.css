@@ -123,7 +123,8 @@ body {
   width: 100%;
 }
 
-.recipe-actions, .selected-recipe-actions {
+.recipe-actions,
+.selected-recipe-actions {
   align-items: center;
   display: flex;
   height: 15%;
@@ -193,6 +194,14 @@ body {
 #boxFour {
   height: 80%;
   width: 40%;
+  .to-cook-buttons,
+  .favorites-buttons {
+    color: #344443;
+    cursor: pointer;
+    height: 55%;
+    padding: 5%;
+    width: 5%;
+  }
 }
 .instructions {
   height: 40%;
@@ -212,6 +221,16 @@ body {
   justify-content: space-around;
 }
 
+.cooking-image {
+  cursor: pointer;
+  height: 45%;
+  width: 25%;
+}
+
+.cooking-image:hover {
+  transform: scale(1.2);
+}
+
 /*  Pantry View  */
 .pantry-view {
   display: flex;
@@ -219,7 +238,9 @@ body {
   width: 100%;
 }
 
-.current-ingredients, .add-ingredients, .upcoming-recipes  {
+.current-ingredients,
+.add-ingredients,
+.upcoming-recipes {
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -239,12 +260,12 @@ body {
   width: 50%;
 }
 
-.pantry-ingredients-list, .recipe-ingredients-list {
+.pantry-ingredients-scroll,
+.pantry-recipe-scroll {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  height:70%;
+  height: 70%;
   width: 80%;
   overflow-y: scroll;
-
 }
 
 h3 {

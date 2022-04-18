@@ -39,7 +39,7 @@ class Pantry {
         .filter((ingredient) => ingredient.quantity.amount)
         .map(
           (ingredient) =>
-            `${ingredient.id} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}. `
+            `${ingredient.name} - ${ingredient.quantity.amount} ${ingredient.quantity.unit}. `
         )
         .join("\n")}`;
     }
@@ -49,7 +49,7 @@ class Pantry {
     return missingIngredients.map((ingredient) => {
       ingredientsData.forEach((ingredientItemInRepository) => {
         if (ingredient.id === ingredientItemInRepository.id) {
-          ingredient.id = ingredientItemInRepository.name;
+          ingredient.name = ingredientItemInRepository.name;
         }
       });
       return ingredient;

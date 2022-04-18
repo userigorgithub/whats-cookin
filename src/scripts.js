@@ -5,6 +5,7 @@ import {
   apiUsersData,
   apiIngredientsData,
   apiRecipeData,
+  postPantryStock,
 } from "./apiCalls.js";
 import "./images/logo.png";
 import "./images/search.png";
@@ -12,6 +13,7 @@ import "./images/add.png";
 import "./images/minus.png";
 import "./images/love.png";
 import "./images/heart.png";
+import "./images/cooking.png";
 import Recipe from "../src/classes/Recipe";
 import Ingredient from "../src/classes/Ingredient";
 import RecipeRepository from "../src/classes/RecipeRepository";
@@ -22,8 +24,11 @@ import Pantry from "../src/classes/Pantry";
 const mainSection = document.querySelector(".main-section");
 const recipeView = document.querySelector(".recipe-view");
 const pantryView = document.querySelector(".pantry-view");
-const pantryIngredientsList = document.querySelector(".pantry-view");
-const recipeIngredientsList = document.querySelector(".pantry-view");
+const pantryIngredientsList = document.querySelector(
+  ".pantry-ingredients-list"
+);
+const recipeIngredientsList = document.querySelector(".pantry-recipe-list");
+const recipesDropDown = document.getElementById("recipesDropDown");
 const pageTitle = document.querySelector(".page-title-section");
 const welcomeUser = document.querySelector(".user-welcome");
 const forwardButton = document.getElementById("goForward");
@@ -52,13 +57,15 @@ let recipeData,
   ingredientsData,
   currentRecipes,
   randomUser,
-  allRecipes;
+  allRecipes,
+  userPantry;
 
 //----------Functions----------//
 const loadPage = () => {
   fetchAll();
-  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData])
-    .then((data) => setGlobalVariablesAndDisplay(data))
+  Promise.all([apiUsersData, apiIngredientsData, apiRecipeData]).then((data) =>
+    setGlobalVariablesAndDisplay(data)
+  );
 };
 
 const setGlobalVariablesAndDisplay = (data) => {
@@ -73,8 +80,10 @@ const setGlobalVariablesAndDisplay = (data) => {
   randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)]
   );
+  console.log(randomUser)
   userID.value = randomUser.singleUser.id;
   welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
+  userPantry = new Pantry(randomUser.singleUser.pantry);
   displayAllRecipes(allRecipes);
 };
 const displayAllRecipes = (currentRecipes = allRecipes) => {
@@ -108,6 +117,7 @@ const displayAllRecipes = (currentRecipes = allRecipes) => {
       return boxOfRecipes;
     });
 };
+
 const handleBoxOfRecipeEvents = () => {
   if (event.target.className === "recipe-image") {
     selectRecipe(event.target.id);
@@ -122,6 +132,7 @@ const handleBoxOfRecipeEvents = () => {
     );
   }
 };
+
 const handleBoxOfSelectedRecipeEvents = () => {
   if (event.target.className.includes("to-cook-buttons")) {
     toggleToCook(allRecipes.repositoryData[event.target.id], event.target.id);
@@ -134,6 +145,7 @@ const handleBoxOfSelectedRecipeEvents = () => {
   }
   selectRecipe(event.target.id);
 };
+
 const searchItems = () => {
   if (favoritesButton.classList.contains("hidden")) {
     userSearchFavorites(event.target.value);
@@ -141,11 +153,13 @@ const searchItems = () => {
     userSearchAllRecipes(event.target.value);
   }
 };
+
 const shiftForward = () => {
   currentRecipes.repositoryData.push(currentRecipes.repositoryData[0]);
   currentRecipes.repositoryData.shift();
   displayAllRecipes(currentRecipes);
 };
+
 const shiftBackward = () => {
   currentRecipes.repositoryData.unshift(
     currentRecipes.repositoryData[currentRecipes.repositoryData.length - 1]
@@ -153,8 +167,9 @@ const shiftBackward = () => {
   currentRecipes.repositoryData.pop();
   displayAllRecipes(currentRecipes);
 };
+
 const goHome = () => {
-  hideElement([homeButton, recipeView,pantryView]);
+  hideElement([homeButton, recipeView, pantryView]);
   showElement([
     bottomSection,
     mainSection,
@@ -179,16 +194,17 @@ const goHome = () => {
   displayAllRecipes(restoreRecipes);
   searchBar.value = "";
 };
+
 const goToFavorites = () => {
   goHome();
-  hideElement([recipeView, favoritesButton,pantryView]);
+  hideElement([recipeView, favoritesButton, pantryView]);
   showElement([
     bottomSection,
     homeButton,
     mainSection,
     searchContainer,
     wantToCookButton,
-    pantryButton
+    pantryButton,
   ]);
   searchBar.placeHolder = "Search Favorite Recipes";
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
@@ -204,22 +220,33 @@ const goToFavorites = () => {
 
 const goToPantry = () => {
   goHome();
-  hideElement([recipeView, pantryButton,bottomSection,mainSection,searchContainer]);
-  showElement([
-    homeButton,
-    pantryView,
-    favoritesButton,
-    wantToCookButton
+  hideElement([
+    recipeView,
+    pantryButton,
+    bottomSection,
+    mainSection,
+    searchContainer,
   ]);
-    pageTitle.innerText = "My Pantry!";
-    // pantryIngredientsList.innerHTML = someMethod(pantryItems);
-    // recipeIngredientsList.innerHTML = someMethod(recipeItems);
-  };
+  showElement([homeButton, pantryView, favoritesButton, wantToCookButton]);
+  determinePantryIngredientNames(randomUser.singleUser.pantry, ingredientsData);
+  displayToCookRecipesInPantry();
+  pageTitle.innerText = "My Pantry!";
+  recipeIngredientsList.innerText = "Please select a recipe.";
+  console.log();
+  // pantryIngredientsList.innerHTML = someMethod(pantryItems);
+  // recipeIngredientsList.innerHTML = someMethod(recipeItems);
+};
 
 const goToWantToCook = () => {
   goHome();
-  hideElement([recipeView, wantToCookButton, searchContainer,pantryView]);
-  showElement([bottomSection, homeButton, mainSection, favoritesButton,pantryButton]);
+  hideElement([recipeView, wantToCookButton, searchContainer, pantryView]);
+  showElement([
+    bottomSection,
+    homeButton,
+    mainSection,
+    favoritesButton,
+    pantryButton,
+  ]);
   currentRecipes.repositoryData = allRecipes.repositoryData.filter(
     (recipe) => recipe.addedToCook
   );
@@ -232,11 +259,14 @@ const goToWantToCook = () => {
 };
 
 const selectRecipe = (selectedIndex) => {
+  goHome();
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
-  hideElement([bottomSection, mainSection, searchContainer,pantryView]);
-  showElement([recipeView, homeButton,pantryButton]);
+  console.log("recipe check",selectedRecipe)
+  console.log("ingredients check", ingredientsData)
+  hideElement([bottomSection, mainSection, searchContainer, pantryView]);
+  showElement([recipeView, homeButton, pantryButton]);
   pageTitle.innerText = "Is This Your Next Meal?";
   let heart = "hidden";
   let love = "";
@@ -263,10 +293,19 @@ const selectRecipe = (selectedIndex) => {
       <img class="to-cook-buttons ${add}" id=${selectedIndex} src="./images/add.png" alt="plus-icon" />
       <img class="to-cook-buttons ${minus}" id=${selectedIndex} src="./images/minus.png" alt="minus-icon" />
     </section>
+    <img
+      label="button"
+      class="cooking-image"
+      src="./images/cooking.png"
+      alt="cooking pan icon"
+      data-index-number="${selectedIndex}"
+      />
+      <label for="cooking-pan-image"></label>
+      <h4 class="cook-now-prompt">Click to Cook This Recipe Now!</h4>
     </section>
     <section class="recipe-details-section">
-      <article class="instructions">Instructions:<br>${selectedRecipe.getInstructions()}</article>
-      <article class="ingredients">Ingredients:<br>${selectedRecipe.storeIngredientNames(
+      <article class="instructions">Instructions:<br> ${selectedRecipe.getInstructions()}</article>
+      <article class="ingredients">Ingredients:<br><br>${selectedRecipe.storeIngredientNames(
         ingredientsData
       )}</article>
       <section class="other-recipe-info">
@@ -279,6 +318,40 @@ const selectRecipe = (selectedIndex) => {
   boxOfSelectedRecipe.addEventListener("click", (e) => {
     handleBoxOfSelectedRecipeEvents(event.target.className);
   });
+  const cookingImage = document.querySelector(".cooking-image");
+  cookingImage.addEventListener("click", (e) => {
+    cookNow(e.target);
+  });
+};
+
+const cookNow = (identification) => {
+  const stillNeeded = document.querySelector(".ingredients");
+  const cookNowPrompt = document.querySelector(".cook-now-prompt");
+  const cookNowRecipe = new Recipe(
+    currentRecipes.repositoryData[identification.dataset.indexNumber]
+  );
+  if (userPantry.checkUserStock(cookNowRecipe, ingredientsData) !== true) {
+    stillNeeded.innerHTML = `${userPantry.checkUserStock(
+      cookNowRecipe,
+      ingredientsData
+    )}`;
+    console.log("Josh, 330 working~");
+  } else {
+    cookNowPrompt.innerText =
+      "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
+  }
+  console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
+  console.log(identification.dataset.indexNumber);
+  console.log("currentRecipes check",
+    currentRecipes.repositoryData[identification.dataset.indexNumber]
+  );
+  console.log("all recipes check",
+    allRecipes.repositoryData[identification.dataset.indexNumber]
+  );
+  //either returns what you need still or ok (YAY, WORKING)
+  //interpolate ingredients section to you still need.... to cook this
+  //POST subtracted ingredients with -neg#
+  //update or refresh user's pantry to display correct stock
 };
 
 const showElement = (domItems) => {
@@ -310,6 +383,7 @@ const userSearchFavorites = (searchText) => {
   }
   displayAllRecipes(currentRecipes);
 };
+
 const userSearchAllRecipes = (searchText) => {
   allRecipes = new RecipeRepository(recipeData);
   allRecipes.addDefaultPreferences();
@@ -326,6 +400,7 @@ const userSearchAllRecipes = (searchText) => {
   }
   displayAllRecipes(currentRecipes);
 };
+
 const toggleToCook = (recipe, id) => {
   if (randomUser.recipesToCook.includes(recipe)) {
     randomUser.deleteFromCook(recipe);
@@ -336,6 +411,7 @@ const toggleToCook = (recipe, id) => {
   }
   displayAllRecipes(currentRecipes);
 };
+
 const toggleFavorites = (recipe, id) => {
   if (randomUser.favoriteRecipes.includes(recipe)) {
     allRecipes.repositoryData[id].favorited = false;
@@ -348,32 +424,95 @@ const toggleFavorites = (recipe, id) => {
 };
 
 const changeStock = (recipe, subtractStock = -1) => {
-  if (checkUserStock(recipe)) {
-    recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
-      this.pantry.forEach((pantryIngredient) => {
-        if (recipeIngredient.id === pantryIngredient.ingredient) {
-          postIngredients(
-            pantryIngredient.ingredient,
-            recipeIngredient.quantity.amount * subtract
-          ); // send decreased amounts to server
-          getIngredients(
-            pantryIngredient.ingredient,
-            recipeIngredient.quantity.amount
-          ); //get decreased amounts from server and update user Pantry global variables
-          console.log(
-            `ran post function and changed server pantry with the following data,${
-              pantryIngredient.ingredient
-            } changed by ${recipeIngredient.quantity.amount * subtract}`
-          );
+  recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
+    randomUser.singleUser.pantry.forEach((pantryIngredient) => {
+      if (recipeIngredient.id === pantryIngredient.ingredient) {
+        postPantryStock({
+          userID: parseInt(randomUser.singleUser.id),
+          ingredientID: parseInt(pantryIngredient.ingredient),
+          ingredientModification: parseInt(
+            recipeIngredient.quantity.amount * -1
+          ),
+        }); // send decreased amounts to server
+        // getIngredients(
+        //   pantryIngredient.ingredient,
+        //   recipeIngredient.quantity.amount
+        // ); //get decreased amounts from server and update user Pantry global variables
+        console.log(
+          `ran post function and changed server pantry with the following data,${
+            pantryIngredient.ingredient
+          } changed by ${recipeIngredient.quantity.amount * subtract}`
+        );
+      }
+    });
+  });
+};
+
+const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
+  pantryIngredientsList.innerHTML = "";
+  return pantryIngredients
+    .map((ingredient) => {
+      ingredientsData.forEach((ingredientItemInRepository) => {
+        if (ingredient.ingredient === ingredientItemInRepository.id) {
+          ingredient.ingredient = ingredientItemInRepository.name;
         }
       });
+      return ingredient;
+    })
+    .map(
+      (e) =>
+        (pantryIngredientsList.innerHTML += `<ul>${e.ingredient} 🍽 ${e.amount}</ul>`)
+    );
+};
+
+const displayToCookRecipesInPantry = () => {
+  recipesDropDown.innerHTML = `<option value="">Select a Recipe</option>`;
+  const recipesToCookInPantry = allRecipes.repositoryData
+    .filter((recipe) => recipe.addedToCook)
+    .map((recipe) => {
+      return recipe.name;
     });
-  } else {
-    return "You don't have enough ingredients to cook this, how did you make it this far?";
-  }
-}
+  console.log(recipesToCookInPantry);
+  return recipesToCookInPantry.map(
+    (e) => (recipesDropDown.innerHTML += `<option value="${e}">${e}</option>`)
+  );
+};
+
+const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
+  recipeIngredientsList.innerHTML = "";
+  console.log("rec to cook", randomUser.recipesToCook);
+  console.log("title", recipeTitle);
+  const recipeIngredients = randomUser.recipesToCook
+    .filter((recipe) => {
+      return recipe.name === recipeTitle;
+    })
+    .map((recipe) => {
+      return recipe.ingredients;
+    });
+  return recipeIngredients
+    .flat()
+    .map((ingredient) => {
+      ingredientsData.forEach((ingredientItemInRepository) => {
+        console.log("436", ingredient);
+        console.log("437", ingredientItemInRepository);
+        if (ingredient.id === ingredientItemInRepository.id) {
+          console.log("438 cond working!!");
+          ingredient.id = ingredientItemInRepository.name;
+        }
+      });
+      console.log("441", recipeIngredients.flat());
+      return ingredient;
+    })
+    .map(
+      (e) =>
+        (recipeIngredientsList.innerHTML += `<ul>${e.id} 🍽 ${e.quantity.amount} ${e.quantity.unit}</ul>`)
+    );
+};
+//if line 420 = to array, return ings
+//filter rec to cook for the same title
 
 //----------Event Listeners----------//
+
 window.addEventListener("load", (e) => loadPage());
 forwardButton.addEventListener("click", (e) => shiftForward());
 backwardButton.addEventListener("click", (e) => shiftBackward());
@@ -393,4 +532,8 @@ mains.addEventListener("click", (e) => {
 });
 sides.addEventListener("click", (e) => {
   (searchBar.value = "side dish"), userSearchAllRecipes("side dish");
+});
+recipesDropDown.addEventListener("change", (e) => {
+  getWTCPantryIngredients(ingredientsData, e.target.value);
+  console.log("EtargetVal", e.target.value);
 });

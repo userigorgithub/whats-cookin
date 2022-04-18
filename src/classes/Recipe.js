@@ -1,4 +1,4 @@
-import Ingredient from '../classes/Ingredient';
+import Ingredient from "../classes/Ingredient";
 
 class Recipe {
   constructor(singleRecipe) {
@@ -16,7 +16,9 @@ class Recipe {
   calculateRecipeCost(ingredientsData) {
     const specificIngredient = new Ingredient(ingredientsData);
     const totalPrice = this.singleRecipe.ingredients.reduce((acc, cur) => {
-      acc += cur.quantity.amount * specificIngredient.provideIngredientCostPerUnit(cur.id);
+      acc +=
+        cur.quantity.amount *
+        specificIngredient.provideIngredientCostPerUnit(cur.id);
       return acc;
     }, 0);
     return `$${(totalPrice / 100).toFixed(2)} USD`;
@@ -24,9 +26,9 @@ class Recipe {
 
   getInstructions() {
     const instructions = this.singleRecipe.instructions.reduce((acc, cur) => {
-      acc += `${cur.number}. ${cur.instruction} \n`;
+      acc += `<br>${cur.number}. ${cur.instruction} <br><br>`;
       return acc;
-    }, '');
+    }, "");
     return instructions;
   }
 }

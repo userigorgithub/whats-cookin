@@ -4,15 +4,15 @@ class Ingredient {
   }
 
   addNameOfIngredient(id) {
-    const ingredientName = this.ingredientList.filter((ingredient) =>
-      ingredient.id === id
+    const ingredientName = this.ingredientList.filter(
+      (ingredient) => ingredient.id === id
     );
-    return ingredientName[0].name;
+    return ` ${ingredientName[0].name}`;
   }
 
   provideIngredientCostPerUnit(id) {
-    const ingredientName = this.ingredientList.filter((ingredient) =>
-      ingredient.id === id
+    const ingredientName = this.ingredientList.filter(
+      (ingredient) => ingredient.id === id
     );
     return ingredientName[0].estimatedCostInCents;
   }
