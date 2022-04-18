@@ -1,3 +1,5 @@
+import { loadPage } from "./scripts.js";
+
 //----------Query Selectors----------//
 const errorMsg = document.querySelector(".page-title-section");
 const pantryForm = document.querySelector(".add-ingredients-form");
@@ -37,7 +39,15 @@ const submitPantryForm = (e) => {
     ingredientModification: parseInt(formData.get("ingredient-modification")),
   };
   postPantryStock(pantryStock);
+  loadPage();
+  // updateUserPantryStock(pantryStock.userID)
+  // console.log("api 41", updateUserPantryStock(pantryStock.userID));
   e.target.reset();
+};
+
+const updateUserPantryStock = (userID) => {
+  return fetchData("users")
+  .then(response => response.find(user => user.id === userID));
 };
 
 const displayError = (error) => {
@@ -66,4 +76,5 @@ export {
   apiIngredientsData,
   apiRecipeData,
   postPantryStock,
+  updateUserPantryStock
 };
