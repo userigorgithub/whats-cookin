@@ -1,3 +1,5 @@
+import { loadPage, goToPantry, goHome } from "./scripts.js";
+
 //----------Query Selectors----------//
 const errorMsg = document.querySelector(".page-title-section");
 const pantryForm = document.querySelector(".add-ingredients-form");
@@ -25,6 +27,8 @@ const postPantryStock = (pantryStock) => {
     headers: { "Content-Type": "application/json" },
   })
     .then((response) => checkError(response))
+    .then((response) => loadPage())
+    .then((response) => goToPantry())
     .catch((error) => displayError(error));
 };
 
@@ -38,6 +42,11 @@ const submitPantryForm = (e) => {
   };
   postPantryStock(pantryStock);
   e.target.reset();
+};
+
+const updateUserPantryStock = (userID) => {
+  return fetchData("users")
+  .then(response => response.find(user => user.id === userID));
 };
 
 const displayError = (error) => {
@@ -66,4 +75,5 @@ export {
   apiIngredientsData,
   apiRecipeData,
   postPantryStock,
+  updateUserPantryStock
 };
