@@ -355,6 +355,8 @@ const cookNow = (identification) => {
   const cookNowRecipe = new Recipe(
     currentRecipes.repositoryData[identification.dataset.indexNumber]
   );
+  console.log("358userPantry", userPantry)
+  console.log("359cookNowRecipe", cookNowRecipe);
   if (userPantry.checkUserStock(cookNowRecipe, ingredientsData) !== true) {
     stillNeeded.innerHTML = `${userPantry.checkUserStock(
       cookNowRecipe,
