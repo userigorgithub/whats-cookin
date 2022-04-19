@@ -336,9 +336,9 @@ const cookNow = (identification) => {
       ingredientsData
     )}`;
   } else {
-    changeStock(cookNowRecipe.singleRecipe.name)
     cookNowPrompt.innerText =
-      "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
+    "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
+    setTimeout(() => {changeStock(cookNowRecipe.singleRecipe.name)}, 4000)
   }
 };
 
