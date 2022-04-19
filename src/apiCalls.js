@@ -26,10 +26,8 @@ const postPantryStock = (pantryStock) => {
     body: JSON.stringify(pantryStock),
     headers: { "Content-Type": "application/json" },
   })
-
     .then((response) => checkError(response))
     .then((response) => loadPage())
-    // .then((response) => goHome())
     .then((response) => goToPantry())
     .catch((error) => displayError(error));
 };
@@ -43,10 +41,6 @@ const submitPantryForm = (e) => {
     ingredientModification: parseInt(formData.get("ingredient-modification")),
   };
   postPantryStock(pantryStock);
-  // loadPage();
-  // goToPantry();
-  // updateUserPantryStock(pantryStock.userID)
-  // console.log("api 41", updateUserPantryStock(pantryStock.userID));
   e.target.reset();
 };
 

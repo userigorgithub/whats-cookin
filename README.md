@@ -44,6 +44,8 @@ Our group is proud to have a LightHouse score of 100% and to have gained a new p
 - HTML
 - Webpack
 - Fetch API
+- Mocha
+- Chai
 - GET and POST requests
 
 ## Future Features

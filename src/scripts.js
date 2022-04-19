@@ -70,16 +70,9 @@ const loadPage = () => {
 };
 
 const setGlobalVariablesAndDisplay = (data) => {
-  console.log("data", data);
   usersData = data[0];
   ingredientsData = data[1];
   recipeData = data[2];
-  // allRecipes = new RecipeRepository(recipeData);
-  // allRecipes.addDefaultPreferences();
-  // allRecipes.repositoryData.sort((a, b) => 0.5 - Math.random());
-  // currentRecipes = allRecipes;
-  console.log("usersData", usersData);
-  console.log("80 before", randomUser);
   if (!randomUser) {
     allRecipes = new RecipeRepository(recipeData);
     allRecipes.addDefaultPreferences();
@@ -88,27 +81,14 @@ const setGlobalVariablesAndDisplay = (data) => {
     randomUser = new User(
     usersData[Math.floor(Math.random() * usersData.length)])
     displayAllRecipes(allRecipes);
-
     userID.value = randomUser.singleUser.id;
     welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-    // randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
     userPantry = new Pantry(randomUser.singleUser.pantry);
-    console.log("after", randomUser)
   } else {
-
-    // userID.value = randomUser.singleUser.id;
-    // welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
     randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
     userPantry = new Pantry(randomUser.singleUser.pantry);
-    console.log("after", randomUser)
-    // goHome();
     goToPantry();
   };
-  // userID.value = randomUser.singleUser.id;
-  // welcomeUser.innerText = `Welcome back, ${randomUser.returnUserFirstName()}!`;
-  // randomUser.singleUser.pantry = usersData.find(user => user.id === randomUser.singleUser.id).pantry
-  // userPantry = new Pantry(randomUser.singleUser.pantry);
-  // console.log("after", randomUser)
 };
 
 const displayAllRecipes = (currentRecipes = allRecipes) => {
@@ -257,9 +237,6 @@ const goToPantry = () => {
   displayToCookRecipesInPantry();
   pageTitle.innerText = "My Pantry!";
   recipeIngredientsList.innerText = "Please select a recipe.";
-  console.log();
-  // pantryIngredientsList.innerHTML = someMethod(pantryItems);
-  // recipeIngredientsList.innerHTML = someMethod(recipeItems);
 };
 
 const goToWantToCook = () => {
@@ -288,8 +265,6 @@ const selectRecipe = (selectedIndex) => {
   const selectedRecipe = new Recipe(
     currentRecipes.repositoryData[selectedIndex]
   );
-  console.log("recipe check",selectedRecipe)
-  console.log("ingredients check", ingredientsData)
   hideElement([bottomSection, mainSection, searchContainer, pantryView]);
   showElement([recipeView, homeButton, pantryButton]);
   pageTitle.innerText = "Is This Your Next Meal?";
@@ -355,31 +330,16 @@ const cookNow = (identification) => {
   const cookNowRecipe = new Recipe(
     currentRecipes.repositoryData[identification.dataset.indexNumber]
   );
-  // console.log("358userPantry", userPantry)
-  // console.log("359cookNowRecipe", cookNowRecipe);
   if (userPantry.checkUserStock(cookNowRecipe, ingredientsData) !== true) {
     stillNeeded.innerHTML = `${userPantry.checkUserStock(
       cookNowRecipe,
       ingredientsData
     )}`;
   } else {
-    // console.log('cooking is working')
     changeStock(cookNowRecipe.singleRecipe.name)
     cookNowPrompt.innerText =
       "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
   }
-  // console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
-  // console.log(identification.dataset.indexNumber);
-  // console.log("currentRecipes check",
-  //   currentRecipes.repositoryData[identification.dataset.indexNumber]
-  // );
-  console.log("all recipes check",
-    allRecipes.repositoryData[identification.dataset.indexNumber]
-  );
-  //either returns what you need still or ok (YAY, WORKING)
-  //interpolate ingredients section to you still need.... to cook this
-  //POST subtracted ingredients with -neg#
-  //update or refresh user's pantry to display correct stock
 };
 
 const showElement = (domItems) => {
@@ -452,8 +412,7 @@ const toggleFavorites = (recipe, id) => {
 };
 
 const changeStock = (dataName, subtractStock = -1) => {
-  console.log("456 within ChangeStock")
-  // console.log(recipe)
+
 fetch(`http://localhost:3001/api/v1/recipes`)
       .then((response) => response.json())
       .then((response) => subtractRecipe(response,dataName))
@@ -461,37 +420,18 @@ fetch(`http://localhost:3001/api/v1/recipes`)
 
 }
 
-  const subtractRecipe = (recipeDataRestored,dataName) => {
-
-    const filteredRecipe = recipeDataRestored.find(recipe =>recipe.name === dataName)
-
-  console.log(filteredRecipe)
+const subtractRecipe = (recipeDataRestored,dataName) => {
+  const filteredRecipe = recipeDataRestored.find(recipe => recipe.name === dataName)
   filteredRecipe.ingredients.forEach((recipeIngredient, index) => {
     randomUser.singleUser.pantry.forEach((pantryIngredient) => {
       if (recipeIngredient.id === pantryIngredient.ingredient) {
-        console.log("changestock conditional is working")
-        console.log(typeof recipeIngredient.quantity.amount)
-        console.log(recipeIngredient)
         postPantryStock({
           userID: parseInt(randomUser.singleUser.id),
           ingredientID: parseInt(pantryIngredient.ingredient),
-          ingredientModification: parseInt(recipeIngredient.quantity.amount)*-1}); // send decreased amounts to server
-        //(parseInt(recipeIngredient.quantity.amount)
-        //getIngredients(
-        //   pantryIngredient.ingredient,
-        //   recipeIngredient.quantity.amount
-        // ); //get decreased amounts from server and update user Pantry global variables
-        console.log(
-          `ran post function and changed server pantry with the following data,${
-            pantryIngredient.ingredient
-          } changed by ${recipeIngredient.quantity.amount}`
-        );
+          ingredientModification: parseInt(recipeIngredient.quantity.amount)*-1});
       }
     });
   });
-  // loadPage()
-  // selectRecipe(recipe);
-  // console.log("452", updateUserPantryStock(randomUser.singleUser.id))
 };
 
 const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
@@ -500,7 +440,6 @@ const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
     .map((ingredient) => {
       ingredientsData.forEach((ingredientItemInRepository) => {
         if (ingredient.ingredient === ingredientItemInRepository.id) {
-          // ingredient.ingredient = ingredientItemInRepository.name;
           ingredient.name = ingredientItemInRepository.name
         }
       });
@@ -519,7 +458,6 @@ const displayToCookRecipesInPantry = () => {
     .map((recipe) => {
       return recipe.name;
     });
-  console.log(recipesToCookInPantry);
   return recipesToCookInPantry.map(
     (e) => (recipesDropDown.innerHTML += `<option value="${e}">${e}</option>`)
   );
@@ -527,8 +465,6 @@ const displayToCookRecipesInPantry = () => {
 
 const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
   recipeIngredientsList.innerHTML = "";
-  console.log("rec to cook", randomUser.recipesToCook);
-  console.log("title", recipeTitle);
   const recipeIngredients = randomUser.recipesToCook
     .filter((recipe) => {
       return recipe.name === recipeTitle;
@@ -540,14 +476,10 @@ const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
     .flat()
     .map((ingredient) => {
       ingredientsData.forEach((ingredientItemInRepository) => {
-        console.log("436", ingredient);
-        console.log("437", ingredientItemInRepository);
         if (ingredient.id === ingredientItemInRepository.id) {
-          console.log("438 cond working!!");
           ingredient.id = ingredientItemInRepository.name;
         }
       });
-      console.log("441", recipeIngredients.flat());
       return ingredient;
     })
     .map(
@@ -555,9 +487,6 @@ const getWTCPantryIngredients = (ingredientsData, recipeTitle) => {
         (recipeIngredientsList.innerHTML += `<ul>${e.id} 🍽 ${e.quantity.amount} ${e.quantity.unit}</ul>`)
     );
 };
-//if line 420 = to array, return ings
-//filter rec to cook for the same title
-
 //----------Event Listeners----------//
 
 window.addEventListener("load", (e) => loadPage());
@@ -582,7 +511,6 @@ sides.addEventListener("click", (e) => {
 });
 recipesDropDown.addEventListener("change", (e) => {
   getWTCPantryIngredients(ingredientsData, e.target.value);
-  console.log("EtargetVal", e.target.value);
 });
 
 export { loadPage, goToPantry, goHome };
