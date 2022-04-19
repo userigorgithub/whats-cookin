@@ -33,7 +33,7 @@ class Pantry {
     if (
       missingIngredientsNames.every((ingredient) => !ingredient.quantity.amount)
     ) {
-      return "You can cook this meal now!";
+      return true;
     } else {
       return `You are missing the Following Ingredients to cook a meal: ${missingIngredientsNames
         .filter((ingredient) => ingredient.quantity.amount)

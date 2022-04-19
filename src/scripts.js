@@ -355,24 +355,24 @@ const cookNow = (identification) => {
   const cookNowRecipe = new Recipe(
     currentRecipes.repositoryData[identification.dataset.indexNumber]
   );
-  console.log("358userPantry", userPantry)
-  console.log("359cookNowRecipe", cookNowRecipe);
+  // console.log("358userPantry", userPantry)
+  // console.log("359cookNowRecipe", cookNowRecipe);
   if (userPantry.checkUserStock(cookNowRecipe, ingredientsData) !== true) {
     stillNeeded.innerHTML = `${userPantry.checkUserStock(
       cookNowRecipe,
       ingredientsData
     )}`;
-    console.log("Josh, 330 working~");
   } else {
-    changeStock(cookNowRecipe)
+    // console.log('cooking is working')
+    changeStock(cookNowRecipe.singleRecipe.name)
     cookNowPrompt.innerText =
       "Enjoy Your meal, we've removed the correct ingredients from your pantry to cook this.";
   }
-  console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
-  console.log(identification.dataset.indexNumber);
-  console.log("currentRecipes check",
-    currentRecipes.repositoryData[identification.dataset.indexNumber]
-  );
+  // console.log("319", userPantry.checkUserStock(cookNowRecipe, ingredientsData));
+  // console.log(identification.dataset.indexNumber);
+  // console.log("currentRecipes check",
+  //   currentRecipes.repositoryData[identification.dataset.indexNumber]
+  // );
   console.log("all recipes check",
     allRecipes.repositoryData[identification.dataset.indexNumber]
   );
@@ -451,30 +451,46 @@ const toggleFavorites = (recipe, id) => {
   displayAllRecipes(currentRecipes);
 };
 
-const changeStock = (recipe, subtractStock = -1) => {
-  recipe.singleRecipe.ingredients.forEach((recipeIngredient, index) => {
+const changeStock = (dataName, subtractStock = -1) => {
+  console.log("456 within ChangeStock")
+  // console.log(recipe)
+fetch(`http://localhost:3001/api/v1/recipes`)
+      .then((response) => response.json())
+      .then((response) => subtractRecipe(response,dataName))
+      .catch((error) => console.log("error on removing items from pantry"));
+
+}
+
+  const subtractRecipe = (recipeDataRestored,dataName) => {
+
+    const filteredRecipe = recipeDataRestored.find(recipe =>recipe.name === dataName)
+
+  console.log(filteredRecipe)
+  filteredRecipe.ingredients.forEach((recipeIngredient, index) => {
     randomUser.singleUser.pantry.forEach((pantryIngredient) => {
       if (recipeIngredient.id === pantryIngredient.ingredient) {
+        console.log("changestock conditional is working")
+        console.log(typeof recipeIngredient.quantity.amount)
+        console.log(recipeIngredient)
         postPantryStock({
           userID: parseInt(randomUser.singleUser.id),
           ingredientID: parseInt(pantryIngredient.ingredient),
-          ingredientModification: parseInt(
-            recipeIngredient.quantity.amount) * -1
-          ,
-        }); // send decreased amounts to server
-        // getIngredients(
+          ingredientModification: parseInt(recipeIngredient.quantity.amount)*-1}); // send decreased amounts to server
+        //(parseInt(recipeIngredient.quantity.amount)
+        //getIngredients(
         //   pantryIngredient.ingredient,
         //   recipeIngredient.quantity.amount
         // ); //get decreased amounts from server and update user Pantry global variables
         console.log(
           `ran post function and changed server pantry with the following data,${
             pantryIngredient.ingredient
-          } changed by ${recipeIngredient.quantity.amount * subtract}`
+          } changed by ${recipeIngredient.quantity.amount}`
         );
       }
     });
   });
-  loadPage();
+  // loadPage()
+  // selectRecipe(recipe);
   // console.log("452", updateUserPantryStock(randomUser.singleUser.id))
 };
 
