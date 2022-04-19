@@ -459,8 +459,8 @@ const changeStock = (recipe, subtractStock = -1) => {
           userID: parseInt(randomUser.singleUser.id),
           ingredientID: parseInt(pantryIngredient.ingredient),
           ingredientModification: parseInt(
-            recipeIngredient.quantity.amount * -1
-          ),
+            recipeIngredient.quantity.amount) * -1
+          ,
         }); // send decreased amounts to server
         // getIngredients(
         //   pantryIngredient.ingredient,
@@ -484,14 +484,15 @@ const determinePantryIngredientNames = (pantryIngredients, ingredientsData) => {
     .map((ingredient) => {
       ingredientsData.forEach((ingredientItemInRepository) => {
         if (ingredient.ingredient === ingredientItemInRepository.id) {
-          ingredient.ingredient = ingredientItemInRepository.name;
+          // ingredient.ingredient = ingredientItemInRepository.name;
+          ingredient.name = ingredientItemInRepository.name
         }
       });
       return ingredient;
     })
     .map(
       (e) =>
-        (pantryIngredientsList.innerHTML += `<ul>${e.ingredient} 🍽 ${e.amount}</ul>`)
+        (pantryIngredientsList.innerHTML += `<ul>${e.name} 🍽 ${e.amount}</ul>`)
     );
 };
 
